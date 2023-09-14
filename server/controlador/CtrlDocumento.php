@@ -1,12 +1,15 @@
 <?php
+session_start();
 require_once './core/Controlador.php';
 require_once './modelo/Documento.php';
 require_once './modelo/TiposDocumentos.php';
 require_once './modelo/Oficina.php';
 require_once './modelo/Persona.php';
 
-class CtrlDocumento extends Controlador {
-    public function index(){
+class CtrlDocumento extends Controlador
+{
+    public function index()
+    {
         # echo "Hola CtaContable";
         $obj = new Documento;
         $data = $obj->getTodo();
@@ -14,22 +17,34 @@ class CtrlDocumento extends Controlador {
         # var_dump($data);exit;
 
         $datos = [
-            'titulo'=>'Documentos',
-            'datos'=>$data['data']
+            'datos' => $data['data']
         ];
 
-        $this->mostrar('documentos/mostrar.php',$datos);
+        // var_dump("<pre>", $datos, "</pre>");
+        // exit;
+
+        $home = $this->mostrar('documentos/mostrar.php', $datos, true);
+
+        $datos = [
+            'titulo' => 'Documentos',
+            'contenido' => $home,
+            'menu' => $_SESSION['menu']
+        ];
+
+        $this->mostrar('./plantilla/home.php', $datos);
     }
 
-    public function eliminar(){
+    public function eliminar()
+    {
         $id = $_GET['id'];
         # echo "eliminando: ".$id;
-        $obj =new Documento ($id);
+        $obj = new Documento($id);
         $obj->eliminar();
 
         $this->index();
     }
-    public function nuevo(){
+    public function nuevo()
+    {
         # echo "Agregando..";
         $obj1 = new TiposDocumentos();
         $dataTipDoc = $obj1->getTodo();
@@ -37,28 +52,60 @@ class CtrlDocumento extends Controlador {
         $dataofic = $obj2->getTodo();
         $obj3 = new Persona();
         $dataperson = $obj3->getTodo();
-        
+
         $datos = [
             "tipDoc" => $dataTipDoc["data"],
             "oficinas" => $dataofic["data"],
             "personas" => $dataperson["data"],
         ];
-        $this->mostrar('documentos/formulario.php', $datos);
+
+        $home = $this->mostrar('documentos/formulario.php', $datos, true);
+
+        $datos = [
+            'titulo' => 'Documentos',
+            'contenido' => $home,
+            'menu' => $_SESSION['menu']
+        ];
+
+        $this->mostrar('./plantilla/home.php', $datos);
     }
-    public function editar(){
+    public function editar()
+    {
         $id = $_GET['id'];
         # echo "Editando: ".$id;
-        $obj = new Documento($id);
-        $data = $obj->editar();
-        # var_dump($data);exit;
+        $obj1 = new Documento($id);
+        $dataDoc = $obj1->editar();
+
+        $obj2 = new TiposDocumentos();
+        $dataTipDoc = $obj2->getTodo();
+        $obj3 = new Oficina();
+        $dataOfic = $obj3->getTodo();
+        $obj4 = new Persona();
+        $dataPerson = $obj4->getTodo();
+
         $datos = [
-            'datos'=>$data['data'][0]
+            'datos' => $dataDoc['data'][0],
+            "tipDoc" => $dataTipDoc["data"],
+            "oficinas" => $dataOfic["data"],
+            "personas" => $dataPerson["data"]
         ];
-        $this->mostrar('documentos/formulario.php',$datos);
+
+
+        $home = $this->mostrar('documentos/formulario.php', $datos, true);
+
+        $datos = [
+            'titulo' => 'Documentos',
+            'contenido' => $home,
+            'menu' => $_SESSION['menu']
+        ];
+
+        $this->mostrar('./plantilla/home.php', $datos);
     }
-    public function guardar(){
+    public function guardar()
+    {
         # echo "Guardando..";
-        # var_dump($_POST);
+        // var_dump("<pre>", $_POST, "</pre>");
+        // exit;
         $id = $_POST['id'];
         $idDocumento = $_POST['idDocumento'];
         $numero = $_POST['numero'];
@@ -71,7 +118,7 @@ class CtrlDocumento extends Controlador {
         $idPersona = $_POST['idPersona'];
         $esNuevo = $_POST['esNuevo'];
 
-        $obj = new Documento (
+        $obj = new Documento(
             $id,
             $idDocumento,
             $numero,
@@ -81,23 +128,21 @@ class CtrlDocumento extends Controlador {
             $fecha_recepcion,
             $idTipo,
             $idOficina,
-            $idPersona,
-            $numero
+            $idPersona
         );
 
         switch ($esNuevo) {
             case 0: # Editar
-                $data=$obj->actualizar();
+                $data = $obj->actualizar();
                 break;
-            
+
             default: # Nuevo
-                $data=$obj->guardar();
+                $data = $obj->guardar();
                 break;
         }
 
-        
+
         # var_dump($data);exit;
         $this->index();
-
     }
 }

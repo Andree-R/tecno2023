@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once './core/Controlador.php';
 require_once './modelo/ConceptoPago.php';
 require_once './modelo/CtaContable.php';
@@ -12,11 +13,18 @@ class CtrlConceptoPago extends Controlador {
         # var_dump($data);exit;
 
         $datos = [
-            'titulo'=>'Conceptos de Pago',
             'datos'=>$data['data']
         ];
 
-        $this->mostrar('conceptosPago/mostrar.php',$datos);
+        $home = $this->mostrar('conceptosPago/mostrar.php', $datos, true);
+
+        $datos = [
+            'titulo' => 'Conceptos de Pago',
+            'contenido' => $home,
+            'menu' => $_SESSION['menu']
+        ];
+
+        $this->mostrar('./plantilla/home.php', $datos);
     }
 
     public function eliminar(){
@@ -35,7 +43,16 @@ class CtrlConceptoPago extends Controlador {
             'ctasContables'=>$dataCta['data']
         ];
         # var_dump($datos);exit;
-        $this->mostrar('conceptosPago/formulario.php',$datos);
+
+        $home = $this->mostrar('conceptosPago/formulario.php', $datos, true);
+
+        $datos = [
+            'titulo' => 'Conceptos de Pago',
+            'contenido' => $home,
+            'menu' => $_SESSION['menu']
+        ];
+
+        $this->mostrar('./plantilla/home.php', $datos);
     }
     public function editar(){
         $id = $_GET['id'];
@@ -51,7 +68,16 @@ class CtrlConceptoPago extends Controlador {
             'datos'=>$data['data'][0],
             'ctasContables'=>$dataCta['data']
         ];
-        $this->mostrar('conceptosPago/formulario.php',$datos);
+
+        $home = $this->mostrar('conceptosPago/formulario.php', $datos, true);
+
+        $datos = [
+            'titulo' => 'Conceptos de Pago',
+            'contenido' => $home,
+            'menu' => $_SESSION['menu']
+        ];
+
+        $this->mostrar('./plantilla/home.php', $datos);
     }
     public function guardar(){
         # echo "Guardando..";

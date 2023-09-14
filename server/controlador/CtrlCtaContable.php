@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once './core/Controlador.php';
 require_once './modelo/CtaContable.php';
 
@@ -11,11 +12,18 @@ class CtrlCtaContable extends Controlador {
         # var_dump($data);exit;
 
         $datos = [
-            'titulo'=>'Cuentas Contables',
             'datos'=>$data['data']
         ];
 
-        $this->mostrar('ctasContables/mostrar.php',$datos);
+        $home = $this->mostrar('ctasContables/mostrar.php', $datos, true);
+
+        $datos = [
+            'titulo' => 'Cuentas Contables',
+            'contenido' => $home,
+            'menu' => $_SESSION['menu']
+        ];
+
+        $this->mostrar('./plantilla/home.php', $datos);
     }
 
     public function eliminar(){
@@ -28,7 +36,15 @@ class CtrlCtaContable extends Controlador {
     }
     public function nuevo(){
         # echo "Agregando..";
-        $this->mostrar('ctasContables/formulario.php');
+        $home = $this->mostrar('ctasContables/formulario.php', null, true);
+
+        $datos = [
+            'titulo' => 'Cuentas Contables',
+            'contenido' => $home,
+            'menu' => $_SESSION['menu']
+        ];
+
+        $this->mostrar('./plantilla/home.php', $datos);
     }
     public function editar(){
         $id = $_GET['id'];
@@ -39,7 +55,16 @@ class CtrlCtaContable extends Controlador {
         $datos = [
             'datos'=>$data['data'][0]
         ];
-        $this->mostrar('ctasContables/formulario.php',$datos);
+
+        $home = $this->mostrar('ctasContables/formulario.php', $datos, true);
+
+        $datos = [
+            'titulo' => 'Cuentas Contables',
+            'contenido' => $home,
+            'menu' => $_SESSION['menu']
+        ];
+
+        $this->mostrar('./plantilla/home.php', $datos);
     }
     public function guardar(){
         # echo "Guardando..";

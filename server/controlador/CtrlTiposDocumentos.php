@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once './core/Controlador.php';
 require_once './modelo/TiposDocumentos.php';
 
@@ -10,12 +11,20 @@ class CtrlTiposDocumentos extends Controlador {
 
         # var_dump($data);exit;
 
+
         $datos = [
-            'titulo'=>'Tipos de documentos',
-            'datos'=>$data['data']
+            'datos' => $data['data']
         ];
 
-        $this->mostrar('tiposDocumentos/mostrar.php',$datos);
+        $home = $this->mostrar('tiposDocumentos/mostrar.php', $datos, true);
+
+        $datos = [
+            'titulo' => 'Tipos de documentos',
+            'contenido' => $home,
+            'menu' => $_SESSION['menu']
+        ];
+
+        $this->mostrar('./plantilla/home.php', $datos);
     }
 
     public function eliminar(){
@@ -28,7 +37,15 @@ class CtrlTiposDocumentos extends Controlador {
     }
     public function nuevo(){
         # echo "Agregando..";
-        $this->mostrar('tiposDocumentos/formulario.php');
+        $home = $this->mostrar('tiposDocumentos/formulario.php', null, true);
+
+        $datos = [
+            'titulo' => 'Tipos de documentos',
+            'contenido' => $home,
+            'menu' => $_SESSION['menu']
+        ];
+
+        $this->mostrar('./plantilla/home.php', $datos);
     }
     public function editar(){
         $id = $_GET['id'];
@@ -39,7 +56,15 @@ class CtrlTiposDocumentos extends Controlador {
         $datos = [
             'datos'=>$data['data'][0]
         ];
-        $this->mostrar('tiposDocumentos/formulario.php',$datos);
+        $home = $this->mostrar('tiposDocumentos/formulario.php', $datos, true);
+
+        $datos = [
+            'titulo' => 'Tipos de documentos',
+            'contenido' => $home,
+            'menu' => $_SESSION['menu']
+        ];
+
+        $this->mostrar('./plantilla/home.php', $datos);
     }
     public function guardar(){
         # echo "Guardando..";
@@ -52,7 +77,6 @@ class CtrlTiposDocumentos extends Controlador {
 
         switch ($esNuevo) {
             case 0: # Editar
-            var_dump($tipo);
                 $data=$obj->actualizar();
                 break;
             

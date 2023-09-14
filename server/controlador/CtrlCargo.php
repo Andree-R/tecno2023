@@ -1,9 +1,12 @@
 <?php
+session_start();
 require_once './core/Controlador.php';
 require_once './modelo/Cargo.php';
 
-class CtrlCargo extends Controlador {
-    public function index(){
+class CtrlCargo extends Controlador
+{
+    public function index()
+    {
         # echo "Hola Cargo";
         $obj = new Cargo;
         $data = $obj->getTodo();
@@ -11,58 +14,87 @@ class CtrlCargo extends Controlador {
         # var_dump($data);exit;
 
         $datos = [
-            'titulo'=>'Cargos',
-            'datos'=>$data['data']
+            'datos' => $data['data']
         ];
 
-        $this->mostrar('cargos/mostrar.php',$datos);
+        $home = $this->mostrar('cargos/mostrar.php', $datos, true);
+
+        $datos = [
+            'titulo' => 'Cargos',
+            'contenido' => $home,
+            'menu' => $_SESSION['menu']
+        ];
+
+        $this->mostrar('./plantilla/home.php', $datos);
     }
 
-    public function eliminar(){
+    public function eliminar()
+    {
         $id = $_GET['id'];
         # echo "eliminando: ".$id;
-        $obj =new Cargo ($id);
+        $obj = new Cargo($id);
         $obj->eliminar();
 
         $this->index();
     }
-    public function nuevo(){
+    public function nuevo()
+    {
         # echo "Agregando..";
-        $this->mostrar('cargos/formulario.php');
+
+        $home = $this->mostrar('cargos/formulario.php', null, true);
+
+        $datos = [
+            'titulo' => 'Cargos',
+            'contenido' => $home,
+            'menu' => $_SESSION['menu']
+        ];
+
+        $this->mostrar('./plantilla/home.php', $datos);
+
     }
-    public function editar(){
+    public function editar()
+    {
         $id = $_GET['id'];
         # echo "Editando: ".$id;
         $obj = new Cargo($id);
         $data = $obj->editar();
         # var_dump($data);exit;
         $datos = [
-            'datos'=>$data['data'][0]
+            'datos' => $data['data'][0]
         ];
-        $this->mostrar('cargos/formulario.php',$datos);
+
+        $home = $this->mostrar('cargos/formulario.php', $datos, true);
+
+        $datos = [
+            'titulo' => 'Cargos',
+            'contenido' => $home,
+            'menu' => $_SESSION['menu']
+        ];
+
+        $this->mostrar('./plantilla/home.php', $datos);
     }
-    public function guardar(){
+    public function guardar()
+    {
         # echo "Guardando..";
         # var_dump($_POST);
         $id = $_POST['id'];
         $nombre = $_POST['nombre'];
         $esNuevo = $_POST['esNuevo'];
 
-        $obj = new Cargo ($id, $nombre);
+        $obj = new Cargo($id, $nombre);
 
         switch ($esNuevo) {
             case 0: # Editar
-                $data=$obj->actualizar();
+                $data = $obj->actualizar();
                 break;
-            
+
             default: # Nuevo
-                $data=$obj->guardar();
+                $data = $obj->guardar();
                 break;
         }
 
-        
+
         # var_dump($data);exit;
         $this->index();
-
     }
 }

@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once './core/Controlador.php';
 require_once './modelo/Estado.php';
 
@@ -9,13 +10,19 @@ class CtrlEstado extends Controlador {
         $data = $obj->getTodo();
 
         # var_dump($data);exit;
-
         $datos = [
-            'titulo'=>'Estados',
-            'datos'=>$data['data']
+            'datos' => $data['data']
         ];
 
-        $this->mostrar('estados/mostrar.php',$datos);
+        $home = $this->mostrar('estados/mostrar.php', $datos, true);
+
+        $datos = [
+            'titulo' => 'Estados',
+            'contenido' => $home,
+            'menu' => $_SESSION['menu']
+        ];
+
+        $this->mostrar('./plantilla/home.php', $datos);
     }
 
     public function eliminar(){
@@ -39,7 +46,16 @@ class CtrlEstado extends Controlador {
         $datos = [
             'datos'=>$data['data'][0]
         ];
-        $this->mostrar('estados/formulario.php',$datos);
+
+        $home = $this->mostrar('estados/formulario.php', $datos, true);
+
+        $datos = [
+            'titulo' => 'Estados',
+            'contenido' => $home,
+            'menu' => $_SESSION['menu']
+        ];
+
+        $this->mostrar('./plantilla/home.php', $datos);
     }
     public function guardar(){
         # echo "Guardando..";

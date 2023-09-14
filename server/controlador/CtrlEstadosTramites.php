@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once './core/Controlador.php';
 require_once './modelo/EstadosTramites.php';
 
@@ -11,11 +12,18 @@ class CtrlEstadosTramites extends Controlador {
         # var_dump($data);exit;
 
         $datos = [
-            'titulo'=>'Estados de tramites',
             'datos'=>$data['data']
         ];
 
-        $this->mostrar('estadosTramites/mostrar.php',$datos);
+        $home = $this->mostrar('estadosTramites/mostrar.php', $datos, true);
+
+        $datos = [
+            'titulo' => 'Estados de tramites',
+            'contenido' => $home,
+            'menu' => $_SESSION['menu']
+        ];
+
+        $this->mostrar('./plantilla/home.php', $datos);
     }
 
     public function eliminar(){
@@ -28,7 +36,15 @@ class CtrlEstadosTramites extends Controlador {
     }
     public function nuevo(){
         # echo "Agregando..";
-        $this->mostrar('estadosTramites/formulario.php');
+        $home = $this->mostrar('estadosTramites/formulario.php', null, true);
+
+        $datos = [
+            'titulo' => 'Estados de tramites',
+            'contenido' => $home,
+            'menu' => $_SESSION['menu']
+        ];
+
+        $this->mostrar('./plantilla/home.php', $datos);
     }
     public function editar(){
         $id = $_GET['id'];
@@ -39,7 +55,15 @@ class CtrlEstadosTramites extends Controlador {
         $datos = [
             'datos'=>$data['data'][0]
         ];
-        $this->mostrar('estadosTramites/formulario.php',$datos);
+        $home = $this->mostrar('estadosTramites/formulario.php', $datos, true);
+
+        $datos = [
+            'titulo' => 'Estados de tramites',
+            'contenido' => $home,
+            'menu' => $_SESSION['menu']
+        ];
+
+        $this->mostrar('./plantilla/home.php', $datos);
     }
     public function guardar(){
         # echo "Guardando..";

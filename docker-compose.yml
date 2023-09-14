@@ -9,7 +9,7 @@ services:
       dockerfile: ./php/Dockerfile
     # Nombre del contenedor
     container_name: tecno_app
-    restart: always
+    restart: "no"
     volumes:
       # Redefinición del puerto de la imagen php:8.2-fpm-alpine 
       - ./php/zz-docker.conf:/usr/local/etc/php-fpm.d/zz-docker.conf
@@ -31,7 +31,7 @@ services:
     image: nginx:1.25.2-alpine
     # Nombre del contenedor
     container_name: tecno_nginx
-    restart: always
+    restart: "no"
     # Configuracion de puertos de acceso host:container_network
     ports:
       - "8080:80"

@@ -49,7 +49,7 @@ class Documento extends Modelo {
     public function guardar(){
         $datos = [
             'id'=>$this->id,
-            'idDocumento'=>"'$this->idDocumento'",
+            'idDocumento'=>$this->idDocumento,
             'numero'=>"'$this->numero'",
             'asunto'=>"'$this->asunto'",
             'fecha'=>"'$this->fecha'",
@@ -62,14 +62,21 @@ class Documento extends Modelo {
         return $this->insert($datos);
     }
     public function editar(){
+
         return $this->getById($this->id);
     }
     public function actualizar(){
         $datos = [
             'id'=>$this->id,
-            'nombre'=>"'$this->nombre'",
-            'monto'=>"'$this->monto'",
-            'idCta'=>"$this->idCta",
+            'idDocumento'=>$this->idDocumento,
+            'numero'=>"'$this->numero'",
+            'asunto'=>"'$this->asunto'",
+            'fecha'=>"'$this->fecha'",
+            'descripcion'=>"'$this->descripcion'",
+            'fecha_recepcion'=>"'$this->fecha_recepcion'",
+            'idTipo'=>"'$this->idTipo'",
+            'idOficina'=>"'$this->idOficina'",
+            'idPersona'=>"'$this->idPersona'",
         ];
         $wh = "id=$this->id";
         return $this->update($wh,$datos);

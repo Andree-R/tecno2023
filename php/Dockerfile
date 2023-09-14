@@ -24,15 +24,24 @@ RUN apk update && apk add --no-cache \
     libexif-dev \
     libzip 
 
+
+ENV BUN_INSTALL="$HOME/.bun"
+ENV PATH=$BUN_INSTALL/bin:$PATH
+
+RUN curl -fsSL https://bun.sh/install | bash && \
+    echo 'export PATH=$BUN_INSTALL/bin:$PATH' >> ~/.bashrc
+
 # Argumentos para la construccion de la imagen
-ARG WWW_INSTALL_PATH=/server
-ARG APP=$WWW_INSTALL_PATH/app
+ARG WWW_INSTALL_PATH_SERVER=/server
+ARG APP_SERVER=$WWW_INSTALL_PATH_SERVER/app
+ARG USER=www
+ARG GROUP=www
 
 # Creación de una carpeta
-RUN mkdir -p ${WWW_INSTALL_PATH}
+RUN mkdir -p ${WWW_INSTALL_PATH_SERVER}
 
 # Definiiendo la carpeta de trabajo
-WORKDIR ${WWW_INSTALL_PATH}
+WORKDIR ${WWW_INSTALL_PATH_SERVER}
 
 # Eliminando cache
 RUN rm -rf /var/cache/apk/lists/*
@@ -43,20 +52,20 @@ RUN docker-php-ext-install pdo pdo_pgsql mbstring mysqli pdo_mysql zip exif pcnt
 # Configurar la extensión GD
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg
 
-# Crea un grupo llamado "www" con GID 1000
-# Crea un usuario llamado "www" con UID 1000, asignándolo al grupo "www"
-RUN addgroup -g 1000 www
-RUN adduser -u 1000 -D -h /home/www -s /bin/bash -G www www
+# Crea un grupo llamado "${GROUP}" con GID 1000
+# Crea un usuario llamado "${USER}" con UID 1000, asignándolo al grupo "${GROUP}"
+RUN addgroup -g 1000 ${GROUP}
+RUN adduser -u 1000 -D -h /home/${USER} -s /bin/bash -G ${USER} ${GROUP}
 
 # Establece el directorio de trabajo para la aplicación
-WORKDIR ${APP}
+WORKDIR ${APP_SERVER}
 
-# Establece los permisos para el usuario www
-RUN chown -R www:www ${APP} && \
-    chmod -R 755 ${APP}
+# Establece los permisos para el usuario ${USER}
+RUN chown -R ${USER}:${GROUP} ${APP_SERVER} && \
+    chmod -R 755 ${APP_SERVER}
 
 # Cambiar usuario actual a www
-USER www
+USER ${USER}
 
 # La imagen php:8.2-fpm-alpine expone el puerto para el 9000 por defecto
 # Puerto expuesto comentado y configurando el puerto en zz-docker.conf

@@ -1,16 +1,23 @@
 <?php
+session_start();
 require_once './core/Controlador.php';
 # require_once './modelo/Oficina.php';
 
 class CtrlPrincipal extends Controlador {
     public function index(){
         # echo "Hola mundo";
+        $_SESSION['menu'] = $this->getMenu();
+
         $datos = [
-            'titulo'=>'Sexto Semestre',
-            'usuario'=>'Walter',
-            'menu'=>$this->getMenu()
+            "usuario" => "Walter",
         ];
-        $this->mostrar('home.php',$datos);
+
+        $datos = [
+            'titulo'=>'Pagina principal',
+            'contenido'=>$this->mostrar('principal.php',$datos,true),
+            'menu'=>$_SESSION['menu']
+        ];
+        $this->mostrar('./plantilla/home.php',$datos);
         /* $obj = new Oficina();
         $data = $obj->mostrar();
 

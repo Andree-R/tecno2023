@@ -14,8 +14,18 @@ FROM documentos doc
 INNER JOIN documentos docR 
 ON doc.id = docR.id 
 INNER JOIN tipos_documentos tipDoc 
-ON tipDoc.id = doc.id 
+ON tipDoc.id = doc.idTipo 
 INNER JOIN personas person 
-ON person.id = doc.id 
+ON person.id = doc.idPersona 
 INNER JOIN oficinas ofic 
-ON ofic.id = doc.id
+ON ofic.id = doc.idOficina
+
+CREATE VIEW v_conceptos_pago as
+SELECT
+cp.id,
+cp.nombre,
+cp.monto,
+cc.descripcion as idCta
+from conceptos_pago as cp
+INNER JOIN ctas_contables cc
+ON cc.id = cp.idCta
