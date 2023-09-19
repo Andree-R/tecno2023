@@ -26,6 +26,17 @@ cp.id,
 cp.nombre,
 cp.monto,
 cc.descripcion as idCta
-from conceptos_pago as cp
+from conceptos_pago cp
 INNER JOIN ctas_contables cc
 ON cc.id = cp.idCta
+
+CREATE VIEW v_anexoDocumento as
+SELECT 
+ad.id,
+ad.nombre,
+ad.descripcion,
+ad.url,
+d.numero as idDocumento
+from anexos_documento ad
+INNER join documentos d
+on d.id = ad.idDocumento
