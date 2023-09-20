@@ -48,6 +48,7 @@ class CtrlPrincipal extends Controlador {
             'CtrlPersona'=>'Personas',
            #  'CtrlFactorForma'=>'Factores de Forma',
             'CtrlCtaContable'=>'Cuentas Contables',
+            'CtrlAnexoDocumento'=>'Anexos de Documentos',
             'CtrlConceptoPago'=>'Conceptos de Pago',
         ];
     }

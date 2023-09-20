@@ -34,7 +34,7 @@ services:
     restart: "no"
     # Configuracion de puertos de acceso host:container_network
     ports:
-      - "8080:80"
+      - "8181:80"
       - "447:443"
     volumes:
       # Configuración de los servidores web de nginx
