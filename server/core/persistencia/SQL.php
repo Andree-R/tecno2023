@@ -27,6 +27,7 @@ class SQL
         $this->_colDatos[]=$dato;
     }
     public function setDatos(array $datos){
+        // var_dump($this->_tabla);exit;
         $this->_colDatos = $datos;
     }
 

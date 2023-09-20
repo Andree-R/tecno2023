@@ -1,6 +1,8 @@
 <?php
+session_start();
 require_once './core/Controlador.php';
 require_once './modelo/Oficina.php';
+require_once './modelo/ServidorPublico.php';
 
 class CtrlOficina extends Controlador {
     public function index(){
@@ -15,7 +17,15 @@ class CtrlOficina extends Controlador {
             'datos'=>$data['data']
         ];
 
-        $this->mostrar('estadosTramites/mostrar.php',$datos);
+        $home = $this->mostrar('oficinas/mostrar.php', $datos, true);
+
+        $datos = [
+            'titulo' => 'Oficinas',
+            'contenido' => $home,
+            'menu' => $_SESSION['menu']
+        ];
+
+        $this->mostrar('./plantilla/home.php', $datos);
     }
 
     public function eliminar(){
@@ -28,7 +38,24 @@ class CtrlOficina extends Controlador {
     }
     public function nuevo(){
         # echo "Agregando..";
-        $this->mostrar('estadosTramites/formulario.php');
+        $obj = new ServidorPublico();
+        $dataSP = $obj->getTodo();
+        $obj = new Oficina();
+        $dataOf = $obj->getTodo();
+        $datos = [
+            'servidoresPublicos'=>$dataSP['data'],
+            'oficinas'=>$dataOf['data'],
+        ];
+
+        $home = $this->mostrar('oficinas/formulario.php', $datos, true);
+
+        $datos = [
+            'titulo' => 'Nueva Oficina',
+            'contenido' => $home,
+            'menu' => $_SESSION['menu']
+        ];
+
+        $this->mostrar('./plantilla/home.php', $datos);
     }
     public function editar(){
         $id = $_GET['id'];
@@ -39,19 +66,25 @@ class CtrlOficina extends Controlador {
         $datos = [
             'datos'=>$data['data'][0]
         ];
-        $this->mostrar('estadosTramites/formulario.php',$datos);
+        $this->mostrar('oficinas/formulario.php',$datos);
     }
     public function guardar(){
         # echo "Guardando..";
         # var_dump($_POST);
         $id = $_POST['id'];
-        $estado = $_POST['nombre'];
-        $id_jefe = $_POST['id_jefe'];
+        $nombre = $_POST['nombre'];
+        $idJefe = $_POST['idJefe'];
+        $idMatriz = $_POST['idMatriz'];
         $esNuevo = $_POST['esNuevo'];
 
         
 
-        $obj = new Oficina ($id, $estado);
+        $obj = new Oficina (
+            $id, 
+            $idMatriz,
+            $nombre,
+            $idJefe,
+        );
 
         switch ($esNuevo) {
             case 0: # Editar

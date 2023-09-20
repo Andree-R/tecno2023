@@ -1,53 +1,96 @@
 <?php
+session_start();
 require_once './core/Controlador.php';
-require_once './modelo/Cargo.php';
+require_once './modelo/AnexoDocumento.php';
+require_once './modelo/Documento.php';
 
 class CtrlAnexoDocumento extends Controlador {
     public function index(){
-        # echo "Hola Cargo";
-        $obj = new Cargo;
+        # echo "Hola CtaContable";
+        $obj = new AnexoDocumento;
         $data = $obj->getTodo();
 
         # var_dump($data);exit;
+
         $datos = [
-            'titulo'=>'Cargos',
             'datos'=>$data['data']
         ];
+        
+        $home = $this->mostrar('anexoDocumento/mostrar.php', $datos, true);
 
-        $this->mostrar('cargos/mostrar.php',$datos);
+        $datos = [
+            'titulo' => 'Anexos de Documentos',
+            'contenido' => $home,
+            'menu' => $_SESSION['menu']
+        ];
+
+        $this->mostrar('./plantilla/home.php', $datos);
     }
 
     public function eliminar(){
         $id = $_GET['id'];
         # echo "eliminando: ".$id;
-        $obj =new Cargo ($id);
+        $obj =new AnexoDocumento ($id);
         $obj->eliminar();
 
         $this->index();
     }
     public function nuevo(){
         # echo "Agregando..";
-        $this->mostrar('cargos/formulario.php');
+        $obj1 = new Documento();
+        $Doc = $obj1->getTodo();
+        $datos = [
+            "Doc" => $Doc["data"],
+        ];
+        $home = $this->mostrar('anexoDocumento/formulario.php', $datos, true);
+
+        $datos = [
+            'titulo' => 'Nuevo anexo de documento',
+            'contenido' => $home,
+            'menu' => $_SESSION['menu']
+        ];
+
+        $this->mostrar('./plantilla/home.php', $datos);
     }
     public function editar(){
         $id = $_GET['id'];
         # echo "Editando: ".$id;
-        $obj = new Cargo($id);
+        $obj = new AnexoDocumento($id);
         $data = $obj->editar();
+
+        $obj = new Documento();
+        $dataDoc = $obj->getTodo();
         # var_dump($data);exit;
         $datos = [
-            'datos'=>$data['data'][0]
+            'datos'=>$data['data'][0],
+            'Doc'=>$dataDoc['data']
         ];
-        $this->mostrar('cargos/formulario.php',$datos);
+        $home = $this->mostrar('anexoDocumento/formulario.php', $datos, true);
+
+        $datos = [
+            'titulo' => 'Editando anexo de documento',
+            'contenido' => $home,
+            'menu' => $_SESSION['menu']
+        ];
+
+        $this->mostrar('./plantilla/home.php', $datos);
     }
     public function guardar(){
         # echo "Guardando..";
-        # var_dump($_POST);
         $id = $_POST['id'];
-        $nombre = $_POST['nombre'];
+        $nombre= $_POST['nombre'];
+        $descripcion = $_POST['descripcion'];
+        $url = $_POST['url'];
+        $idDocumento = $_POST['idDocumento'];
         $esNuevo = $_POST['esNuevo'];
 
-        $obj = new Cargo ($id, $nombre);
+        $obj = new AnexoDocumento (
+            $id,
+            $idDocumento,
+            $nombre,
+            $descripcion,
+            $url
+        );
 
         switch ($esNuevo) {
             case 0: # Editar

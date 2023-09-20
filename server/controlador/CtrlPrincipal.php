@@ -36,11 +36,16 @@ class CtrlPrincipal extends Controlador {
 
     public function getMenu(){
         return [
+            'CtrlAnexoDocumento'=>'Anexos',
             'CtrlCargo'=>'Cargos',
             'CtrlEstado'=>'Estados',
+            'CtrlEstudiante'=>'Estudiante',
+            'CtrlServidorPublico'=>'Servidores Públicos',
+            'CtrlOficina'=>'Oficinas',
             'CtrlTiposDocumentos'=>'Tipos de Documentos',
             'CtrlEstadosTramites'=>'Estados de tramites',
             'CtrlDocumento'=>'Documentos',
+            'CtrlPersona'=>'Personas',
            #  'CtrlFactorForma'=>'Factores de Forma',
             'CtrlCtaContable'=>'Cuentas Contables',
             'CtrlConceptoPago'=>'Conceptos de Pago',
