@@ -1,4 +1,4 @@
-<a class="btn btn-success" href="?ctrl=CtrlTiposDocumentos&accion=nuevo">Nuevo tipo</a>
+<a class="btn btn-success" href="?ctrl=CtrlTiposDocumentos&accion=nuevo">Nuevo Tipo de Documento</a>
 <table class="table">
     <tr>
         <th>Id</th>

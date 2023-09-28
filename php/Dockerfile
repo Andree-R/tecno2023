@@ -6,6 +6,10 @@ FROM php:8.2-fpm-alpine
 
 # Librerias que se instalaran durante la construccion de la imagen
 RUN apk update && apk add --no-cache \
+    neofetch \
+    autoconf \
+    g++ \
+    make \
     build-base \
     libpng-dev \
     libjpeg-turbo-dev \
@@ -23,13 +27,6 @@ RUN apk update && apk add --no-cache \
     postgresql-dev \
     libexif-dev \
     libzip 
-
-
-ENV BUN_INSTALL="$HOME/.bun"
-ENV PATH=$BUN_INSTALL/bin:$PATH
-
-RUN curl -fsSL https://bun.sh/install | bash && \
-    echo 'export PATH=$BUN_INSTALL/bin:$PATH' >> ~/.bashrc
 
 # Argumentos para la construccion de la imagen
 ARG WWW_INSTALL_PATH_SERVER=/server

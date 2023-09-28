@@ -60,13 +60,27 @@ class CtrlOficina extends Controlador {
     public function editar(){
         $id = $_GET['id'];
         // echo "Editando: ".$id;
-        $obj = new Oficina($id);
-        $data = $obj->editar();
+        $obj = new ServidorPublico();
+        $dataSP = $obj->getTodo();
+        $obj = new Oficina();
+        $dataOf = $obj->getTodo();
+        $obj = new Oficina();
+        $data = $obj->getTodo();
         # var_dump($data);exit;
         $datos = [
-            'datos'=>$data['data'][0]
+            'servidoresPublicos'=>$dataSP['data'],
+            'oficinas'=>$dataOf['data'],
+            'datos'=>$data['data'][0],
         ];
-        $this->mostrar('oficinas/formulario.php',$datos);
+        $home = $this->mostrar('oficinas/formulario.php', $datos, true);
+
+        $datos = [
+            'titulo' => 'Editar Oficina',
+            'contenido' => $home,
+            'menu' => $_SESSION['menu']
+        ];
+
+        $this->mostrar('./plantilla/home.php', $datos);
     }
     public function guardar(){
         # echo "Guardando..";

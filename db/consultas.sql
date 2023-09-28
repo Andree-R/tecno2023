@@ -11,13 +11,13 @@ tipDoc.tipo as idTipo,
 ofic.nombre as idOficina,
 CONCAT(person.nombres," ",person.apellidos) as idPersona
 FROM documentos doc 
-INNER JOIN documentos docR 
-ON doc.id = docR.id 
-INNER JOIN tipos_documentos tipDoc 
+LEFT JOIN documentos docR 
+ON doc.idDocumento = docR.id 
+LEFT JOIN tipos_documentos tipDoc 
 ON tipDoc.id = doc.idTipo 
-INNER JOIN personas person 
+LEFT JOIN personas person 
 ON person.id = doc.idPersona 
-INNER JOIN oficinas ofic 
+LEFT JOIN oficinas ofic 
 ON ofic.id = doc.idOficina
 ;
 
@@ -72,23 +72,22 @@ ON p.id = sp.id
 ;
 
 CREATE VIEW v_tramites_documentarios as
-SELECT
+SELECT 
 td.*,
-d.numero,
-d.idDocumento,
-d.asunto,
+d.numero as documento,
 ofo.nombre as oficinaOrigen,
 ofd.nombre as oficinaDestino,
 et.estado
-FROM tramites_documentarios td
-INNER JOIN documentos d
-ON d.id = td.idDocumento
-INNER JOIN oficinas ofo
+FROM
+tramites_documentarios td
+LEFT JOIN documentos d
+on d.id = td.idDocumento
+LEFT JOIN oficinas ofo
 ON ofo.id = td.idOficinaOrigen
-INNER JOIN oficinas ofd
+LEFT JOIN oficinas ofd
 ON ofd.id = td.idOficinaDestino
-INNER JOIN estados_tramites et
-ON et.id = td.idEstado
+LEFT JOIN estados_tramites et
+on et.id = td.idEstado
 ;
 
 CREATE VIEW v_servidores_publicos as

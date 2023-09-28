@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: localhost:3307
--- Tiempo de generación: 05-09-2023 a las 23:46:07
--- Versión del servidor: 10.1.38-MariaDB
--- Versión de PHP: 7.3.2
+-- Servidor: mariadb:3306
+-- Tiempo de generación: 28-09-2023 a las 16:25:11
+-- Versión del servidor: 10.11.5-MariaDB-1:10.11.5+maria~ubu2204
+-- Versión de PHP: 8.2.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -19,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `bdtecno2023`
+-- Base de datos: `dbtecno2023`
 --
 
 -- --------------------------------------------------------
@@ -34,7 +33,7 @@ CREATE TABLE `anexos_documento` (
   `url` varchar(250) DEFAULT NULL,
   `id` int(11) NOT NULL,
   `idDocumento` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -56,7 +55,7 @@ CREATE TABLE `anexo_03` (
   `idEstudiante` int(11) DEFAULT NULL,
   `idModulo` int(11) DEFAULT NULL,
   `detalle_otros` varchar(80) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -75,7 +74,7 @@ CREATE TABLE `anexo_04` (
   `idModulo` int(11) DEFAULT NULL,
   `idEmpresa` int(11) DEFAULT NULL,
   `idDocente` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -104,7 +103,7 @@ CREATE TABLE `anexo_05` (
   `total_puntaje` char(18) DEFAULT NULL,
   `fecha_anexo` timestamp NULL DEFAULT NULL,
   `lugar_anexo` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -118,7 +117,7 @@ CREATE TABLE `asignaciones_bienes` (
   `idServidorPublico` int(11) DEFAULT NULL,
   `idEstado` int(11) DEFAULT NULL,
   `idJefeInmediato` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -130,12 +129,12 @@ CREATE TABLE `auditoria` (
   `id` int(11) NOT NULL,
   `tabla` varchar(25) DEFAULT NULL,
   `operacion` varchar(10) DEFAULT NULL,
-  `fecha` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `fecha` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `usuario` varchar(15) DEFAULT NULL,
   `ip` varchar(32) DEFAULT NULL,
-  `datos_new` longtext,
-  `datos_old` longtext
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `datos_new` longtext DEFAULT NULL,
+  `datos_old` longtext DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -145,7 +144,7 @@ CREATE TABLE `auditoria` (
 
 CREATE TABLE `autores` (
   `id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -158,7 +157,7 @@ CREATE TABLE `bachilleres` (
   `tieneIdiomaExtranjero` bit(1) DEFAULT NULL,
   `culminoEstudios` bit(1) DEFAULT NULL,
   `añoTermino` varchar(4) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -170,7 +169,7 @@ CREATE TABLE `bachiller_trabajo_aplicacion` (
   `id` int(11) NOT NULL,
   `idBachiller` int(11) DEFAULT NULL,
   `idTrabajo` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -198,7 +197,7 @@ CREATE TABLE `cargas_horaria` (
   `vienes_fin` timestamp NULL DEFAULT NULL,
   `sabado_fin` timestamp NULL DEFAULT NULL,
   `domingo_fin` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -209,7 +208,16 @@ CREATE TABLE `cargas_horaria` (
 CREATE TABLE `cargos` (
   `id` int(11) NOT NULL,
   `nombre` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Volcado de datos para la tabla `cargos`
+--
+
+INSERT INTO `cargos` (`id`, `nombre`) VALUES
+(1, 'Gerente'),
+(2, 'Tecnico'),
+(3, 'Docente');
 
 -- --------------------------------------------------------
 
@@ -220,7 +228,7 @@ CREATE TABLE `cargos` (
 CREATE TABLE `categorias` (
   `id` int(11) NOT NULL,
   `nombre` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -231,7 +239,7 @@ CREATE TABLE `categorias` (
 CREATE TABLE `ciudades` (
   `id` int(11) NOT NULL,
   `nombre` varchar(60) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -244,7 +252,14 @@ CREATE TABLE `conceptos_pago` (
   `monto` decimal(10,2) DEFAULT NULL,
   `id` int(11) NOT NULL,
   `idCta` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Volcado de datos para la tabla `conceptos_pago`
+--
+
+INSERT INTO `conceptos_pago` (`nombre`, `monto`, `id`, `idCta`) VALUES
+('Matricula', 150.00, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -258,7 +273,7 @@ CREATE TABLE `cronogramas_academicos` (
   `nombre` varchar(50) DEFAULT NULL,
   `id` int(11) NOT NULL,
   `idPeriodo` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -270,7 +285,14 @@ CREATE TABLE `ctas_contables` (
   `cuenta` varchar(15) DEFAULT NULL,
   `descripcion` varchar(100) DEFAULT NULL,
   `id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Volcado de datos para la tabla `ctas_contables`
+--
+
+INSERT INTO `ctas_contables` (`cuenta`, `descripcion`, `id`) VALUES
+('Corriente', 'Corriente', 1);
 
 -- --------------------------------------------------------
 
@@ -287,7 +309,7 @@ CREATE TABLE `cursos` (
   `idModulo` int(11) DEFAULT NULL,
   `idTipo` int(11) DEFAULT NULL,
   `idSemestre` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -300,7 +322,7 @@ CREATE TABLE `desplazamientos` (
   `fecha` timestamp NULL DEFAULT NULL,
   `idServidorOrigen` int(11) DEFAULT NULL,
   `idServidorDestino` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -314,7 +336,7 @@ CREATE TABLE `detalles_asignacion` (
   `idEquipo` int(11) DEFAULT NULL,
   `observaciones` varchar(250) DEFAULT NULL,
   `cantidad` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -326,7 +348,7 @@ CREATE TABLE `detalles_desplazamientos` (
   `id` int(11) NOT NULL,
   `idDesplazamiento` int(11) DEFAULT NULL,
   `idEquipo` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -341,7 +363,7 @@ CREATE TABLE `detalles_matricula` (
   `nroMatricula` int(11) DEFAULT NULL,
   `notaFinal` decimal(5,2) DEFAULT NULL,
   `notaRecuperacion` decimal(5,2) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -358,7 +380,7 @@ CREATE TABLE `detalles_pago` (
   `idPago` int(11) DEFAULT NULL,
   `descuento` decimal(10,2) DEFAULT NULL,
   `igv` decimal(19,7) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -384,7 +406,7 @@ CREATE TABLE `detalles_permanencia` (
   `domingo_fin` char(18) DEFAULT NULL,
   `idFicha` int(11) DEFAULT NULL,
   `idTurno` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -395,7 +417,7 @@ CREATE TABLE `detalles_permanencia` (
 CREATE TABLE `docentes` (
   `idPrograma_estudios` int(11) DEFAULT NULL,
   `id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -414,7 +436,14 @@ CREATE TABLE `documentos` (
   `asunto` varchar(100) DEFAULT NULL,
   `idOficina` int(11) DEFAULT NULL,
   `idPersona` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Volcado de datos para la tabla `documentos`
+--
+
+INSERT INTO `documentos` (`id`, `idDocumento`, `descripcion`, `fecha`, `fecha_recepcion`, `idTipo`, `numero`, `asunto`, `idOficina`, `idPersona`) VALUES
+(1, NULL, 'qwe', '2023-09-23 09:18:00', '2023-09-30 09:18:00', 1, 'FUT-001', 'Solicitud', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -426,7 +455,7 @@ CREATE TABLE `editoriales` (
   `id` int(11) NOT NULL,
   `nombre` varchar(50) DEFAULT NULL,
   `idCiudad` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -443,7 +472,7 @@ CREATE TABLE `empresas` (
   `idRepresentante` int(11) DEFAULT NULL,
   `RUC` varchar(11) DEFAULT NULL,
   `esActiva` bit(1) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -463,7 +492,7 @@ CREATE TABLE `equipos` (
   `numeroPECOSA` varchar(20) DEFAULT NULL,
   `numeroOC` varchar(20) DEFAULT NULL,
   `dimensiones` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -477,7 +506,7 @@ CREATE TABLE `equipos_antivirus` (
   `observaciones` varchar(100) DEFAULT NULL,
   `idAntivirus` int(11) DEFAULT NULL,
   `licencia` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -492,7 +521,7 @@ CREATE TABLE `equipos_discos` (
   `idTipoDisco` int(11) DEFAULT NULL,
   `numeroSerie` varchar(30) DEFAULT NULL,
   `idEstado` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -503,7 +532,16 @@ CREATE TABLE `equipos_discos` (
 CREATE TABLE `estados` (
   `id` int(11) NOT NULL,
   `nombre` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Volcado de datos para la tabla `estados`
+--
+
+INSERT INTO `estados` (`id`, `nombre`) VALUES
+(1, 'Bueno'),
+(2, 'Malo'),
+(3, 'Regular');
 
 -- --------------------------------------------------------
 
@@ -514,7 +552,15 @@ CREATE TABLE `estados` (
 CREATE TABLE `estados_tramites` (
   `estado` varchar(30) DEFAULT NULL,
   `id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Volcado de datos para la tabla `estados_tramites`
+--
+
+INSERT INTO `estados_tramites` (`estado`, `id`) VALUES
+('Observado', 1),
+('Archivado', 2);
 
 -- --------------------------------------------------------
 
@@ -525,7 +571,7 @@ CREATE TABLE `estados_tramites` (
 CREATE TABLE `estudiantes` (
   `id` int(11) NOT NULL,
   `idPrograma_estudios` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -539,7 +585,7 @@ CREATE TABLE `evaluaciones` (
   `asistio` int(11) DEFAULT NULL,
   `nota` decimal(5,2) DEFAULT NULL,
   `idSubIndicador` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -551,7 +597,7 @@ CREATE TABLE `examenes_requisitos` (
   `id` int(11) NOT NULL,
   `idExamen` int(11) DEFAULT NULL,
   `idRequisito` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -568,7 +614,7 @@ CREATE TABLE `examenes_suficiencia` (
   `numeroActa` varchar(50) DEFAULT NULL,
   `acta` varchar(100) DEFAULT NULL,
   `fechaSustentacion` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -579,7 +625,7 @@ CREATE TABLE `examenes_suficiencia` (
 CREATE TABLE `factores_forma` (
   `id` int(11) NOT NULL,
   `nombre` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -592,7 +638,7 @@ CREATE TABLE `fichas_permanencia` (
   `idTrabajador` int(11) DEFAULT NULL,
   `fecha_ini` timestamp NULL DEFAULT NULL,
   `fecha_fin` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -611,7 +657,7 @@ CREATE TABLE `fichas_postulacion` (
   `puntaje` decimal(19,7) DEFAULT NULL,
   `puesto` int(11) DEFAULT NULL,
   `ingreso` bit(1) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -622,7 +668,7 @@ CREATE TABLE `fichas_postulacion` (
 CREATE TABLE `idiomas` (
   `id` int(11) NOT NULL,
   `nombre` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -637,7 +683,7 @@ CREATE TABLE `indicadores` (
   `idDetalleMatricula` int(11) DEFAULT NULL,
   `promedio` decimal(5,2) DEFAULT NULL,
   `notaRecuperacion` decimal(5,2) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -650,7 +696,7 @@ CREATE TABLE `indicadores_anexo` (
   `idAnexo` int(11) DEFAULT NULL,
   `idIndicador` int(11) DEFAULT NULL,
   `calificacion` decimal(5,2) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -663,7 +709,7 @@ CREATE TABLE `indicadores_evaluacion` (
   `item` int(11) DEFAULT NULL,
   `nombre` varchar(80) DEFAULT NULL,
   `idTipo_indicador` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -677,7 +723,7 @@ CREATE TABLE `jurados_examen_suficiencia` (
   `idJurado` int(11) DEFAULT NULL,
   `notaTeoria` decimal(5,2) DEFAULT NULL,
   `notaPractica` decimal(5,2) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -690,7 +736,7 @@ CREATE TABLE `jurados_trabajo_aplicacion` (
   `idTrabajo` int(11) DEFAULT NULL,
   `idJurado` int(11) DEFAULT NULL,
   `notaJurado` decimal(5,2) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -706,7 +752,7 @@ CREATE TABLE `justificaciones_asistencia` (
   `justificacion` char(18) DEFAULT NULL,
   `idTrabajador` int(11) DEFAULT NULL,
   `idJefe` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -731,7 +777,7 @@ CREATE TABLE `libros` (
   `idIdioma` int(11) DEFAULT NULL,
   `volumen` int(11) DEFAULT NULL,
   `codigoDEWEY` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -743,7 +789,7 @@ CREATE TABLE `libro_autores` (
   `id` int(11) NOT NULL,
   `idAutor` int(11) DEFAULT NULL,
   `idLibro` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -755,7 +801,7 @@ CREATE TABLE `libro_materias` (
   `id` int(11) NOT NULL,
   `idMateria` int(11) DEFAULT NULL,
   `idLibro` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -766,7 +812,7 @@ CREATE TABLE `libro_materias` (
 CREATE TABLE `marcas` (
   `nombre` varchar(50) DEFAULT NULL,
   `id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -778,7 +824,7 @@ CREATE TABLE `materias` (
   `id` int(11) NOT NULL,
   `nombre` varchar(100) DEFAULT NULL,
   `idCategoria` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -793,7 +839,7 @@ CREATE TABLE `matriculas` (
   `idPeriodo` int(11) DEFAULT NULL,
   `idPago` int(11) DEFAULT NULL,
   `idTipo` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -806,7 +852,7 @@ CREATE TABLE `mis_favoritos` (
   `Fecha_registro` timestamp NULL DEFAULT NULL,
   `idPersona` int(11) DEFAULT NULL,
   `idLibro` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -817,7 +863,7 @@ CREATE TABLE `mis_favoritos` (
 CREATE TABLE `modalidades` (
   `id` int(11) NOT NULL,
   `nombre` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -828,7 +874,7 @@ CREATE TABLE `modalidades` (
 CREATE TABLE `modalides_ingreso` (
   `id` int(11) NOT NULL,
   `modalidad` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -841,7 +887,7 @@ CREATE TABLE `modelos` (
   `id` int(11) NOT NULL,
   `detalles` varchar(100) DEFAULT NULL,
   `idMarca` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -856,7 +902,7 @@ CREATE TABLE `modulos` (
   `creditos` int(11) DEFAULT NULL,
   `numero` varchar(10) DEFAULT NULL,
   `idPlan` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -869,7 +915,7 @@ CREATE TABLE `modulos_sys` (
   `version` varchar(12) DEFAULT NULL,
   `id` int(11) NOT NULL,
   `icono` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -880,7 +926,7 @@ CREATE TABLE `modulos_sys` (
 CREATE TABLE `motivos_salida` (
   `motivo` varchar(30) DEFAULT NULL,
   `id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -893,7 +939,15 @@ CREATE TABLE `oficinas` (
   `idOficina` int(11) DEFAULT NULL,
   `nombre` varchar(80) DEFAULT NULL,
   `idJefe` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Volcado de datos para la tabla `oficinas`
+--
+
+INSERT INTO `oficinas` (`id`, `idOficina`, `nombre`, `idJefe`) VALUES
+(1, NULL, 'Direccion General', 1),
+(2, 1, 'Mesa de partes', 1);
 
 -- --------------------------------------------------------
 
@@ -909,7 +963,7 @@ CREATE TABLE `pagos` (
   `idTipo` int(11) DEFAULT NULL,
   `idPersona` int(11) DEFAULT NULL,
   `idCajero` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -928,7 +982,7 @@ CREATE TABLE `papeletas_salida` (
   `idTrabajador` int(11) DEFAULT NULL,
   `idJefe` int(11) DEFAULT NULL,
   `idMotivo` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -947,7 +1001,7 @@ CREATE TABLE `pcs` (
   `observaciones` varchar(250) DEFAULT NULL,
   `direccionIP` varchar(20) DEFAULT NULL,
   `mascaraRed` varchar(20) DEFAULT NULL,
-  `PuertaEnlace` mediumblob,
+  `PuertaEnlace` mediumblob DEFAULT NULL,
   `DNS1` varchar(20) DEFAULT NULL,
   `DNS2` varchar(20) DEFAULT NULL,
   `numeroSerie` varchar(30) DEFAULT NULL,
@@ -956,7 +1010,7 @@ CREATE TABLE `pcs` (
   `clavePC` varchar(30) DEFAULT NULL,
   `id` int(11) NOT NULL,
   `foto` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -970,7 +1024,7 @@ CREATE TABLE `pc_perifericos` (
   `idPeriferico` int(11) DEFAULT NULL,
   `observaciones` varchar(100) DEFAULT NULL,
   `idEstado` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -981,7 +1035,7 @@ CREATE TABLE `pc_perifericos` (
 CREATE TABLE `perfiles` (
   `id` int(11) NOT NULL,
   `perfil` varchar(30) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -996,7 +1050,7 @@ CREATE TABLE `perifericos` (
   `observaciones` varchar(250) DEFAULT NULL,
   `foto` varchar(100) DEFAULT NULL,
   `descripcion` varchar(500) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -1010,7 +1064,7 @@ CREATE TABLE `periodos_academico` (
   `semestre` int(11) DEFAULT NULL,
   `inicio` timestamp NULL DEFAULT NULL,
   `fin` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -1023,7 +1077,7 @@ CREATE TABLE `permisos` (
   `idPersona` int(11) DEFAULT NULL,
   `idModulo` int(11) DEFAULT NULL,
   `idPerfil` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -1041,8 +1095,9 @@ CREATE TABLE `personas` (
   `Telefono` varchar(15) DEFAULT NULL,
   `password` varchar(25) DEFAULT NULL,
   `usuario` varchar(20) DEFAULT NULL,
-  `fechaNacimiento` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `fechaNacimiento` timestamp NULL DEFAULT NULL,
+  `genero` tinyint(1) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -1055,7 +1110,7 @@ CREATE TABLE `planes_estudio` (
   `anio` int(11) DEFAULT NULL,
   `activo` int(11) DEFAULT NULL,
   `idPrograma` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -1065,7 +1120,7 @@ CREATE TABLE `planes_estudio` (
 
 CREATE TABLE `postulantes` (
   `id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -1078,7 +1133,14 @@ CREATE TABLE `programas_estudios` (
   `nombre` varchar(80) DEFAULT NULL,
   `logo` varchar(50) DEFAULT NULL,
   `idTurno` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Volcado de datos para la tabla `programas_estudios`
+--
+
+INSERT INTO `programas_estudios` (`id`, `nombre`, `logo`, `idTurno`) VALUES
+(1, 'APSTI', 'logo.png', 2);
 
 -- --------------------------------------------------------
 
@@ -1095,7 +1157,7 @@ CREATE TABLE `registros_asistencia` (
   `idTurno` int(11) DEFAULT NULL,
   `idJustificacion` int(11) DEFAULT NULL,
   `idPapeleta` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -1106,7 +1168,7 @@ CREATE TABLE `registros_asistencia` (
 CREATE TABLE `representantes` (
   `id` int(11) NOT NULL,
   `cargo` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -1118,7 +1180,7 @@ CREATE TABLE `requisitos` (
   `id` int(11) NOT NULL,
   `nombre` varchar(100) DEFAULT NULL,
   `idModalidad` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -1130,7 +1192,7 @@ CREATE TABLE `requisitos_postulacion` (
   `requisito` varchar(50) DEFAULT NULL,
   `id` int(11) NOT NULL,
   `idModalidad` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -1143,7 +1205,7 @@ CREATE TABLE `requisitos_presentados` (
   `idFicha` int(11) DEFAULT NULL,
   `idRequisito` int(11) DEFAULT NULL,
   `presento` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -1154,7 +1216,7 @@ CREATE TABLE `requisitos_presentados` (
 CREATE TABLE `semestres` (
   `id` int(11) NOT NULL,
   `semestre` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -1167,7 +1229,7 @@ CREATE TABLE `servidores_publicos` (
   `idCargo` int(11) DEFAULT NULL,
   `fecha_inicio` timestamp NULL DEFAULT NULL,
   `fecha_fin` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -1178,7 +1240,7 @@ CREATE TABLE `servidores_publicos` (
 CREATE TABLE `sistemas_operativos` (
   `id` int(11) NOT NULL,
   `nombre` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -1193,7 +1255,7 @@ CREATE TABLE `subindicadores` (
   `promedio` decimal(5,2) DEFAULT NULL,
   `notaRecuperacion` decimal(5,2) DEFAULT NULL,
   `idIndicador` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -1204,7 +1266,7 @@ CREATE TABLE `subindicadores` (
 CREATE TABLE `sw_antivirus` (
   `id` int(11) NOT NULL,
   `nombre` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -1215,7 +1277,7 @@ CREATE TABLE `sw_antivirus` (
 CREATE TABLE `tipos_curso` (
   `id` int(11) NOT NULL,
   `tipo` varchar(25) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -1226,7 +1288,7 @@ CREATE TABLE `tipos_curso` (
 CREATE TABLE `tipos_disco` (
   `id` int(11) NOT NULL,
   `nombre` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -1237,7 +1299,15 @@ CREATE TABLE `tipos_disco` (
 CREATE TABLE `tipos_documentos` (
   `id` int(11) NOT NULL,
   `tipo` varchar(25) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Volcado de datos para la tabla `tipos_documentos`
+--
+
+INSERT INTO `tipos_documentos` (`id`, `tipo`) VALUES
+(1, 'FUT'),
+(2, 'Carta de presentación');
 
 -- --------------------------------------------------------
 
@@ -1249,7 +1319,7 @@ CREATE TABLE `tipos_indicadores` (
   `id` int(11) NOT NULL,
   `item` varchar(1) DEFAULT NULL,
   `nombre` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -1260,7 +1330,7 @@ CREATE TABLE `tipos_indicadores` (
 CREATE TABLE `tipos_matricula` (
   `tipo` varchar(30) DEFAULT NULL,
   `id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -1273,7 +1343,7 @@ CREATE TABLE `tipos_pago` (
   `id` int(11) NOT NULL,
   `banco` varchar(30) DEFAULT NULL,
   `nroCuenta` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -1284,7 +1354,7 @@ CREATE TABLE `tipos_pago` (
 CREATE TABLE `tipos_procesadores` (
   `id` int(11) NOT NULL,
   `nombre` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -1300,7 +1370,7 @@ CREATE TABLE `trabajos_aplicacion_profesional` (
   `notaFinal` decimal(5,2) DEFAULT NULL,
   `numeroActa` varchar(50) DEFAULT NULL,
   `acta` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -1312,7 +1382,7 @@ CREATE TABLE `trabajos_requisitos` (
   `id` int(11) NOT NULL,
   `idTrabajo` int(11) DEFAULT NULL,
   `idRequisito` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -1329,7 +1399,14 @@ CREATE TABLE `tramites_documentarios` (
   `fecha_envio` timestamp NULL DEFAULT NULL,
   `fecha_recepcion` timestamp NULL DEFAULT NULL,
   `idEstado` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Volcado de datos para la tabla `tramites_documentarios`
+--
+
+INSERT INTO `tramites_documentarios` (`id`, `idDocumento`, `idOficinaOrigen`, `idOficinaDestino`, `fecha`, `fecha_envio`, `fecha_recepcion`, `idEstado`) VALUES
+(1, 1, 2, 1, NULL, '2023-09-05 09:58:10', '2023-09-09 09:58:10', 2);
 
 -- --------------------------------------------------------
 
@@ -1340,7 +1417,15 @@ CREATE TABLE `tramites_documentarios` (
 CREATE TABLE `turnos` (
   `id` int(11) NOT NULL,
   `turno` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Volcado de datos para la tabla `turnos`
+--
+
+INSERT INTO `turnos` (`id`, `turno`) VALUES
+(1, 'Mañana'),
+(2, 'Tarde');
 
 -- --------------------------------------------------------
 
@@ -1355,7 +1440,197 @@ CREATE TABLE `visitas_anexo04` (
   `tareas` varchar(150) DEFAULT NULL,
   `porcentaje_avance` int(11) DEFAULT NULL,
   `idAnexo` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura Stand-in para la vista `v_anexoDocumento`
+-- (Véase abajo para la vista actual)
+--
+CREATE TABLE `v_anexoDocumento` (
+`id` int(11)
+,`nombre` varchar(100)
+,`descripcion` varchar(4000)
+,`url` varchar(250)
+,`idDocumento` varchar(20)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura Stand-in para la vista `v_conceptos_pago`
+-- (Véase abajo para la vista actual)
+--
+CREATE TABLE `v_conceptos_pago` (
+`id` int(11)
+,`nombre` varchar(100)
+,`monto` decimal(10,2)
+,`idCta` varchar(100)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura Stand-in para la vista `v_documentos`
+-- (Véase abajo para la vista actual)
+--
+CREATE TABLE `v_documentos` (
+`id` int(11)
+,`idDocumento` varchar(20)
+,`numero` varchar(20)
+,`asunto` varchar(100)
+,`fecha` timestamp
+,`descripcion` varchar(4000)
+,`fecha_recepcion` timestamp
+,`idTipo` varchar(25)
+,`idOficina` varchar(80)
+,`idPersona` varchar(101)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura Stand-in para la vista `v_estudiante`
+-- (Véase abajo para la vista actual)
+--
+CREATE TABLE `v_estudiante` (
+`id` int(11)
+,`nombres` varchar(50)
+,`apellidos` varchar(50)
+,`dni` varchar(8)
+,`correo` varchar(60)
+,`direccion` varchar(150)
+,`Telefono` varchar(15)
+,`password` varchar(25)
+,`usuario` varchar(20)
+,`fechaNacimiento` timestamp
+,`genero` tinyint(1)
+,`idPrograma_estudios` int(11)
+,`programa` varchar(80)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura Stand-in para la vista `v_oficinas`
+-- (Véase abajo para la vista actual)
+--
+CREATE TABLE `v_oficinas` (
+`id` int(11)
+,`idOficina` int(11)
+,`nombre` varchar(80)
+,`idJefe` int(11)
+,`matriz` varchar(80)
+,`idCargo` int(11)
+,`jefe` varchar(101)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura Stand-in para la vista `v_servidores_publicos`
+-- (Véase abajo para la vista actual)
+--
+CREATE TABLE `v_servidores_publicos` (
+`id` int(11)
+,`nombres` varchar(50)
+,`apellidos` varchar(50)
+,`dni` varchar(8)
+,`correo` varchar(60)
+,`direccion` varchar(150)
+,`Telefono` varchar(15)
+,`password` varchar(25)
+,`usuario` varchar(20)
+,`fechaNacimiento` timestamp
+,`genero` tinyint(1)
+,`idCargo` int(11)
+,`cargo` varchar(50)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura Stand-in para la vista `v_tramites_documentarios`
+-- (Véase abajo para la vista actual)
+--
+CREATE TABLE `v_tramites_documentarios` (
+`id` int(11)
+,`idDocumento` int(11)
+,`idOficinaOrigen` int(11)
+,`idOficinaDestino` int(11)
+,`fecha` timestamp
+,`fecha_envio` timestamp
+,`fecha_recepcion` timestamp
+,`idEstado` int(11)
+,`documento` varchar(20)
+,`oficinaOrigen` varchar(80)
+,`oficinaDestino` varchar(80)
+,`estado` varchar(30)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la vista `v_anexoDocumento`
+--
+DROP TABLE IF EXISTS `v_anexoDocumento`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`%` SQL SECURITY DEFINER VIEW `v_anexoDocumento`  AS SELECT `ad`.`id` AS `id`, `ad`.`nombre` AS `nombre`, `ad`.`descripcion` AS `descripcion`, `ad`.`url` AS `url`, `d`.`numero` AS `idDocumento` FROM (`anexos_documento` `ad` join `documentos` `d` on(`d`.`id` = `ad`.`idDocumento`)) ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la vista `v_conceptos_pago`
+--
+DROP TABLE IF EXISTS `v_conceptos_pago`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`%` SQL SECURITY DEFINER VIEW `v_conceptos_pago`  AS SELECT `cp`.`id` AS `id`, `cp`.`nombre` AS `nombre`, `cp`.`monto` AS `monto`, `cc`.`descripcion` AS `idCta` FROM (`conceptos_pago` `cp` join `ctas_contables` `cc` on(`cc`.`id` = `cp`.`idCta`)) ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la vista `v_documentos`
+--
+DROP TABLE IF EXISTS `v_documentos`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`%` SQL SECURITY DEFINER VIEW `v_documentos`  AS SELECT `doc`.`id` AS `id`, `docR`.`numero` AS `idDocumento`, `doc`.`numero` AS `numero`, `doc`.`asunto` AS `asunto`, `doc`.`fecha` AS `fecha`, `doc`.`descripcion` AS `descripcion`, `doc`.`fecha_recepcion` AS `fecha_recepcion`, `tipDoc`.`tipo` AS `idTipo`, `ofic`.`nombre` AS `idOficina`, concat(`person`.`nombres`,' ',`person`.`apellidos`) AS `idPersona` FROM ((((`documentos` `doc` left join `documentos` `docR` on(`doc`.`idDocumento` = `docR`.`id`)) left join `tipos_documentos` `tipDoc` on(`tipDoc`.`id` = `doc`.`idTipo`)) left join `personas` `person` on(`person`.`id` = `doc`.`idPersona`)) left join `oficinas` `ofic` on(`ofic`.`id` = `doc`.`idOficina`)) ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la vista `v_estudiante`
+--
+DROP TABLE IF EXISTS `v_estudiante`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`%` SQL SECURITY DEFINER VIEW `v_estudiante`  AS SELECT `p`.`id` AS `id`, `p`.`nombres` AS `nombres`, `p`.`apellidos` AS `apellidos`, `p`.`dni` AS `dni`, `p`.`correo` AS `correo`, `p`.`direccion` AS `direccion`, `p`.`Telefono` AS `Telefono`, `p`.`password` AS `password`, `p`.`usuario` AS `usuario`, `p`.`fechaNacimiento` AS `fechaNacimiento`, `p`.`genero` AS `genero`, `e`.`idPrograma_estudios` AS `idPrograma_estudios`, `pe`.`nombre` AS `programa` FROM ((`estudiantes` `e` join `personas` `p` on(`p`.`id` = `e`.`id`)) join `programas_estudios` `pe` on(`pe`.`id` = `e`.`idPrograma_estudios`)) ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la vista `v_oficinas`
+--
+DROP TABLE IF EXISTS `v_oficinas`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`%` SQL SECURITY DEFINER VIEW `v_oficinas`  AS SELECT `of`.`id` AS `id`, `of`.`idOficina` AS `idOficina`, `of`.`nombre` AS `nombre`, `of`.`idJefe` AS `idJefe`, `ofG`.`nombre` AS `matriz`, `sp`.`idCargo` AS `idCargo`, concat(`p`.`nombres`,' ',`p`.`apellidos`) AS `jefe` FROM (((`oficinas` `of` left join `oficinas` `ofG` on(`ofG`.`id` = `of`.`idOficina`)) left join `servidores_publicos` `sp` on(`sp`.`id` = `of`.`idJefe`)) left join `personas` `p` on(`p`.`id` = `sp`.`id`)) ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la vista `v_servidores_publicos`
+--
+DROP TABLE IF EXISTS `v_servidores_publicos`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`%` SQL SECURITY DEFINER VIEW `v_servidores_publicos`  AS SELECT `p`.`id` AS `id`, `p`.`nombres` AS `nombres`, `p`.`apellidos` AS `apellidos`, `p`.`dni` AS `dni`, `p`.`correo` AS `correo`, `p`.`direccion` AS `direccion`, `p`.`Telefono` AS `Telefono`, `p`.`password` AS `password`, `p`.`usuario` AS `usuario`, `p`.`fechaNacimiento` AS `fechaNacimiento`, `p`.`genero` AS `genero`, `sp`.`idCargo` AS `idCargo`, `c`.`nombre` AS `cargo` FROM ((`servidores_publicos` `sp` join `personas` `p` on(`p`.`id` = `sp`.`id`)) join `cargos` `c` on(`c`.`id` = `sp`.`idCargo`)) ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la vista `v_tramites_documentarios`
+--
+DROP TABLE IF EXISTS `v_tramites_documentarios`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`%` SQL SECURITY DEFINER VIEW `v_tramites_documentarios`  AS SELECT `td`.`id` AS `id`, `td`.`idDocumento` AS `idDocumento`, `td`.`idOficinaOrigen` AS `idOficinaOrigen`, `td`.`idOficinaDestino` AS `idOficinaDestino`, `td`.`fecha` AS `fecha`, `td`.`fecha_envio` AS `fecha_envio`, `td`.`fecha_recepcion` AS `fecha_recepcion`, `td`.`idEstado` AS `idEstado`, `d`.`numero` AS `documento`, `ofo`.`nombre` AS `oficinaOrigen`, `ofd`.`nombre` AS `oficinaDestino`, `et`.`estado` AS `estado` FROM ((((`tramites_documentarios` `td` left join `documentos` `d` on(`d`.`id` = `td`.`idDocumento`)) left join `oficinas` `ofo` on(`ofo`.`id` = `td`.`idOficinaOrigen`)) left join `oficinas` `ofd` on(`ofd`.`id` = `td`.`idOficinaDestino`)) left join `estados_tramites` `et` on(`et`.`id` = `td`.`idEstado`)) ;
 
 --
 -- Índices para tablas volcadas

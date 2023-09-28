@@ -43,6 +43,7 @@ class CtrlPrincipal extends Controlador {
             'CtrlServidorPublico'=>'Servidores Públicos',
             'CtrlOficina'=>'Oficinas',
             'CtrlTiposDocumentos'=>'Tipos de Documentos',
+            'CtrlTramiteDocumentario'=>'Tramites documentarios',
             'CtrlEstadosTramites'=>'Estados de tramites',
             'CtrlDocumento'=>'Documentos',
             'CtrlPersona'=>'Personas',

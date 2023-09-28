@@ -42,6 +42,6 @@ $titulo = $esNuevo==1?'Nuevo Anexo de Documento':'Editando el Anexo de Documento
 
     </form>
 
-    <a href="?ctrl=CtrlAnexoDocumento">Retornar</a>
+    <!-- <a href="?ctrl=CtrlAnexoDocumento">Retornar</a> -->
 </body>
 </html>
