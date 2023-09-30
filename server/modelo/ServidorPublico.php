@@ -8,7 +8,7 @@ class ServidorPublico extends Persona
     private $idCargo;
     private $fecha_inicio;
     private $fecha_fin;
-    private $_tabla = 'servidores_publicos ';
+    private $_tabla = 'servidores_publicos';
     private $_vista = 'v_servidores_publicos ';
 
     public function __construct(

@@ -1,4 +1,4 @@
-<a class="btn btn-success" href="?ctrl=CtrlEstadosTramites&accion=nuevo">Nuevo Estado</a>
+<a class="btn btn-success" href="?ctrl=CtrlEstadosTramites&accion=nuevo">Nuevo Estado de Tramite</a>
 <table class="table">
     <tr>
         <th>Id</th>

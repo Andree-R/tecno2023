@@ -8,9 +8,9 @@
         <th>Fecha</th>
         <th>Descripción</th>
         <th>Fecha Recepción</th>
-        <th>Id Tipo de documento</th>
-        <th>Id Oficina Actual</th>
-        <th>Id Persona</th>
+        <th>Tipo de documento</th>
+        <th>Oficina Actual</th>
+        <th>Persona</th>
         <th>Opciones</th>
     </tr>
     <?php

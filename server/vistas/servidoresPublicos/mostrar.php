@@ -1,4 +1,4 @@
-<a class="btn btn-success" href="?ctrl=CtrlServidorPublico&accion=nuevo">Nuevo Estudiante</a>
+<a class="btn btn-success" href="?ctrl=CtrlServidorPublico&accion=nuevo">Nuevo Servidor Publico</a>
 
     <table class="table">
         <tr>

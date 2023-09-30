@@ -11,6 +11,8 @@ services:
     container_name: tecno_app
     restart: "no"
     volumes:
+      # - ./php/php.ini:/usr/local/etc/php/conf.d/php.ini
+      # - ./php/php.ini:/usr/local/etc/php/php.ini-production
       # Redefinición del puerto de la imagen php:8.2-fpm-alpine 
       - ./php/zz-docker.conf:/usr/local/etc/php-fpm.d/zz-docker.conf
       # Configuración del php-fpm
@@ -35,7 +37,7 @@ services:
     # Configuracion de puertos de acceso host:container_network
     ports:
       - "8181:80"
-      - "447:443"
+      - "450:443"
     volumes:
       # Configuración de los servidores web de nginx
       - ./nginx/myphpwebsite.conf:/etc/nginx/conf.d/default.conf

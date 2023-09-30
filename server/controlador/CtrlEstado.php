@@ -35,7 +35,15 @@ class CtrlEstado extends Controlador {
     }
     public function nuevo(){
         # echo "Agregando..";
-        $this->mostrar('estados/formulario.php');
+        $home = $this->mostrar('estados/formulario.php', null, true);
+
+        $datos = [
+            'titulo' => 'Estados',
+            'contenido' => $home,
+            'menu' => $_SESSION['menu']
+        ];
+
+        $this->mostrar('./plantilla/home.php', $datos);
     }
     public function editar(){
         $id = $_GET['id'];

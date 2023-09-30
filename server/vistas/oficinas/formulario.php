@@ -1,8 +1,8 @@
 <?php
 $id = isset($datos['id']) ? $datos['id'] : '';
 $nombre = isset($datos['nombre']) ? $datos['nombre'] : '';
-$jefe = isset($datos['jefe']) ? $datos['jefe'] : '';
-$matriz = isset($datos['matriz']) ? $datos['matriz'] : '';
+$idJefe = isset($datos['idJefe']) ? $datos['idJefe'] : '';
+$idOficina = isset($datos['idOficina']) ? $datos['idOficina'] : '';
 $esNuevo = isset($datos['id']) ? 0 : 1;
 $titulo = $esNuevo == 1 ? 'Nuevo estado de tramite' : 'Editando estado de tramite';
 
@@ -12,7 +12,7 @@ $titulo = $esNuevo == 1 ? 'Nuevo estado de tramite' : 'Editando estado de tramit
     <input class="form-control" type="text" name="id" value="<?= $id ?>">
     <input class="form-control" type="hidden" name="esNuevo" value="<?= $esNuevo ?>">
     <br>
-    nombre:
+    Oficina:
     <input class="form-control" type="text" name="nombre" value="<?= $nombre ?>">
     <br>
     Jefe:
@@ -20,13 +20,14 @@ $titulo = $esNuevo == 1 ? 'Nuevo estado de tramite' : 'Editando estado de tramit
         <?php
         $esSeleccionado = null;
         if (is_array($servidoresPublicos))
-            foreach ($servidoresPublicos as $c) {
+            foreach ($servidoresPublicos as $persona) {
                 $esSeleccionado = '';
-                if ($idCta == $c['id'])
+
+                if ($idJefe == $persona['id'])
                     $esSeleccionado = 'selected';
         ?>
 
-            <option <?= $esSeleccionado ?> value="<?= $c['id'] ?>"> <?= $c['nombres'] ." " .  $c["apellidos"] ?></option>
+            <option <?= $esSeleccionado ?> value="<?= $persona['id'] ?>"> <?= $persona['nombres'] . " " .  $persona["apellidos"] ?></option>
         <?php
             }
         ?>
@@ -34,22 +35,38 @@ $titulo = $esNuevo == 1 ? 'Nuevo estado de tramite' : 'Editando estado de tramit
     </select>
     <br>
     Matriz:
+    <?php 
+    // var_dump("<pre>", $oficinas[0]['id'], $idOficina, $oficinas, $oficinas[0]['id'] == $idOficina, "</pre>");
+    ?>
     <select class="custom-select" name="idMatriz" id="">
         <?php
         $esSeleccionado = null;
+        $selected = true;
         if (is_array($oficinas))
-            foreach ($oficinas as $c) {
+            foreach ($oficinas as $oficina) {
                 $esSeleccionado = '';
-                if ($idCta == $c['id'])
+                if ($idOficina == $oficina['id'])
                     $esSeleccionado = 'selected';
-        ?>
+                    $selected = false;
 
-            <option <?= $esSeleccionado ?> value="<?= $c['id'] ?>"> <?= $c['nombre'] ?></option>
+        ?>
+            <option <?= $esSeleccionado ?> value="<?= $oficina['id'] ?>"> <?= $oficina['nombre'] ?></option>
         <?php
             }
+        if ($selected) { $nulo = "esnulo"
+        ?>
+            <option <?= "selected" ?> value=<?= NULL ?>></option>
+
+        <?php
+        var_dump("<pre>", $nulo,$selected, "</pre>");
+        }
         ?>
 
     </select>
+
+    <?php 
+    var_dump("<pre>", $selected, "</pre>");
+    ?>
     <br>
     <input class="btn btn-primary" type="submit" value="Guardar">
 

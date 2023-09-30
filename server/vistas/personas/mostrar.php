@@ -1,4 +1,4 @@
-<a class="btn btn-success" href="?ctrl=CtrlPersona&accion=nuevo">Nuevo Cargo</a>
+<a class="btn btn-success" href="?ctrl=CtrlPersona&accion=nuevo">Nueva Persona</a>
 <table class="table">
     <tr>
         <th>ID</th>
