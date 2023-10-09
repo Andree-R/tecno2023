@@ -28,7 +28,6 @@ class CtrlDocumento extends Controlador
         $datos = [
             'titulo' => 'Documentos',
             'contenido' => $home,
-            'menu' => $_SESSION['menu']
         ];
 
         $this->mostrar('./plantilla/home.php', $datos);

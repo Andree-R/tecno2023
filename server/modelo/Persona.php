@@ -83,4 +83,12 @@ class Persona extends Modelo
             'Telefono' => "'$this->telefono'",
         ];
     }
+
+    public function validar($user, $contraseña){
+        $sql = "Select * from $this->_tabla
+            WHERE usuario='$user' AND password='$contraseña'";
+        
+        $this->setSql($sql);
+        return $this->ejecutarSql();
+    }
 }

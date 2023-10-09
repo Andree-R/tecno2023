@@ -2,11 +2,16 @@
 session_start();
 require_once './core/Controlador.php';
 require_once './modelo/Persona.php';
+require_once "./helpers/helper.php";
 
 class CtrlPersona extends Controlador
 {
+
+    private $roles = [];
+
     public function index()
     {
+        // $this->verificarLogin();
         # echo "Hola Estado";
         $obj = new Persona;
         $data = $obj->getTodo();
@@ -88,7 +93,7 @@ class CtrlPersona extends Controlador
 
 
         $obj = new Persona(
-            $id, 
+            $id,
             $nombres,
             $apellidos,
             $dni,
@@ -113,5 +118,83 @@ class CtrlPersona extends Controlador
 
         # var_dump($data);exit;
         $this->index();
+    }
+
+
+    public function showLogin()
+    {
+        $home = $this->mostrar('personas/login.php', null, true);
+
+        $datos = [
+            'contenido' => $home,
+        ];
+
+        $this->mostrar('./plantilla/home.php', $datos);
+    }
+
+    public function validar()
+    {
+        # echo "Validando datos";
+        $user = $_POST['usuario'];
+        $contraseña = $_POST['clave'];
+        $obj = new Persona();
+        $data = $obj->validar($user, $contraseña)['data'][0];
+
+        // var_dump("<pre>",$data,"</pre>");exit;
+        if (!is_null($data)) {
+            $_SESSION['id'] = $data['id'];
+            $_SESSION['usuario'] = $data['usuario'];
+            $_SESSION['nombre'] = $data['nombres'] . ' ' . $data['apellidos'];
+
+            $_SESSION['menu'] = $this->getMenu();
+
+            # var_dump($_SESSION);exit;
+        }
+        header("Location: ?");
+    }
+
+    public function logout()
+    {
+        // echo "Ce";exit;
+        session_destroy();
+        header("Location: ?");
+    }
+
+    public function inbox(){
+        $home = $this->mostrar('personas/inbox.php', null, true);
+
+        
+
+        $datos = [
+            'contenido' => $home,
+        ];
+
+        $this->mostrar('./plantilla/home.php', $datos);
+    }
+
+    public function getMessages(){
+
+    }
+
+    public function getMenu()
+    {
+        return [
+            'CtrlPersona&accion=inbox' => 'Inbox',
+            'CtrlAnexoDocumento' => 'Anexos',
+            'CtrlCargo' => 'Cargos',
+            'CtrlEstado' => 'Estados',
+            'CtrlEstudiante' => 'Estudiante',
+            'CtrlServidorPublico' => 'Servidores Públicos',
+            'CtrlOficina' => 'Oficinas',
+            'CtrlTiposDocumentos' => 'Tipos de Documentos',
+            'CtrlTramiteDocumentario' => 'Tramites documentarios',
+            'CtrlEstadosTramites' => 'Estados de tramites',
+            'CtrlDocumento' => 'Documentos',
+            'CtrlPersona' => 'Personas',
+            #  'CtrlFactorForma'=>'Factores de Forma',
+            'CtrlCtaContable' => 'Cuentas Contables',
+            'CtrlAnexoDocumento' => 'Anexos de Documentos',
+            'CtrlConceptoPago' => 'Conceptos de Pago',
+        ];
     }
 }

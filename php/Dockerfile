@@ -6,6 +6,9 @@ FROM php:8.2-fpm-alpine
 
 # Librerias que se instalaran durante la construccion de la imagen
 RUN apk update && apk add --no-cache \
+    linux-headers \
+    php82-dev \
+    automake \
     neofetch \
     autoconf \
     g++ \
@@ -27,6 +30,28 @@ RUN apk update && apk add --no-cache \
     postgresql-dev \
     libexif-dev \
     libzip 
+
+ARG EXTENSIONS=/extensiones
+
+RUN mkdir -p ${EXTENSIONS}
+WORKDIR ${EXTENSIONS}
+
+# Descargar Xdebug
+RUN wget https://xdebug.org/files/xdebug-3.2.2.tgz && \
+    tar -xvzf xdebug-3.2.2.tgz && \
+    rm xdebug-3.2.2.tgz
+
+# Cambiar al directorio Xdebug
+WORKDIR /extensiones/xdebug-3.2.2
+
+# Configurar Xdebug
+RUN phpize && \
+    ./configure && \
+    make && \
+    make install
+
+# Habilitar Xdebug en la configuración de PHP
+COPY ./php/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
 
 # Argumentos para la construccion de la imagen
 ARG WWW_INSTALL_PATH_SERVER=/server

@@ -3,3 +3,5 @@ services:
   app_volumes:
     volumes: 
       - ../server:/server/app
+
+      - ../php/extensions:/extensions_cache

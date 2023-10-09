@@ -10,6 +10,8 @@ services:
     # Nombre del contenedor
     container_name: tecno_app
     restart: "no"
+    ports:
+      - "9003:9003"
     volumes:
       # - ./php/php.ini:/usr/local/etc/php/conf.d/php.ini
       # - ./php/php.ini:/usr/local/etc/php/php.ini-production

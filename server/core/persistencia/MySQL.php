@@ -4,7 +4,7 @@ require_once "ManejadorBDInterface.php";
 class MySQL implements ManejadorBDInterface
 {
    # private $_driver;
-    private $_host, $_user, $_pass, $_database, $_charset, $_port;
+    private $_host, $_user, $_pass, $_database, $_charset;
     private $_conexion;
 
     public function __construct() {
@@ -12,7 +12,6 @@ class MySQL implements ManejadorBDInterface
         $this->_user="root";
         $this->_pass="root";
         $this->_database="dbtecno2023";
-        $this->_port=3306;
         $this->_charset="utf8";
     }
      
@@ -21,10 +20,8 @@ class MySQL implements ManejadorBDInterface
         $this->_conexion =new mysqli(
             $this->_host, 
             $this->_user, 
-            $this->_pass,
-            $this->_database,
-            $this->_port
-            );
+            $this->_pass, 
+            $this->_database);
 
         $this->_conexion->query("SET NAMES '".$this->_charset."'");
         
