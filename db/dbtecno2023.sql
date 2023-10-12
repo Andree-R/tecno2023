@@ -442,8 +442,7 @@ CREATE TABLE `documentos` (
 -- Volcado de datos para la tabla `documentos`
 --
 
-INSERT INTO `documentos` (`id`, `idDocumento`, `descripcion`, `fecha`, `fecha_recepcion`, `idTipo`, `numero`, `asunto`, `idOficina`, `idPersona`) VALUES
-(1, NULL, 'qwe', '2023-09-23 09:18:00', '2023-09-30 09:18:00', 1, 'FUT-001', 'Solicitud', 1, 1);
+
 
 -- --------------------------------------------------------
 
@@ -945,9 +944,6 @@ CREATE TABLE `oficinas` (
 -- Volcado de datos para la tabla `oficinas`
 --
 
-INSERT INTO `oficinas` (`id`, `idOficina`, `nombre`, `idJefe`) VALUES
-(1, NULL, 'Direccion General', 1),
-(2, 1, 'Mesa de partes', 1);
 
 -- --------------------------------------------------------
 
@@ -1405,8 +1401,6 @@ CREATE TABLE `tramites_documentarios` (
 -- Volcado de datos para la tabla `tramites_documentarios`
 --
 
-INSERT INTO `tramites_documentarios` (`id`, `idDocumento`, `idOficinaOrigen`, `idOficinaDestino`, `fecha`, `fecha_envio`, `fecha_recepcion`, `idEstado`) VALUES
-(1, 1, 2, 1, NULL, '2023-09-05 09:58:10', '2023-09-09 09:58:10', 2);
 
 -- --------------------------------------------------------
 

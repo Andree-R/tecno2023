@@ -2,6 +2,8 @@
 abstract class Index
 {
     public static function ejecutar(){
+        // $rolesManager = RolesManager::getInstance();
+
         $miControlador = isset ($_GET['ctrl'])?$_GET['ctrl']:'CtrlPrincipal';
         $accion = isset($_REQUEST['accion'])?$_REQUEST['accion']:'index';
         $fileControlador = './controlador/'.$miControlador.'.php';

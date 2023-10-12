@@ -7,8 +7,6 @@ require_once "./helpers/helper.php";
 class CtrlPersona extends Controlador
 {
 
-    private $roles = [];
-
     public function index()
     {
         // $this->verificarLogin();
@@ -138,10 +136,12 @@ class CtrlPersona extends Controlador
         $user = $_POST['usuario'];
         $contraseña = $_POST['clave'];
         $obj = new Persona();
-        $data = $obj->validar($user, $contraseña)['data'][0];
+        $data = $obj->validar($user, $contraseña);
+
+        $_SESSION["id"] = $data[0]["id"];
 
         // var_dump("<pre>",$data,"</pre>");exit;
-        if (!is_null($data)) {
+        /* if (!is_null($data)) {
             $_SESSION['id'] = $data['id'];
             $_SESSION['usuario'] = $data['usuario'];
             $_SESSION['nombre'] = $data['nombres'] . ' ' . $data['apellidos'];
@@ -149,8 +149,34 @@ class CtrlPersona extends Controlador
             $_SESSION['menu'] = $this->getMenu();
 
             # var_dump($_SESSION);exit;
+        } */
+
+        if (is_null($data)) {
+            header("Location: ?");
+        } else{
+            $datos = [
+                'datos' => $data
+            ];
+            $home = $this->mostrar('personas/perfiles.php', $datos, true);
+    
+            $datos = [
+                'titulo' => 'Opciones de perfil',
+                'contenido' => $home,
+                // 'menu' => $_SESSION['menu']
+            ];
+    
+            $this->mostrar('./plantilla/home.php', $datos);
         }
+    }
+
+    public function accederModulo(){
+        $idModulo = $_GET["idModulo"];
+        $idPerfil = $_GET["idPerfil"];
+        $idPersona = $_GET["id"];
+
+        $_SESSION["menu"] = Helper::getMenu($idModulo,$idPerfil);
         header("Location: ?");
+
     }
 
     public function logout()
