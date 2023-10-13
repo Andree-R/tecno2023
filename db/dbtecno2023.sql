@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: mariadb:3306
--- Tiempo de generación: 28-09-2023 a las 16:25:11
+-- Tiempo de generación: 13-10-2023 a las 01:39:47
 -- Versión del servidor: 10.11.5-MariaDB-1:10.11.5+maria~ubu2204
 -- Versión de PHP: 8.2.10
 
@@ -438,12 +438,6 @@ CREATE TABLE `documentos` (
   `idPersona` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
---
--- Volcado de datos para la tabla `documentos`
---
-
-
-
 -- --------------------------------------------------------
 
 --
@@ -539,8 +533,8 @@ CREATE TABLE `estados` (
 
 INSERT INTO `estados` (`id`, `nombre`) VALUES
 (1, 'Bueno'),
-(2, 'Malo'),
-(3, 'Regular');
+(2, 'Regular'),
+(3, 'Malo');
 
 -- --------------------------------------------------------
 
@@ -910,11 +904,18 @@ CREATE TABLE `modulos` (
 --
 
 CREATE TABLE `modulos_sys` (
+  `id` int(11) NOT NULL,
   `nombre` varchar(50) DEFAULT NULL,
   `version` varchar(12) DEFAULT NULL,
-  `id` int(11) NOT NULL,
   `icono` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Volcado de datos para la tabla `modulos_sys`
+--
+
+INSERT INTO `modulos_sys` (`id`, `nombre`, `version`, `icono`) VALUES
+(1, 'Módulo Tramite Documentario', '1.0.0', 'tramite.png');
 
 -- --------------------------------------------------------
 
@@ -939,11 +940,6 @@ CREATE TABLE `oficinas` (
   `nombre` varchar(80) DEFAULT NULL,
   `idJefe` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
-
---
--- Volcado de datos para la tabla `oficinas`
---
-
 
 -- --------------------------------------------------------
 
@@ -1033,6 +1029,17 @@ CREATE TABLE `perfiles` (
   `perfil` varchar(30) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
+--
+-- Volcado de datos para la tabla `perfiles`
+--
+
+INSERT INTO `perfiles` (`id`, `perfil`) VALUES
+(1, 'Administrador'),
+(2, 'Docente'),
+(3, 'Estudiante'),
+(4, 'Administrativo'),
+(5, 'Visitante');
+
 -- --------------------------------------------------------
 
 --
@@ -1075,6 +1082,14 @@ CREATE TABLE `permisos` (
   `idPerfil` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
+--
+-- Volcado de datos para la tabla `permisos`
+--
+
+INSERT INTO `permisos` (`id`, `idPersona`, `idModulo`, `idPerfil`) VALUES
+(1, 1, 1, 1),
+(2, 1, 1, 4);
+
 -- --------------------------------------------------------
 
 --
@@ -1094,6 +1109,13 @@ CREATE TABLE `personas` (
   `fechaNacimiento` timestamp NULL DEFAULT NULL,
   `genero` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Volcado de datos para la tabla `personas`
+--
+
+INSERT INTO `personas` (`id`, `nombres`, `apellidos`, `dni`, `correo`, `direccion`, `Telefono`, `password`, `usuario`, `fechaNacimiento`, `genero`) VALUES
+(1, 'M', 'R', '7', NULL, 'Calle', '9', '123', 'User', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -1396,11 +1418,6 @@ CREATE TABLE `tramites_documentarios` (
   `fecha_recepcion` timestamp NULL DEFAULT NULL,
   `idEstado` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
-
---
--- Volcado de datos para la tabla `tramites_documentarios`
---
-
 
 -- --------------------------------------------------------
 

@@ -72,10 +72,14 @@ abstract class Helper
   }
   private static function getMenuTramiteAdministrativo(){
       return [
-         #  'CtrlFactorForma'=>'Factores de Forma',
-          'CtrlCtaContable'=>'Cuentas Contables',
-          'CtrlConceptoPago'=>'Conceptos de Pago',
-          'CtrlEstudiante'=>'Estudiante',
+          'CtrlAnexoDocumento' => 'Anexos',
+          'CtrlTiposDocumentos' => 'Tipos de Documentos',
+          'CtrlOficina' => 'Oficinas',
+          'CtrlDocumento' => 'Documentos',
+          'CtrlTramiteDocumentario' => 'Tramites documentarios',
+          'CtrlEstadosTramites' => 'Estados de tramites',
+
+
       ]; 
   }
   private static function getMenuTramiteDocente(){

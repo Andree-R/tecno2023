@@ -41,15 +41,15 @@ class CtrlCargo extends Controlador
     {
         # echo "Agregando..";
 
-        $home = $this->mostrar('cargos/formulario.php', null, true);
+        $this->mostrar('cargos/formulario.php');
 
-        $datos = [
-            'titulo' => 'Cargos',
-            'contenido' => $home,
-            'menu' => $_SESSION['menu']
-        ];
+        // $datos = [
+        //     'titulo' => 'Cargos',
+        //     'contenido' => $home,
+        //     'menu' => $_SESSION['menu']
+        // ];
 
-        $this->mostrar('./plantilla/home.php', $datos);
+        // $this->mostrar('./plantilla/home.php', $datos);
 
     }
     public function editar()
@@ -63,15 +63,15 @@ class CtrlCargo extends Controlador
             'datos' => $data['data'][0]
         ];
 
-        $home = $this->mostrar('cargos/formulario.php', $datos, true);
+        $this->mostrar('cargos/formulario.php', $datos);
 
-        $datos = [
-            'titulo' => 'Cargos',
-            'contenido' => $home,
-            'menu' => $_SESSION['menu']
-        ];
+        // $datos = [
+        //     'titulo' => 'Cargos',
+        //     'contenido' => $home,
+        //     'menu' => $_SESSION['menu']
+        // ];
 
-        $this->mostrar('./plantilla/home.php', $datos);
+        // $this->mostrar('./plantilla/home.php', $datos);
     }
     public function guardar()
     {

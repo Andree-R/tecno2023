@@ -10,7 +10,7 @@
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="/assets/css/fontawesome-free/css/all.min.css">
     <!-- Theme style -->
-    
+
     <link rel="stylesheet" href="/assets/css/icheck.css">
     <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assets/css/jquery-toast.css">
@@ -31,7 +31,10 @@
         <?php
         require_once "./vistas/plantilla/nav.php";
         require_once "./vistas/plantilla/sidebar.php";
+
+
         ?>
+
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
             <?php
@@ -48,6 +51,48 @@
         </div>
         <!-- /.content-wrapper -->
 
+        <!-- Formularios modales -->
+        <!-- Modal Formulario - Nuevo / Editar -->
+        <div class="modal fade" id="modal-form" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title"></h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body" id="body-form">
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Eliminar -->
+        <div class="modal fade" id="modal-eliminar" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="frm-eliminar"></h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body" id="body-eliminar">
+                        <div class="text-center">
+                            <h5>¿Estas seguro que deseas seguir con la eliminación?</h5>
+                            <h5 class="reg-eliminacion">Registro: </h5>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-secundary" data-dismiss="modal">Cancelar</button>
+                        <a type="button" class="btn btn-danger" id="btn-confirmar" href="" data-id="">Eliminar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
 
     </div>
@@ -61,6 +106,8 @@
     <script src="/assets/js/adminlte.min.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="/assets/js/demo.js"></script>
+
+    <?php require_once './vistas/plantilla/js.php'; ?>
 </body>
 
 </html>

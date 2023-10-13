@@ -5,7 +5,6 @@ $idDocumento = isset($datos['idDocumento'])?$datos['idDocumento']:'';
 $descripcion = isset($datos['descripcion'])?$datos['descripcion']:'';
 $url = isset($datos['url'])?$datos['url']:'';
 $esNuevo = isset($datos['id'])?0:1;
-$titulo = $esNuevo==1?'Nuevo Anexo de Documento':'Editando el Anexo de Documento';
 ?>
     <form class="form-group" action="?ctrl=CtrlAnexoDocumento&accion=guardar" method="post">
         Id:
@@ -42,6 +41,4 @@ $titulo = $esNuevo==1?'Nuevo Anexo de Documento':'Editando el Anexo de Documento
 
     </form>
 
-    <!-- <a href="?ctrl=CtrlAnexoDocumento">Retornar</a> -->
-</body>
-</html>
+    <a href="?ctrl=CtrlAnexoDocumento">Retornar</a>

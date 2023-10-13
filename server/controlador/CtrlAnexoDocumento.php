@@ -42,15 +42,15 @@ class CtrlAnexoDocumento extends Controlador {
         $datos = [
             "Doc" => $Doc["data"],
         ];
-        $home = $this->mostrar('anexoDocumento/formulario.php', $datos, true);
+        $this->mostrar('anexoDocumento/formulario.php', $datos, null);
 
-        $datos = [
-            'titulo' => 'Nuevo anexo de documento',
-            'contenido' => $home,
-            'menu' => $_SESSION['menu']
-        ];
+        // $datos = [
+        //     'titulo' => 'Nuevo anexo de documento',
+        //     'contenido' => $home,
+        //     'menu' => $_SESSION['menu']
+        // ];
 
-        $this->mostrar('./plantilla/home.php', $datos);
+        // $this->mostrar('./plantilla/home.php', $datos);
     }
     public function editar(){
         $id = $_GET['id'];

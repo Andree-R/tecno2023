@@ -58,15 +58,15 @@ class CtrlDocumento extends Controlador
             "personas" => $dataperson["data"],
         ];
 
-        $home = $this->mostrar('documentos/formulario.php', $datos, true);
+        $this->mostrar('documentos/formulario.php', $datos);
 
-        $datos = [
-            'titulo' => 'Documentos',
-            'contenido' => $home,
-            'menu' => $_SESSION['menu']
-        ];
+        // $datos = [
+        //     'titulo' => 'Documentos',
+        //     'contenido' => $home,
+        //     'menu' => $_SESSION['menu']
+        // ];
 
-        $this->mostrar('./plantilla/home.php', $datos);
+        // $this->mostrar('./plantilla/home.php', $datos);
     }
     public function editar()
     {
@@ -90,15 +90,15 @@ class CtrlDocumento extends Controlador
         ];
 
 
-        $home = $this->mostrar('documentos/formulario.php', $datos, true);
+        $this->mostrar('documentos/formulario.php', $datos);
 
-        $datos = [
-            'titulo' => 'Documentos',
-            'contenido' => $home,
-            'menu' => $_SESSION['menu']
-        ];
+        // $datos = [
+        //     'titulo' => 'Documentos',
+        //     'contenido' => $home,
+        //     'menu' => $_SESSION['menu']
+        // ];
 
-        $this->mostrar('./plantilla/home.php', $datos);
+        // $this->mostrar('./plantilla/home.php', $datos);
     }
     public function guardar()
     {

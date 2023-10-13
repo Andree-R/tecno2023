@@ -110,4 +110,21 @@ class Persona extends Modelo
 
 
     }
+
+    public function cambiarClave($clave){
+
+        $passCrypt = $this->generarClave($clave);
+    
+        $datos = [
+            "password" => "$passCrypt"
+        ];
+
+        $wh = "id=$this->id";
+        return $this->update($wh, $datos);
+    
+    }
+
+    private function generarClave($clave){
+        return md5($clave);
+    }
 }

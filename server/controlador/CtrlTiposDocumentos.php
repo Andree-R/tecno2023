@@ -37,15 +37,15 @@ class CtrlTiposDocumentos extends Controlador {
     }
     public function nuevo(){
         # echo "Agregando..";
-        $home = $this->mostrar('tiposDocumentos/formulario.php', null, true);
+        $this->mostrar('tiposDocumentos/formulario.php');
 
-        $datos = [
-            'titulo' => 'Tipos de documentos',
-            'contenido' => $home,
-            'menu' => $_SESSION['menu']
-        ];
+        // $datos = [
+        //     'titulo' => 'Tipos de documentos',
+        //     'contenido' => $home,
+        //     'menu' => $_SESSION['menu']
+        // ];
 
-        $this->mostrar('./plantilla/home.php', $datos);
+        // $this->mostrar('./plantilla/home.php', $datos);
     }
     public function editar(){
         $id = $_GET['id'];
@@ -56,15 +56,15 @@ class CtrlTiposDocumentos extends Controlador {
         $datos = [
             'datos'=>$data['data'][0]
         ];
-        $home = $this->mostrar('tiposDocumentos/formulario.php', $datos, true);
+        $this->mostrar('tiposDocumentos/formulario.php', $datos);
 
-        $datos = [
-            'titulo' => 'Tipos de documentos',
-            'contenido' => $home,
-            'menu' => $_SESSION['menu']
-        ];
+        // $datos = [
+        //     'titulo' => 'Tipos de documentos',
+        //     'contenido' => $home,
+        //     'menu' => $_SESSION['menu']
+        // ];
 
-        $this->mostrar('./plantilla/home.php', $datos);
+        // $this->mostrar('./plantilla/home.php', $datos);
     }
     public function guardar(){
         # echo "Guardando..";
