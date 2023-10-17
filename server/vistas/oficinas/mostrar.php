@@ -1,4 +1,7 @@
-<a class="btn btn-success" href="?ctrl=CtrlOficina&accion=nuevo">Nueva Oficina</a>
+<a href="#" class="btn btn-primary nuevo">
+    <i class="fa fa-plus"></i> 
+    Nuevo Oficina
+</a>
 <table class="table">
     <tr>
         <th>Id</th>

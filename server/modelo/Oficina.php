@@ -34,11 +34,12 @@ class Oficina extends Modelo
     }
     public function guardar()
     {
+        var_dump("<pre>", $this->idJefe, "</pre>");
         $datos = [
             'id' => $this->id,
-            'idOficina' => "'$this->idOficina'",
+            'idOficina' => "$this->idOficina",
             'nombre' => "'$this->nombre'",
-            'idJefe' => "'$this->idJefe'",
+            'idJefe' => "$this->idJefe",
         ];
         return $this->insert($datos);
     }

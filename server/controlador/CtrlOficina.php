@@ -47,15 +47,15 @@ class CtrlOficina extends Controlador {
             'oficinas'=>$dataOf['data'],
         ];
 
-        $home = $this->mostrar('oficinas/formulario.php', $datos, true);
+        $this->mostrar('oficinas/formulario.php', $datos);
 
-        $datos = [
-            'titulo' => 'Nueva Oficina',
-            'contenido' => $home,
-            'menu' => $_SESSION['menu']
-        ];
+        // $datos = [
+        //     'titulo' => 'Nueva Oficina',
+        //     'contenido' => $home,
+        //     'menu' => $_SESSION['menu']
+        // ];
 
-        $this->mostrar('./plantilla/home.php', $datos);
+        // $this->mostrar('./plantilla/home.php', $datos);
     }
     public function editar(){
         $id = $_GET['id'];
@@ -91,7 +91,7 @@ class CtrlOficina extends Controlador {
         $idMatriz = $_POST['idMatriz'];
         $esNuevo = $_POST['esNuevo'];
 
-        
+        // var_dump("<pre>", $_POST, "</pre>");exit;
 
         $obj = new Oficina (
             $id, 

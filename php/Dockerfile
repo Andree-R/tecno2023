@@ -55,7 +55,11 @@ COPY ./php/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
 
 # Argumentos para la construccion de la imagen
 ARG WWW_INSTALL_PATH_SERVER=/server
-ARG APP_SERVER=$WWW_INSTALL_PATH_SERVER/app
+ARG APP_SERVER=${WWW_INSTALL_PATH_SERVER}/app_php
+
+ARG WWW_INSTALL_PATH_CLIENT=/client
+ARG APP_CLIENT=${WWW_INSTALL_PATH_CLIENT}/app_angular
+
 ARG USER=www
 ARG GROUP=www
 
@@ -86,8 +90,23 @@ WORKDIR ${APP_SERVER}
 RUN chown -R ${USER}:${GROUP} ${APP_SERVER} && \
     chmod -R 755 ${APP_SERVER}
 
+WORKDIR ${WWW_INSTALL_PATH_CLIENT}
+
+RUN npm install -g @angular/cli
+
+COPY ../client ${APP_CLIENT}
+
+WORKDIR ${APP_CLIENT}
+
+RUN npm install
+
+RUN chown -R ${USER}:${GROUP} ${APP_CLIENT} && \
+    chmod -R 755 ${APP_CLIENT}
+
 # Cambiar usuario actual a www
 USER ${USER}
+
+EXPOSE 4200
 
 # La imagen php:8.2-fpm-alpine expone el puerto para el 9000 por defecto
 # Puerto expuesto comentado y configurando el puerto en zz-docker.conf

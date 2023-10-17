@@ -9,6 +9,7 @@ services:
       dockerfile: ./php/Dockerfile
     # Nombre del contenedor
     container_name: tecno_app
+    command: sh -c "ng serve --host 0.0.0.0 --port 4200 & php-fpm"
     restart: "no"
     volumes:
       # - ./php/php.ini:/usr/local/etc/php/conf.d/php.ini
@@ -36,6 +37,7 @@ services:
     restart: "no"
     # Configuracion de puertos de acceso host:container_network
     ports:
+      - "4200:4200"
       - "8181:80"
       - "450:443"
     volumes:

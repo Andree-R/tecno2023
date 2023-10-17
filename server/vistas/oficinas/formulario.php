@@ -17,6 +17,11 @@ $titulo = $esNuevo == 1 ? 'Nuevo estado de tramite' : 'Editando estado de tramit
     <br>
     Jefe:
     <select class="custom-select" name="idJefe" id="">
+
+        
+
+        <option <?= "selected" ?> value=<?= "NULL" ?>></option>
+        
         <?php
         $esSeleccionado = null;
         if (is_array($servidoresPublicos))
@@ -30,6 +35,13 @@ $titulo = $esNuevo == 1 ? 'Nuevo estado de tramite' : 'Editando estado de tramit
             <option <?= $esSeleccionado ?> value="<?= $persona['id'] ?>"> <?= $persona['nombres'] . " " .  $persona["apellidos"] ?></option>
         <?php
             }
+            
+                ?>
+        
+                <?php
+                var_dump("<pre>", $nulo,$selected, "</pre>");
+        
+                ?>
         ?>
 
     </select>
@@ -63,10 +75,10 @@ $titulo = $esNuevo == 1 ? 'Nuevo estado de tramite' : 'Editando estado de tramit
         ?>
 
     </select>
-
+<!-- 
     <?php 
     var_dump("<pre>", $selected, "</pre>");
-    ?>
+    ?> -->
     <br>
     <input class="btn btn-primary" type="submit" value="Guardar">
 
