@@ -1,11 +1,11 @@
 <a href="#" class="btn btn-primary nuevo">
-    <i class="fa fa-plus"></i> 
-    Nuevo Oficina
+    <i class="fa fa-plus"></i>
+    Nueva Oficina
 </a>
 <table class="table">
     <tr>
         <th>Id</th>
-        <th>Oficina</th>
+        <th>Nombre</th>
         <th>Jefe</th>
         <th>Matriz</th>
         <th>Opciones</th>
@@ -28,11 +28,14 @@
                 <?= $d['matriz'] ?>
             </td>
             <td>
-                <a class="btn btn-warning" href="?ctrl=CtrlOficina&accion=editar&id=<?= $d['id'] ?>">
+                <a data-id="<?= $d["id"] ?>" href="#" class="btn btn-success editar">
+                    <i class="fa fa-edit"></i>
                     Editar
                 </a>
-                <a class="btn btn-danger" href="?ctrl=CtrlOficina&accion=eliminar&id=<?= $d['id'] ?>">Eliminar</a>
-
+                <a data-id="<?= $d["id"] ?>" data-nombre="<?= $d["nombre"] ?>" href="#" class="btn btn-danger eliminar">
+                    <i class="fa fa-trash"></i>
+                    Eliminar
+                </a>
             </td>
         </tr>
 

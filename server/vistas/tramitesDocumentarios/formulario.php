@@ -24,7 +24,7 @@ $titulo = $esNuevo == 1 ? 'Nuevo Cargo' : 'Editando Cargo';
         if (is_array($documentos))
             foreach ($documentos as $c) {
                 $esSeleccionado = '';
-                if ($idDocumento == $c['id'])
+                if ($idDocumento === $c['id'])
                     $esSeleccionado = 'selected';
         ?>
 
@@ -48,7 +48,7 @@ $titulo = $esNuevo == 1 ? 'Nuevo Cargo' : 'Editando Cargo';
         if (is_array($oficinas))
             foreach ($oficinas as $c) {
                 $esSeleccionado = '';
-                if ($idOficinaOrigen == $c['id'])
+                if ($idOficinaOrigen === $c['id'])
                     $esSeleccionado = 'selected';
         ?>
 
@@ -65,7 +65,7 @@ $titulo = $esNuevo == 1 ? 'Nuevo Cargo' : 'Editando Cargo';
         if (is_array($oficinas))
             foreach ($oficinas as $c) {
                 $esSeleccionado = '';
-                if ($idOficinaDestino == $c['id'])
+                if ($idOficinaDestino === $c['id'])
                     $esSeleccionado = 'selected';
         ?>
 
@@ -82,7 +82,7 @@ $titulo = $esNuevo == 1 ? 'Nuevo Cargo' : 'Editando Cargo';
         if (is_array($estadosTramites))
             foreach ($estadosTramites as $c) {
                 $esSeleccionado = '';
-                if ($idEstado == $c['id'])
+                if ($idEstado === $c['id'])
                     $esSeleccionado = 'selected';
         ?>
 

@@ -53,15 +53,15 @@ class CtrlTramiteDocumentario extends Controlador {
         ];
         # var_dump($datos);exit;
 
-        $home = $this->mostrar('tramitesDocumentarios/formulario.php', $datos, true);
+        $this->mostrar('tramitesDocumentarios/formulario.php', $datos);
 
-        $datos = [
-            'titulo' => 'Conceptos de Pago',
-            'contenido' => $home,
-            'menu' => $_SESSION['menu']
-        ];
+        // $datos = [
+        //     'titulo' => 'Conceptos de Pago',
+        //     'contenido' => $home,
+        //     'menu' => $_SESSION['menu']
+        // ];
 
-        $this->mostrar('./plantilla/home.php', $datos);
+        // $this->mostrar('./plantilla/home.php', $datos);
     }
     public function editar(){
         $id = $_GET['id'];
@@ -86,15 +86,15 @@ class CtrlTramiteDocumentario extends Controlador {
             'estadosTramites'=>$dataEsT['data'],
         ];
 
-        $home = $this->mostrar('tramitesDocumentarios/formulario.php', $datos, true);
+        $this->mostrar('tramitesDocumentarios/formulario.php', $datos);
 
-        $datos = [
-            'titulo' => 'Editar Tramite Documentario',
-            'contenido' => $home,
-            'menu' => $_SESSION['menu']
-        ];
+        // $datos = [
+        //     'titulo' => 'Editar Tramite Documentario',
+        //     'contenido' => $home,
+        //     'menu' => $_SESSION['menu']
+        // ];
 
-        $this->mostrar('./plantilla/home.php', $datos);
+        // $this->mostrar('./plantilla/home.php', $datos);
     }
     public function guardar(){
         # echo "Guardando..";

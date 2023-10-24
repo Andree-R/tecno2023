@@ -50,6 +50,7 @@ class ServidorPublico extends Persona
         $this->setTabla($this->_vista);
         return $this->getAll();
     }
+
     public function eliminar()
     {
         $this->setTabla($this->_tabla);

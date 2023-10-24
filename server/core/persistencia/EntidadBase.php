@@ -35,12 +35,15 @@ class EntidadBase
     public function getById($id){
         $this->_sql->setTabla($this->_tabla);
         $this->_sql->addWhere("`id`=$id");
+        // echo $this->_sql;exit;
+        
         return $this->_bd->ejecutar($this->_sql);
     }
-     
+    
     public function getBy($columna,$valor){
         $this->_sql->setTabla($this->_tabla);
         $this->_sql->addWhere("`$columna`='$valor'");
+        // echo $this->_sql;exit;
         return $this->_bd->ejecutar($this->_sql);
     }
      
@@ -63,7 +66,7 @@ class EntidadBase
         $this->_sql->addWhere($wh);
         $this->_sql->setDatos($datos);
         $this->_sql->setComando("UPDATE");
-        # echo $this->_sql;exit;
+        // echo $this->_sql;exit;
         return $this->_bd->ejecutar($this->_sql);
     }
     public function insert($datos){

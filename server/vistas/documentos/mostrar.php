@@ -56,7 +56,7 @@
                     <i class="fa fa-edit"></i>
                     Editar
                 </a>
-                <a data-id="<?= $d["id"] ?>" data-nombre="<?= $d["nombre"] ?>" href="#" class="btn btn-danger eliminar">
+                <a data-id="<?= $d["id"] ?>" data-nombre="<?= $d["numero"] ?>" href="#" class="btn btn-danger eliminar">
                     <i class="fa fa-trash"></i>
                     Eliminar
                 </a>

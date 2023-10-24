@@ -72,15 +72,15 @@ class CtrlOficina extends Controlador {
             'oficinas'=>$dataOf['data'],
             'datos'=>$data['data'][0],
         ];
-        $home = $this->mostrar('oficinas/formulario.php', $datos, true);
+        $this->mostrar('oficinas/formulario.php', $datos);
 
-        $datos = [
-            'titulo' => 'Editar Oficina',
-            'contenido' => $home,
-            'menu' => $_SESSION['menu']
-        ];
+        // $datos = [
+        //     'titulo' => 'Editar Oficina',
+        //     'contenido' => $home,
+        //     'menu' => $_SESSION['menu']
+        // ];
 
-        $this->mostrar('./plantilla/home.php', $datos);
+        // $this->mostrar('./plantilla/home.php', $datos);
     }
     public function guardar(){
         # echo "Guardando..";
@@ -90,6 +90,8 @@ class CtrlOficina extends Controlador {
         $idJefe = $_POST['idJefe'];
         $idMatriz = $_POST['idMatriz'];
         $esNuevo = $_POST['esNuevo'];
+
+
 
         // var_dump("<pre>", $_POST, "</pre>");exit;
 

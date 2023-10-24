@@ -65,15 +65,15 @@ class CtrlAnexoDocumento extends Controlador {
             'datos'=>$data['data'][0],
             'Doc'=>$dataDoc['data']
         ];
-        $home = $this->mostrar('anexoDocumento/formulario.php', $datos, true);
+        $this->mostrar('anexoDocumento/formulario.php', $datos);
 
-        $datos = [
-            'titulo' => 'Editando anexo de documento',
-            'contenido' => $home,
-            'menu' => $_SESSION['menu']
-        ];
+        // $datos = [
+        //     'titulo' => 'Editando anexo de documento',
+        //     'contenido' => $home,
+        //     'menu' => $_SESSION['menu']
+        // ];
 
-        $this->mostrar('./plantilla/home.php', $datos);
+        // $this->mostrar('./plantilla/home.php', $datos);
     }
     public function guardar(){
         # echo "Guardando..";

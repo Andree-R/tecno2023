@@ -26,7 +26,7 @@ $titulo = $esNuevo == 1 ? 'Nuevo Cargo' : 'Editando Cargo';
         if (is_array($ctasContables))
             foreach ($ctasContables as $c) {
                 $esSeleccionado = '';
-                if ($idCta == $c['id'])
+                if ($idCta === $c['id'])
                     $esSeleccionado = 'selected';
         ?>
 

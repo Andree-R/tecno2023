@@ -36,15 +36,15 @@ class CtrlEstadosTramites extends Controlador {
     }
     public function nuevo(){
         # echo "Agregando..";
-        $home = $this->mostrar('estadosTramites/formulario.php', null, true);
+        $this->mostrar('estadosTramites/formulario.php');
 
-        $datos = [
-            'titulo' => 'Estados de tramites',
-            'contenido' => $home,
-            'menu' => $_SESSION['menu']
-        ];
+        // $datos = [
+        //     'titulo' => 'Estados de tramites',
+        //     'contenido' => $home,
+        //     'menu' => $_SESSION['menu']
+        // ];
 
-        $this->mostrar('./plantilla/home.php', $datos);
+        // $this->mostrar('./plantilla/home.php', $datos);
     }
     public function editar(){
         $id = $_GET['id'];
@@ -55,15 +55,15 @@ class CtrlEstadosTramites extends Controlador {
         $datos = [
             'datos'=>$data['data'][0]
         ];
-        $home = $this->mostrar('estadosTramites/formulario.php', $datos, true);
+        $this->mostrar('estadosTramites/formulario.php', $datos);
 
-        $datos = [
-            'titulo' => 'Estados de tramites',
-            'contenido' => $home,
-            'menu' => $_SESSION['menu']
-        ];
+        // $datos = [
+        //     'titulo' => 'Estados de tramites',
+        //     'contenido' => $home,
+        //     'menu' => $_SESSION['menu']
+        // ];
 
-        $this->mostrar('./plantilla/home.php', $datos);
+        // $this->mostrar('./plantilla/home.php', $datos);
     }
     public function guardar(){
         # echo "Guardando..";

@@ -12,71 +12,56 @@ $titulo = $esNuevo == 1 ? 'Nuevo estado de tramite' : 'Editando estado de tramit
     <input class="form-control" type="text" name="id" value="<?= $id ?>">
     <input class="form-control" type="hidden" name="esNuevo" value="<?= $esNuevo ?>">
     <br>
-    Oficina:
+    Nombre:
     <input class="form-control" type="text" name="nombre" value="<?= $nombre ?>">
     <br>
     Jefe:
     <select class="custom-select" name="idJefe" id="">
 
-        
+        <option value=<?= "NULL" ?>></option>
 
-        <option <?= "selected" ?> value=<?= "NULL" ?>></option>
-        
         <?php
         $esSeleccionado = null;
         if (is_array($servidoresPublicos))
             foreach ($servidoresPublicos as $persona) {
                 $esSeleccionado = '';
 
-                if ($idJefe == $persona['id'])
+                if ($idJefe === $persona['id'])
                     $esSeleccionado = 'selected';
         ?>
 
             <option <?= $esSeleccionado ?> value="<?= $persona['id'] ?>"> <?= $persona['nombres'] . " " .  $persona["apellidos"] ?></option>
         <?php
-            }
-            
-                ?>
-        
-                <?php
-                var_dump("<pre>", $nulo,$selected, "</pre>");
-        
-                ?>
+        }
         ?>
 
     </select>
     <br>
     Matriz:
-    <?php 
+    <?php
     // var_dump("<pre>", $oficinas[0]['id'], $idOficina, $oficinas, $oficinas[0]['id'] == $idOficina, "</pre>");
     ?>
     <select class="custom-select" name="idMatriz" id="">
+        <option value=<?= "NULL" ?>></option>
         <?php
         $esSeleccionado = null;
         $selected = true;
         if (is_array($oficinas))
             foreach ($oficinas as $oficina) {
                 $esSeleccionado = '';
-                if ($idOficina == $oficina['id'])
+                if ($idOficina === $oficina['id'])
                     $esSeleccionado = 'selected';
-                    $selected = false;
+                $selected = false;
 
         ?>
             <option <?= $esSeleccionado ?> value="<?= $oficina['id'] ?>"> <?= $oficina['nombre'] ?></option>
         <?php
             }
-        if ($selected) { $nulo = "esnulo"
-        ?>
-            <option <?= "selected" ?> value=<?= NULL ?>></option>
-
-        <?php
-        var_dump("<pre>", $nulo,$selected, "</pre>");
-        }
         ?>
 
     </select>
-<!-- 
-    <?php 
+    <!-- 
+    <?php
     var_dump("<pre>", $selected, "</pre>");
     ?> -->
     <br>

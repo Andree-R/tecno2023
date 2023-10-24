@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: mariadb:3306
--- Tiempo de generación: 13-10-2023 a las 01:39:47
+-- Tiempo de generación: 18-10-2023 a las 01:31:24
 -- Versión del servidor: 10.11.5-MariaDB-1:10.11.5+maria~ubu2204
 -- Versión de PHP: 8.2.10
 
@@ -34,6 +34,13 @@ CREATE TABLE `anexos_documento` (
   `id` int(11) NOT NULL,
   `idDocumento` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Volcado de datos para la tabla `anexos_documento`
+--
+
+INSERT INTO `anexos_documento` (`nombre`, `descripcion`, `url`, `id`, `idDocumento`) VALUES
+('Mesa de partes', 'Solicitando', 'www', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -432,11 +439,19 @@ CREATE TABLE `documentos` (
   `fecha` timestamp NULL DEFAULT NULL,
   `fecha_recepcion` timestamp NULL DEFAULT NULL,
   `idTipo` int(11) DEFAULT NULL,
-  `numero` varchar(20) DEFAULT NULL,
+  `numero` varchar(30) DEFAULT NULL,
   `asunto` varchar(100) DEFAULT NULL,
   `idOficina` int(11) DEFAULT NULL,
   `idPersona` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Volcado de datos para la tabla `documentos`
+--
+
+INSERT INTO `documentos` (`id`, `idDocumento`, `descripcion`, `fecha`, `fecha_recepcion`, `idTipo`, `numero`, `asunto`, `idOficina`, `idPersona`) VALUES
+(1, NULL, 'Solicitando', '2023-10-05 19:47:00', '2023-10-06 19:47:00', 1, 'Carta de presentación', 'Solicitud', 1, 1),
+(2, NULL, 'Solicitando', '2023-09-30 19:49:00', '2023-09-30 19:49:00', 1, 'FUT', 'Solicitud', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -941,6 +956,14 @@ CREATE TABLE `oficinas` (
   `idJefe` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
+--
+-- Volcado de datos para la tabla `oficinas`
+--
+
+INSERT INTO `oficinas` (`id`, `idOficina`, `nombre`, `idJefe`) VALUES
+(1, 2, 'Mesa de partes', NULL),
+(2, NULL, 'Direccion General', NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -1419,6 +1442,13 @@ CREATE TABLE `tramites_documentarios` (
   `idEstado` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
+--
+-- Volcado de datos para la tabla `tramites_documentarios`
+--
+
+INSERT INTO `tramites_documentarios` (`id`, `idDocumento`, `idOficinaOrigen`, `idOficinaDestino`, `fecha`, `fecha_envio`, `fecha_recepcion`, `idEstado`) VALUES
+(1, 1, 1, 1, NULL, '2023-10-18 20:11:00', '2023-10-04 20:11:00', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -1464,7 +1494,7 @@ CREATE TABLE `v_anexoDocumento` (
 ,`nombre` varchar(100)
 ,`descripcion` varchar(4000)
 ,`url` varchar(250)
-,`idDocumento` varchar(20)
+,`idDocumento` varchar(30)
 );
 
 -- --------------------------------------------------------
@@ -1488,8 +1518,8 @@ CREATE TABLE `v_conceptos_pago` (
 --
 CREATE TABLE `v_documentos` (
 `id` int(11)
-,`idDocumento` varchar(20)
-,`numero` varchar(20)
+,`idDocumento` varchar(30)
+,`numero` varchar(30)
 ,`asunto` varchar(100)
 ,`fecha` timestamp
 ,`descripcion` varchar(4000)
@@ -1574,7 +1604,7 @@ CREATE TABLE `v_tramites_documentarios` (
 ,`fecha_envio` timestamp
 ,`fecha_recepcion` timestamp
 ,`idEstado` int(11)
-,`documento` varchar(20)
+,`documento` varchar(30)
 ,`oficinaOrigen` varchar(80)
 ,`oficinaDestino` varchar(80)
 ,`estado` varchar(30)

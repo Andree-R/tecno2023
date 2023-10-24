@@ -1,4 +1,7 @@
-<a class="btn btn-success" href="?ctrl=CtrlEstadosTramites&accion=nuevo">Nuevo Estado de Tramite</a>
+<a href="#" class="btn btn-primary nuevo">
+    <i class="fa fa-plus"></i>
+    Nuevo Tramite Documentario
+</a>
 <table class="table">
     <tr>
         <th>Id</th>
@@ -17,10 +20,14 @@
                 <?= $d['estado'] ?>
             </td>
             <td>
-                <a class="btn btn-warning" href="?ctrl=CtrlEstadosTramites&accion=editar&id=<?= $d['id'] ?>">
+            <a data-id="<?= $d["id"] ?>" href="#" class="btn btn-success editar">
+                    <i class="fa fa-edit"></i>
                     Editar
                 </a>
-                <a class="btn btn-danger" href="?ctrl=CtrlEstadosTramites&accion=eliminar&id=<?= $d['id'] ?>">Eliminar</a>
+                <a data-id="<?= $d["id"] ?>" data-nombre="<?= $d["estado"] ?>" href="#" class="btn btn-danger eliminar">
+                    <i class="fa fa-trash"></i>
+                    Eliminar
+                </a>
 
             </td>
         </tr>

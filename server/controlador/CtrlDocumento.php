@@ -45,6 +45,8 @@ class CtrlDocumento extends Controlador
     public function nuevo()
     {
         # echo "Agregando..";
+        $obj0 = new Documento();
+        $dataDoc = $obj0->getTodo();
         $obj1 = new TiposDocumentos();
         $dataTipDoc = $obj1->getTodo();
         $obj2 = new Oficina();
@@ -53,6 +55,7 @@ class CtrlDocumento extends Controlador
         $dataperson = $obj3->getTodo();
 
         $datos = [
+            "DocRef" => $dataDoc["data"],
             "tipDoc" => $dataTipDoc["data"],
             "oficinas" => $dataofic["data"],
             "personas" => $dataperson["data"],
@@ -75,15 +78,18 @@ class CtrlDocumento extends Controlador
         $obj1 = new Documento($id);
         $dataDoc = $obj1->editar();
 
-        $obj2 = new TiposDocumentos();
-        $dataTipDoc = $obj2->getTodo();
-        $obj3 = new Oficina();
-        $dataOfic = $obj3->getTodo();
-        $obj4 = new Persona();
-        $dataPerson = $obj4->getTodo();
+        $obj2 = new Documento($id);
+        $dataDoc2 = $obj2->editar();
+        $obj3 = new TiposDocumentos();
+        $dataTipDoc = $obj3->getTodo();
+        $obj4 = new Oficina();
+        $dataOfic = $obj4->getTodo();
+        $obj5 = new Persona();
+        $dataPerson = $obj5->getTodo();
 
         $datos = [
             'datos' => $dataDoc['data'][0],
+            "DocRef" => $dataDoc2["data"],
             "tipDoc" => $dataTipDoc["data"],
             "oficinas" => $dataOfic["data"],
             "personas" => $dataPerson["data"]
@@ -144,4 +150,40 @@ class CtrlDocumento extends Controlador
         # var_dump($data);exit;
         $this->index();
     }
+
+    public function enviarDocumento(){
+
+        $solicitud = $_POST["solicitud"];
+        $destinatario = $_POST["destinatario"];
+        $asunto = $_POST["asunto"];
+        $descripcion = $_POST["descripcion"];
+        $adjuntos = $_FILES["uploadedFile"];
+    
+        // Directorio de destino
+        $directorioDestino = "solicitudes";
+    
+        // Verificar si el directorio existe, y si no, crearlo
+        if (!file_exists($directorioDestino)) {
+            mkdir($directorioDestino, 0755, true);
+        }
+    
+        // Verificar si se han subido archivos
+        if ($adjuntos['name']) {
+            $nombreArchivo = $adjuntos['name'];
+            $rutaArchivo = $directorioDestino . '/' . $nombreArchivo;
+    
+            // Mover el archivo al directorio de destino
+            if (move_uploaded_file($adjuntos['tmp_name'], $rutaArchivo)) {
+                // El archivo se ha movido exitosamente, puedes realizar acciones adicionales aquí
+                echo "El archivo se ha subido y movido correctamente.";
+            } else {
+                // Ocurrió un error al mover el archivo
+                echo "Error al mover el archivo.";
+            }
+        } else {
+            // No se han subido archivos
+            echo "No se han subido archivos.";
+        }
+    }
+    
 }

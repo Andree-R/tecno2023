@@ -68,7 +68,7 @@ class Documento extends Modelo {
     public function actualizar(){
         $datos = [
             'id'=>$this->id,
-            'idDocumento'=>$this->idDocumento,
+            'idDocumento'=>"$this->idDocumento",
             'numero'=>"'$this->numero'",
             'asunto'=>"'$this->asunto'",
             'fecha'=>"'$this->fecha'",

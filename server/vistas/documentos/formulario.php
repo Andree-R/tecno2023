@@ -18,7 +18,25 @@ $titulo = $esNuevo == 1 ? 'Nuevo Documento' : 'Editando el Documento';
     <input class="form-control" type="hidden" name="esNuevo" value="<?= $esNuevo ?>">
     <br>
     Id Documento Referencia:
-    <input class="form-control" type="text" name="idDocumento" value="<?= $idDocumento ?>">
+    <select class="custom-select" name="idDocumento" id="">
+
+    <option value=<?= "NULL" ?>></option>
+        <?php
+        $esSeleccionado = null;
+        if (is_array($DocRef))
+            foreach ($DocRef as $d) {
+                $esSeleccionado = '';
+                if ($idDocumento === $d['idDocumento'])
+                    $esSeleccionado = 'selected';
+        ?>
+
+            <option <?= $esSeleccionado ?> value="<?= $d['id'] ?>"> <?= $d['numero'] ?></option>
+        <?php
+            }
+        ?>
+
+    </select>
+    <br>
     <br>
     Número:
     <input class="form-control" type="text" name="numero" value="<?= $numero ?>">
@@ -37,12 +55,13 @@ $titulo = $esNuevo == 1 ? 'Nuevo Documento' : 'Editando el Documento';
     <br>
     Id Tipo de documento:
     <select class="custom-select" name="idTipo" id="">
+
         <?php
         $esSeleccionado = null;
         if (is_array($tipDoc))
             foreach ($tipDoc as $tip) {
                 $esSeleccionado = '';
-                if ($idTipo == $tip['id'])
+                if ($idTipo === $tip['id'])
                     $esSeleccionado = 'selected';
         ?>
 
@@ -60,7 +79,7 @@ $titulo = $esNuevo == 1 ? 'Nuevo Documento' : 'Editando el Documento';
         if (is_array($oficinas))
             foreach ($oficinas as $ofic) {
                 $esSeleccionado = '';
-                if ($idOficina == $ofic['id'])
+                if ($idOficina === $ofic['id'])
                     $esSeleccionado = 'selected';
         ?>
 
@@ -79,7 +98,7 @@ $titulo = $esNuevo == 1 ? 'Nuevo Documento' : 'Editando el Documento';
         if (is_array($personas))
             foreach ($personas as $person) {
                 $esSeleccionado = '';
-                if ($idPersona == $person['id'])
+                if ($idPersona === $person['id'])
                     $esSeleccionado = 'selected';
         ?>
 

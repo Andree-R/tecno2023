@@ -28,11 +28,11 @@ $esNuevo = isset($datos['id'])?0:1;
             if (is_array ($Doc))
             foreach ($Doc as $idD) { 
                 $esSeleccionado='';
-                if($Doc==$idD['id'])
+                if($idDocumento === $idD['id'])
                     $esSeleccionado='selected';
             ?>
                 
-                <option <?=$esSeleccionado?> value="<?=$idD['id']?>"> <?=$idD['idDocumento']?></option>
+                <option <?=$esSeleccionado?> value="<?=$idD['id']?>"> <?=$idD['numero']?></option>
             <?php
             }
             ?>

@@ -43,7 +43,7 @@ $esNuevo = isset($datos['id'])?0:1;
             <?php
             if (is_array($cargos))
             foreach ($cargos as $p) {
-                $selected = ($p['id']==$idPrograma)?'selected':'';
+                $selected = ($p['id'] === $idPrograma)?'selected':'';
             ?>
             <option value="<?=$p['id']?>" <?=$selected?>><?=$p['nombre']?></option>
             <?php

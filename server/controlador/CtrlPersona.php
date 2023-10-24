@@ -2,6 +2,7 @@
 session_start();
 require_once './core/Controlador.php';
 require_once './modelo/Persona.php';
+require_once './modelo/Oficina.php';
 require_once "./helpers/helper.php";
 
 class CtrlPersona extends Controlador
@@ -138,7 +139,9 @@ class CtrlPersona extends Controlador
         $obj = new Persona();
         $data = $obj->validar($user, $contraseña);
 
+
         $_SESSION["id"] = $data[0]["id"];
+        // $_SESSION["perfil"] = $data[0]["perfil"];
 
         // var_dump("<pre>",$data,"</pre>");exit;
         /* if (!is_null($data)) {
@@ -170,11 +173,24 @@ class CtrlPersona extends Controlador
     }
 
     public function accederModulo(){
-        $idModulo = $_GET["idModulo"];
-        $idPerfil = $_GET["idPerfil"];
-        $idPersona = $_GET["id"];
+        $idModulo = $_GET['idModulo'];
+        $idPerfil = $_GET['idPerfil'];
+        $idPersona = $_GET['id'];
 
-        $_SESSION["menu"] = Helper::getMenu($idModulo,$idPerfil);
+        $obj = new Persona($idPersona);
+        $data = $obj->editar()['data'];
+
+        if(! is_null($data)){
+
+            $_SESSION['id']=$data[0]['id'];
+            $_SESSION['usuario']=$data[0]['usuario'];
+            $_SESSION['nombre']=$data[0]['nombres'] . ' '. $data[0]['apellidos'];
+        }
+
+        $_SESSION['menu']= Helper::getMenu($idModulo,$idPerfil);
+
+       # var_dump($_SESSION['menu']);exit;
+
         header("Location: ?");
 
     }
@@ -187,15 +203,40 @@ class CtrlPersona extends Controlador
     }
 
     public function inbox(){
-        $home = $this->mostrar('personas/inbox.php', null, true);
 
-        
+
+        $datos = [
+            "title" => "Bandeja",
+        ];
+
+        $home = $this->mostrar('personas/inbox.php', $datos, true);
 
         $datos = [
             'contenido' => $home,
         ];
 
         $this->mostrar('./plantilla/home.php', $datos);
+    }
+
+    public function solicitud(){
+
+        $obj = new Oficina();
+
+        
+        // var_dump($persona);exit;
+
+        $datos = [
+            "title" => "Bandeja",
+        ];
+
+        $home = $this->mostrar('personas/compose.php', $datos, true);
+
+        $datos = [
+            'contenido' => $home,
+        ];
+
+        $this->mostrar('./plantilla/home.php', $datos);
+
     }
 
     public function getMessages(){
