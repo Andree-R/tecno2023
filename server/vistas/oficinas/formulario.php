@@ -8,6 +8,7 @@ $titulo = $esNuevo == 1 ? 'Nuevo estado de tramite' : 'Editando estado de tramit
 
 ?>
 <form class="form-group" action="?ctrl=CtrlOficina&accion=guardar" method="post">
+    
     id:
     <input class="form-control" type="text" name="id" value="<?= $id ?>">
     <input class="form-control" type="hidden" name="esNuevo" value="<?= $esNuevo ?>">

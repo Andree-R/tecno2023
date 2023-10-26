@@ -12,6 +12,7 @@ class Documento extends Modelo {
     private $idTipo;
     private $idOficina;
     private $idPersona;
+    private $ubicacion;
     private $_tabla='documentos';
     private $_vista='v_documentos';
 
@@ -25,7 +26,8 @@ class Documento extends Modelo {
         $fechaRecepcion=null,
         $idTipo=null,
         $idOficina=null,
-        $idPersona=null
+        $idPersona=null,
+        $ubicacion=null
         ){
         $this->id = $id;
         $this->idDocumento=$idDocumento;
@@ -37,6 +39,7 @@ class Documento extends Modelo {
         $this->idTipo=$idTipo;
         $this->idOficina=$idOficina;
         $this->idPersona=$idPersona;
+        $this->ubicacion=$ubicacion;
         parent::__construct($this->_tabla);
     }
     public function getTodo(){
@@ -58,9 +61,15 @@ class Documento extends Modelo {
             'idTipo'=>"'$this->idTipo'",
             'idOficina'=>"'$this->idOficina'",
             'idPersona'=>"'$this->idPersona'",
+            'ubicacion'=>"'$this->ubicacion'",
         ];
         return $this->insert($datos);
     }
+
+    public function getDoc(){
+        return $this->getBy("ubicacion", $this->ubicacion);
+    }
+
     public function editar(){
 
         return $this->getById($this->id);

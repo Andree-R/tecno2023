@@ -18,7 +18,7 @@
   <section class="content">
     <div class="row">
       <div class="col-md-3">
-        <a href="?ctrl=CtrlPersona&accion=solicitud" class="btn btn-primary btn-block mb-3">Solicitud Nueva</a>
+        <a href="?ctrl=CtrlTramiteDocumentario&accion=solicitud" class="btn btn-primary btn-block mb-3">Solicitud Nueva</a>
         <div class="card">
           <div class="card-header">
             <h3 class="card-title">Carpetas</h3>
@@ -276,7 +276,7 @@
                     </td>
                     <td class="mailbox-attachment"></td>
                     <td class="mailbox-date">2 days ago</td>
-                  </tr>
+                  </tr
                 </tbody>
               </table>
 

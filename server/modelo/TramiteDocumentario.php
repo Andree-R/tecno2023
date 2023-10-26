@@ -52,12 +52,12 @@ class TramiteDocumentario extends Modelo
     {
         $datos = [
             'id' => $this->id,
-            'fecha' => $this->fecha,
+            'fecha' => ($this->fecha === "null") ? "null" : "'$this->fecha'",
             'fecha_envio' => "'$this->fechaEnvio'",
-            'fecha_recepcion' => "'$this->fechaRecepcion'",
+            'fecha_recepcion' => ($this->fechaRecepcion === "null") ? "null" : "'$this->fechaRecepcion'",
             
             'idDocumento' => "$this->idDocumento",
-            'idOficinaOrigen' => "$this->idOficinaOrigen",
+            'idOficinaOrigen' => ($this->idOficinaOrigen === "null") ? "null" :  "$this->idOficinaOrigen",
             'idOficinaDestino' => "$this->idOficinaDestino",
             'idEstado' => "$this->idEstado",
         ];

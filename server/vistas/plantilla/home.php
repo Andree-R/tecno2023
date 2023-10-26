@@ -15,7 +15,9 @@
     <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assets/css/jquery-toast.css">
     <link rel="stylesheet" href="/assets/css/adminlte.min.css">
-    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script> -->
+
+    <script src="/assets/js/jquery.min.js"></script>
 
 
     <style>
@@ -96,6 +98,8 @@
 
 
     </div>
+
+
     <script src="/assets/js/jq-toast.min.js"></script>
 
     <script type="text/javascript" src="/assets/js/moment.min.js"></script>
@@ -105,9 +109,50 @@
     <!-- AdminLTE App -->
     <script src="/assets/js/adminlte.min.js"></script>
     <!-- AdminLTE for demo purposes -->
+    <!-- 
+    <script src="/assets/js/jquery.flot.js"></script>
+
+    <script src="/assets/js/jquery.flot.resize.js"></script> -->
+
     <script src="/assets/js/demo.js"></script>
 
+
+
+
     <?php require_once './vistas/plantilla/js.php'; ?>
+
+    <script>
+        let form2 = document.getElementById('form');
+
+        form2.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const DATA = new FormData(form2);
+
+
+            for (var pair of DATA.entries()) {
+                console.log(`Campo: ${pair[0]}, Valor: ${pair[1]}`);
+            }
+
+            fetch("?ctrl=CtrlTramiteDocumentario&accion=enviarTramite", {
+                    method: "post",
+                    body: DATA,
+
+                })
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    }
+                })
+
+                .then(data => {
+                    console.log(data);
+                })
+
+            ;
+
+        });
+    </script>
 </body>
 
 </html>

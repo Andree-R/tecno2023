@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: mariadb:3306
--- Tiempo de generación: 26-10-2023 a las 18:25:21
+-- Tiempo de generación: 25-10-2023 a las 19:10:52
 -- Versión del servidor: 10.11.5-MariaDB-1:10.11.5+maria~ubu2204
 -- Versión de PHP: 8.2.10
 
@@ -435,16 +435,8 @@ CREATE TABLE `documentos` (
   `numero` varchar(20) DEFAULT NULL,
   `asunto` varchar(100) DEFAULT NULL,
   `idOficina` int(11) DEFAULT NULL,
-  `idPersona` int(11) DEFAULT NULL,
-  `ubicacion` varchar(100) DEFAULT NULL
+  `idPersona` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `documentos`
---
-
-INSERT INTO `documentos` (`id`, `idDocumento`, `descripcion`, `fecha`, `fecha_recepcion`, `idTipo`, `numero`, `asunto`, `idOficina`, `idPersona`, `ubicacion`) VALUES
-(25, NULL, '', '2023-10-26 13:22:17', '2023-10-26 13:22:17', 2, '', '', 2, 1, 'solicitudes/77788822/dbtecno2023__2023-10-26_13:22:17.sql');
 
 -- --------------------------------------------------------
 
@@ -1445,13 +1437,6 @@ CREATE TABLE `tramites_documentarios` (
   `idEstado` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `tramites_documentarios`
---
-
-INSERT INTO `tramites_documentarios` (`id`, `idDocumento`, `idOficinaOrigen`, `idOficinaDestino`, `fecha`, `fecha_envio`, `fecha_recepcion`, `idEstado`) VALUES
-(3, 25, NULL, 2, NULL, '2023-10-26 13:22:17', NULL, 3);
-
 -- --------------------------------------------------------
 
 --
@@ -2373,563 +2358,654 @@ ALTER TABLE `visitas_anexo04`
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
---
--- AUTO_INCREMENT de la tabla `anexos_documento`
+
+  -- Indices de la tabla `anexos_documento`
 --
 ALTER TABLE `anexos_documento`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `anexo_04`
+-- Indices de la tabla `anexo_03`
+--
+
+--
+-- Indices de la tabla `anexo_04`
 --
 ALTER TABLE `anexo_04`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `anexo_05`
+-- Indices de la tabla `anexo_05`
 --
 ALTER TABLE `anexo_05`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `asignaciones_bienes`
+-- Indices de la tabla `asignaciones_bienes`
 --
 ALTER TABLE `asignaciones_bienes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `auditoria`
+-- Indices de la tabla `auditoria`
 --
 ALTER TABLE `auditoria`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `autores`
+-- Indices de la tabla `autores`
 --
 ALTER TABLE `autores`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `bachilleres`
+-- Indices de la tabla `bachilleres`
 --
 ALTER TABLE `bachilleres`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `bachiller_trabajo_aplicacion`
+-- Indices de la tabla `bachiller_trabajo_aplicacion`
 --
 ALTER TABLE `bachiller_trabajo_aplicacion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `cargas_horaria`
+-- Indices de la tabla `cargas_horaria`
 --
 ALTER TABLE `cargas_horaria`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `cargos`
+-- Indices de la tabla `cargos`
 --
 ALTER TABLE `cargos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `categorias`
+-- Indices de la tabla `categorias`
 --
 ALTER TABLE `categorias`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `ciudades`
+-- Indices de la tabla `ciudades`
 --
 ALTER TABLE `ciudades`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `conceptos_pago`
+-- Indices de la tabla `conceptos_pago`
 --
 ALTER TABLE `conceptos_pago`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `cronogramas_academicos`
+-- Indices de la tabla `cronogramas_academicos`
 --
 ALTER TABLE `cronogramas_academicos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `ctas_contables`
+-- Indices de la tabla `ctas_contables`
 --
 ALTER TABLE `ctas_contables`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `cursos`
+-- Indices de la tabla `cursos`
 --
 ALTER TABLE `cursos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `desplazamientos`
+-- Indices de la tabla `desplazamientos`
 --
 ALTER TABLE `desplazamientos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `detalles_asignacion`
+-- Indices de la tabla `detalles_asignacion`
 --
 ALTER TABLE `detalles_asignacion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `detalles_desplazamientos`
+-- Indices de la tabla `detalles_desplazamientos`
 --
 ALTER TABLE `detalles_desplazamientos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `detalles_matricula`
+-- Indices de la tabla `detalles_matricula`
 --
 ALTER TABLE `detalles_matricula`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `detalles_pago`
+-- Indices de la tabla `detalles_pago`
 --
 ALTER TABLE `detalles_pago`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `detalles_permanencia`
+-- Indices de la tabla `detalles_permanencia`
 --
 ALTER TABLE `detalles_permanencia`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `docentes`
+-- Indices de la tabla `docentes`
 --
 ALTER TABLE `docentes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `documentos`
+-- Indices de la tabla `documentos`
 --
 ALTER TABLE `documentos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `editoriales`
+-- Indices de la tabla `editoriales`
 --
 ALTER TABLE `editoriales`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `empresas`
+-- Indices de la tabla `empresas`
 --
 ALTER TABLE `empresas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `equipos`
+-- Indices de la tabla `equipos`
 --
 ALTER TABLE `equipos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `equipos_antivirus`
+-- Indices de la tabla `equipos_antivirus`
 --
 ALTER TABLE `equipos_antivirus`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `equipos_discos`
+-- Indices de la tabla `equipos_discos`
 --
 ALTER TABLE `equipos_discos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `estados`
+-- Indices de la tabla `estados`
 --
 ALTER TABLE `estados`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `estados_tramites`
+-- Indices de la tabla `estados_tramites`
 --
 ALTER TABLE `estados_tramites`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `estudiantes`
+-- Indices de la tabla `estudiantes`
 --
 ALTER TABLE `estudiantes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `evaluaciones`
+-- Indices de la tabla `evaluaciones`
 --
 ALTER TABLE `evaluaciones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `examenes_requisitos`
+-- Indices de la tabla `examenes_requisitos`
 --
 ALTER TABLE `examenes_requisitos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `examenes_suficiencia`
+-- Indices de la tabla `examenes_suficiencia`
 --
 ALTER TABLE `examenes_suficiencia`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `factores_forma`
+-- Indices de la tabla `factores_forma`
 --
 ALTER TABLE `factores_forma`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `fichas_permanencia`
+-- Indices de la tabla `fichas_permanencia`
 --
 ALTER TABLE `fichas_permanencia`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `fichas_postulacion`
+-- Indices de la tabla `fichas_postulacion`
 --
 ALTER TABLE `fichas_postulacion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `idiomas`
+-- Indices de la tabla `idiomas`
 --
 ALTER TABLE `idiomas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `indicadores`
+-- Indices de la tabla `indicadores`
 --
 ALTER TABLE `indicadores`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `indicadores_anexo`
+-- Indices de la tabla `indicadores_anexo`
 --
 ALTER TABLE `indicadores_anexo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `indicadores_evaluacion`
+-- Indices de la tabla `indicadores_evaluacion`
 --
 ALTER TABLE `indicadores_evaluacion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `jurados_examen_suficiencia`
+-- Indices de la tabla `jurados_examen_suficiencia`
 --
 ALTER TABLE `jurados_examen_suficiencia`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `jurados_trabajo_aplicacion`
+-- Indices de la tabla `jurados_trabajo_aplicacion`
 --
 ALTER TABLE `jurados_trabajo_aplicacion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `justificaciones_asistencia`
+-- Indices de la tabla `justificaciones_asistencia`
 --
 ALTER TABLE `justificaciones_asistencia`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `libros`
+-- Indices de la tabla `libros`
 --
 ALTER TABLE `libros`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `libro_autores`
+-- Indices de la tabla `libro_autores`
 --
 ALTER TABLE `libro_autores`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `libro_materias`
+-- Indices de la tabla `libro_materias`
 --
 ALTER TABLE `libro_materias`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `marcas`
+-- Indices de la tabla `marcas`
 --
 ALTER TABLE `marcas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `materias`
+-- Indices de la tabla `materias`
 --
 ALTER TABLE `materias`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `matriculas`
+-- Indices de la tabla `matriculas`
 --
 ALTER TABLE `matriculas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `mis_favoritos`
+-- Indices de la tabla `mis_favoritos`
 --
 ALTER TABLE `mis_favoritos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `modalidades`
+-- Indices de la tabla `modalidades`
 --
 ALTER TABLE `modalidades`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `modalides_ingreso`
+-- Indices de la tabla `modalides_ingreso`
 --
 ALTER TABLE `modalides_ingreso`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `modelos`
+-- Indices de la tabla `modelos`
 --
 ALTER TABLE `modelos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `modulos`
+-- Indices de la tabla `modulos`
 --
 ALTER TABLE `modulos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `modulos_sys`
+-- Indices de la tabla `modulos_sys`
 --
 ALTER TABLE `modulos_sys`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `motivos_salida`
+-- Indices de la tabla `motivos_salida`
 --
 ALTER TABLE `motivos_salida`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `oficinas`
+-- Indices de la tabla `oficinas`
 --
 ALTER TABLE `oficinas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `pagos`
+-- Indices de la tabla `pagos`
 --
 ALTER TABLE `pagos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `papeletas_salida`
+-- Indices de la tabla `papeletas_salida`
 --
 ALTER TABLE `papeletas_salida`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `pcs`
+-- Indices de la tabla `pcs`
 --
 ALTER TABLE `pcs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `pc_perifericos`
+-- Indices de la tabla `pc_perifericos`
 --
 ALTER TABLE `pc_perifericos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `perfiles`
+-- Indices de la tabla `perfiles`
 --
 ALTER TABLE `perfiles`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `perifericos`
+-- Indices de la tabla `perifericos`
 --
 ALTER TABLE `perifericos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `periodos_academico`
+-- Indices de la tabla `periodos_academico`
 --
 ALTER TABLE `periodos_academico`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `permisos`
+-- Indices de la tabla `permisos`
 --
 ALTER TABLE `permisos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `personas`
+-- Indices de la tabla `personas`
 --
 ALTER TABLE `personas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `planes_estudio`
+-- Indices de la tabla `planes_estudio`
 --
 ALTER TABLE `planes_estudio`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `postulantes`
+-- Indices de la tabla `postulantes`
 --
 ALTER TABLE `postulantes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `programas_estudios`
+-- Indices de la tabla `programas_estudios`
 --
 ALTER TABLE `programas_estudios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `registros_asistencia`
+-- Indices de la tabla `registros_asistencia`
 --
 ALTER TABLE `registros_asistencia`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `representantes`
+-- Indices de la tabla `representantes`
 --
 ALTER TABLE `representantes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `requisitos`
+-- Indices de la tabla `requisitos`
 --
 ALTER TABLE `requisitos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `requisitos_postulacion`
+-- Indices de la tabla `requisitos_postulacion`
 --
 ALTER TABLE `requisitos_postulacion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `requisitos_presentados`
+-- Indices de la tabla `requisitos_presentados`
 --
 ALTER TABLE `requisitos_presentados`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `semestres`
+-- Indices de la tabla `semestres`
 --
 ALTER TABLE `semestres`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `servidores_publicos`
+-- Indices de la tabla `servidores_publicos`
 --
 ALTER TABLE `servidores_publicos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `sistemas_operativos`
+-- Indices de la tabla `sistemas_operativos`
 --
 ALTER TABLE `sistemas_operativos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `subindicadores`
+-- Indices de la tabla `subindicadores`
 --
 ALTER TABLE `subindicadores`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `sw_antivirus`
+-- Indices de la tabla `sw_antivirus`
 --
 ALTER TABLE `sw_antivirus`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `tipos_curso`
+-- Indices de la tabla `tipos_curso`
 --
 ALTER TABLE `tipos_curso`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `tipos_disco`
+-- Indices de la tabla `tipos_disco`
 --
 ALTER TABLE `tipos_disco`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `tipos_documentos`
+-- Indices de la tabla `tipos_documentos`
 --
 ALTER TABLE `tipos_documentos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `tipos_indicadores`
+-- Indices de la tabla `tipos_indicadores`
 --
 ALTER TABLE `tipos_indicadores`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `tipos_matricula`
+-- Indices de la tabla `tipos_matricula`
 --
 ALTER TABLE `tipos_matricula`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `tipos_pago`
+-- Indices de la tabla `tipos_pago`
 --
 ALTER TABLE `tipos_pago`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `tipos_procesadores`
+-- Indices de la tabla `tipos_procesadores`
 --
 ALTER TABLE `tipos_procesadores`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `trabajos_aplicacion_profesional`
+-- Indices de la tabla `trabajos_aplicacion_profesional`
 --
 ALTER TABLE `trabajos_aplicacion_profesional`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `trabajos_requisitos`
+-- Indices de la tabla `trabajos_requisitos`
 --
 ALTER TABLE `trabajos_requisitos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `tramites_documentarios`
+-- Indices de la tabla `tramites_documentarios`
 --
 ALTER TABLE `tramites_documentarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `turnos`
+-- Indices de la tabla `turnos`
 --
 ALTER TABLE `turnos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
--- AUTO_INCREMENT de la tabla `visitas_anexo04`
+-- Indices de la tabla `visitas_anexo04`
 --
 ALTER TABLE `visitas_anexo04`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY COLUMN id INT(11) NOT NULL AUTO_INCREMENT;
+
 
 --
 -- Restricciones para tablas volcadas

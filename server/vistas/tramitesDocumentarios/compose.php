@@ -23,7 +23,7 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-3">
-        <a href="?ctrl=CtrlPersona&accion=inbox" class="btn btn-primary btn-block mb-3">Volver a la bandeja</a>
+        <a href="?ctrl=CtrlTramiteDocumentario&accion=inbox" class="btn btn-primary btn-block mb-3">Volver a la bandeja</a>
 
         <div class="card">
           <div class="card-header">
@@ -98,7 +98,7 @@
         <!-- /.card -->
       </div>
       <!-- /.col -->
-      <div class="col-md-9">
+      <form id="form" class="col-md-9">
         <div class="card card-primary card-outline">
           <div class="card-header">
             <h3 class="card-title">Compose New Message</h3>
@@ -106,28 +106,53 @@
           <!-- /.card-header -->
           <div class="card-body">
             <div class="form-group">
-              <select class="custom-select" name="idCta" id="">
-              <option value="">Mesa de partes</option>
+              <?php
+
+              // var_dump("<pre>", $oficinas, "</pre>");
+              ?>
+
+              <select class="custom-select" name="oficina" id="">
                 <?php
                 $esSeleccionado = null;
+
+
                 if (is_array($oficinas))
+
                   foreach ($oficinas as $c) {
                     $esSeleccionado = '';
-                    if ($idCta === $c['id'])
+                    if ("Mesa de partes" === $c['nombre'])
                       $esSeleccionado = 'selected';
                 ?>
 
-                  <option <?= $esSeleccionado ?> value="<?= $c['id'] ?>"> <?= $c['descripcion'] ?></option>
+                  <option <?= $esSeleccionado ?> value="<?= $c['id'] ?>"> <?= $c['nombre'] ?></option>
                 <?php
                   }
                 ?>
-                <input class="form-control" placeholder="Oficina">
-            </div>
-            <div class="form-group">
-              <input class="form-control" placeholder="Solicitud:">
-            </div>
-            <div class="form-group">
-              <textarea id="compose-textarea" class="form-control" style="height: 300px">
+              </select>
+              <br>
+              <br>
+              <select class="custom-select" name="tipoDoc" id="">
+                <?php
+                $esSeleccionado = null;
+
+
+                if (is_array($tipoDoc))
+
+                  foreach ($tipoDoc as $c) {
+                    $esSeleccionado = '';
+                    if ("FUT" === $c['tipo'])
+                      $esSeleccionado = 'selected';
+                ?>
+
+                  <option <?= $esSeleccionado ?> value="<?= $c['id'] ?>"> <?= $c['tipo'] ?></option>
+                <?php
+                  }
+                ?>
+              </select>
+              <br>
+              <br>
+              <div class="form-group">
+                <textarea id="compose-textarea" name="descripcion" class="form-control" style="height: 300px">
                       <h1><u>Heading Of Message</u></h1>
                       <h4>Subheading</h4>
                       <p>But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain
@@ -152,27 +177,27 @@
                       <p>Thank you,</p>
                       <p>John Doe</p>
                     </textarea>
-            </div>
-            <div class="form-group">
-              <div class="btn btn-default btn-file">
-                <i class="fas fa-paperclip"></i> Adjunto
-                <input type="file" name="attachment">
               </div>
-              <p class="help-block">Max. 32MB</p>
+              <div class="form-group">
+                <div class="btn btn-default btn-file">
+                  <i class="fas fa-paperclip"></i> Adjunto
+                  <input type="file" name="adjunto">
+                </div>
+                <p class="help-block">Max. 32MB</p>
+              </div>
             </div>
-          </div>
-          <!-- /.card-body -->
-          <div class="card-footer">
-            <div class="float-right">
-              <button type="button" class="btn btn-default"><i class="fas fa-pencil-alt"></i> Borrador</button>
-              <button type="submit" class="btn btn-primary"><i class="far fa-envelope"></i> Enviar</button>
+            <!-- /.card-body -->
+            <div class="card-footer">
+              <div class="float-right">
+                <button type="button" class="btn btn-default"><i class="fas fa-pencil-alt"></i> Borrador</button>
+                <button type="submit" class="btn btn-primary"><i class="far fa-envelope"></i> Enviar</button>
+              </div>
+              <button type="reset" class="btn btn-default"><i class="fas fa-times"></i> Descartar</button>
             </div>
-            <button type="reset" class="btn btn-default"><i class="fas fa-times"></i> Desechar</button>
+            <!-- /.card-footer -->
           </div>
-          <!-- /.card-footer -->
-        </div>
-        <!-- /.card -->
-      </div>
+          <!-- /.card -->
+      </form>
       <!-- /.col -->
     </div>
     <!-- /.row -->

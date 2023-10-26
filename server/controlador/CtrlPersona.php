@@ -202,42 +202,7 @@ class CtrlPersona extends Controlador
         header("Location: ?");
     }
 
-    public function inbox(){
-
-
-        $datos = [
-            "title" => "Bandeja",
-        ];
-
-        $home = $this->mostrar('personas/inbox.php', $datos, true);
-
-        $datos = [
-            'contenido' => $home,
-        ];
-
-        $this->mostrar('./plantilla/home.php', $datos);
-    }
-
-    public function solicitud(){
-
-        $obj = new Oficina();
-
-        
-        // var_dump($persona);exit;
-
-        $datos = [
-            "title" => "Bandeja",
-        ];
-
-        $home = $this->mostrar('personas/compose.php', $datos, true);
-
-        $datos = [
-            'contenido' => $home,
-        ];
-
-        $this->mostrar('./plantilla/home.php', $datos);
-
-    }
+    
 
     public function getMessages(){
 

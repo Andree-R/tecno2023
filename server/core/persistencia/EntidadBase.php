@@ -43,6 +43,7 @@ class EntidadBase
     public function getBy($columna,$valor){
         $this->_sql->setTabla($this->_tabla);
         $this->_sql->addWhere("`$columna`='$valor'");
+        $this->_sql->setComando("SELECT");
         // echo $this->_sql;exit;
         return $this->_bd->ejecutar($this->_sql);
     }
@@ -73,7 +74,7 @@ class EntidadBase
         $this->_sql->setTabla($this->_tabla);
         $this->_sql->setDatos($datos);
         $this->_sql->setComando("INSERT");
-        // echo $this->_sql;exit();
+        echo $this->_sql;
         return $this->_bd->ejecutar($this->_sql);
     } 
  

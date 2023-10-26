@@ -64,9 +64,10 @@ class CtrlOficina extends Controlador {
         $dataSP = $obj->getTodo();
         $obj = new Oficina();
         $dataOf = $obj->getTodo();
-        $obj = new Oficina();
-        $data = $obj->getTodo();
-        # var_dump($data);exit;
+        $obj = new Oficina($id);
+        $data = $obj->editar();
+        // var_dump("<pre>", $data, "</pre>");exit;
+        // var_dump($data);exit;
         $datos = [
             'servidoresPublicos'=>$dataSP['data'],
             'oficinas'=>$dataOf['data'],
