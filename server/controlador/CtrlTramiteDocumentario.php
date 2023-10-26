@@ -148,9 +148,15 @@ class CtrlTramiteDocumentario extends Controlador
     public function inbox()
     {
 
+        $tramites = new TramiteDocumentario();
+        $dataTramites = $tramites->getTodo();
 
         $datos = [
             "title" => "Bandeja",
+            "solicitud" => "Enviar solicitud",
+            "url" => "?ctrl=CtrlTramiteDocumentario&accion=solicitud",
+            "tramites" => $dataTramites["data"],
+
         ];
 
         $home = $this->mostrar('tramitesDocumentarios/inbox.php', $datos, true);
@@ -163,6 +169,38 @@ class CtrlTramiteDocumentario extends Controlador
     }
 
     public function solicitud()
+    {
+
+        $oficinas = new Oficina();
+
+        $dataOficinas = $oficinas->getTodo();
+
+        $tipoDocumento = new TiposDocumentos();
+        $dataTipDoc = $tipoDocumento->getTodo();
+
+
+
+        $datos = [
+            "title" => "Solicitud",
+            "solicitud" => "Volver a la bandeja",
+            "url" => "?ctrl=CtrlTramiteDocumentario&accion=inbox",
+            "oficinas" => $dataOficinas["data"],
+            "tipoDoc" => $dataTipDoc["data"],
+        ];
+        // var_dump($persona);exit;
+
+
+
+        $home = $this->mostrar('tramitesDocumentarios/compose.php', $datos, true);
+
+        $datos = [
+            'contenido' => $home,
+        ];
+
+        $this->mostrar('./plantilla/home.php', $datos);
+    }
+
+    public function mostrarEnviados()
     {
 
         $oficinas = new Oficina();
@@ -254,7 +292,6 @@ class CtrlTramiteDocumentario extends Controlador
         }
 
         if (isset($documento)) {
-            echo "asd";
 
             $idDocumento = $documento->getDoc()["data"][0]["id"];
         

@@ -147,9 +147,13 @@
 
                 .then(data => {
                     console.log(data);
+
                 })
 
             ;
+
+            window.location.href = "?ctrl=CtrlTramiteDocumentario&accion=inbox"
+
 
         });
     </script>
