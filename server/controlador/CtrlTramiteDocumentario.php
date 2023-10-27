@@ -11,8 +11,6 @@ require_once './modelo/Persona.php';
 class CtrlTramiteDocumentario extends Controlador
 {
 
-    private const CARPETA_SOLICITUDES = "solicitudes";
-
     public function index()
     {
         # echo "Hola ConceptoPago";
@@ -247,54 +245,30 @@ class CtrlTramiteDocumentario extends Controlador
         $datetime = new DateTime();
         $now = $datetime->format("Y-m-d H:i:s");
 
-        $persona = new Persona($_SESSION["id"]);
-        $dataPersona = $persona->getTodo()["data"][0];
+        $carpetaDestino = Documento::crearCarpeta();
 
-        $carpetaDestino = self::CARPETA_SOLICITUDES . DIRECTORY_SEPARATOR . $dataPersona["dni"];
 
-        if (!file_exists(
-            $carpetaDestino = self::CARPETA_SOLICITUDES . DIRECTORY_SEPARATOR . $dataPersona["dni"]
-        )) {
-            mkdir($carpetaDestino, 0755);
-        }
+        $documento = new Documento(
+            "null",
+            "null",
+            null,
+            null,
+            $now,
+            null,
+            $now,
+            $idTipoDoc,
+            $idOficinaDestino,
+            $_SESSION["id"],
+            $carpetaDestino
+        );
 
-        if (!empty($adjunto["tmp_name"]) and isset($carpetaDestino)) {
-            $format_datetime = $datetime->format("Y-m-d_H:i:s");
-
-            $fileInfo = pathinfo($adjunto["name"]);
-            $separatorName = "__";
-            $separatorExtension = ".";
-
-            $nuevoNombreDeArchivo = $fileInfo["filename"] .
-                $separatorName .
-                $format_datetime .
-                $separatorExtension .
-                $fileInfo["extension"];
-
-            $ubicacion = $carpetaDestino . DIRECTORY_SEPARATOR . $nuevoNombreDeArchivo;
-            move_uploaded_file($adjunto["tmp_name"], $ubicacion);
-
-            $documento = new Documento(
-                "null",
-                "null",
-                null,
-                null,
-                $now,
-                null,
-                $now,
-                $idTipoDoc,
-                $idOficinaDestino,
-                $_SESSION["id"],
-                $ubicacion
-            );
-
-            $documento->guardar();
-        }
+        $documento->moverDocumentos($adjunto, $carpetaDestino, $datetime);
+        $documento->guardar();
 
         if (isset($documento)) {
 
             $idDocumento = $documento->getDoc()["data"][0]["id"];
-        
+
             $tramite = new TramiteDocumentario(
                 "null",
                 "null",
@@ -308,8 +282,9 @@ class CtrlTramiteDocumentario extends Controlador
 
             $tramite->guardar();
         }
-    }
 
+        echo json_encode($response);
+    }
     public function boardDocumentos()
     {
 

@@ -13,6 +13,9 @@ class Documento extends Modelo {
     private $idOficina;
     private $idPersona;
     private $ubicacion;
+
+    private const CARPETA_SOLICITUDES = "solicitudes";
+
     private $_tabla='documentos';
     private $_vista='v_documentos';
 
@@ -89,5 +92,38 @@ class Documento extends Modelo {
         ];
         $wh = "id=$this->id";
         return $this->update($wh,$datos);
+    }
+
+    public static function crearCarpeta()
+    {
+        $carpetaDestino = self::CARPETA_SOLICITUDES . DIRECTORY_SEPARATOR . $_SESSION["dni"];
+
+        if (!file_exists(
+            $carpetaDestino = self::CARPETA_SOLICITUDES . DIRECTORY_SEPARATOR . $_SESSION["dni"]
+        )) {
+            mkdir($carpetaDestino, 0755);
+        }
+
+        return $carpetaDestino;
+    }
+
+    public function moverDocumentos($adjunto, $carpetaDestino, $datetime)
+    {
+        if (!empty($adjunto["tmp_name"]) and isset($carpetaDestino)) {
+            $format_datetime = $datetime->format("Y-m-d_H:i:s");
+
+            $fileInfo = pathinfo($adjunto["name"]);
+            $separatorName = "__";
+            $separatorExtension = ".";
+
+            $nuevoNombreDeArchivo = $fileInfo["filename"] .
+                $separatorName .
+                $format_datetime .
+                $separatorExtension .
+                $fileInfo["extension"];
+
+            $ubicacion = $carpetaDestino . DIRECTORY_SEPARATOR . $nuevoNombreDeArchivo;
+            move_uploaded_file($adjunto["tmp_name"], $ubicacion);
+        }
     }
 }

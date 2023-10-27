@@ -124,7 +124,8 @@
     <script>
         let form2 = document.getElementById('form');
 
-        form2.addEventListener('submit', function(e) {
+        if (form2) {
+            form2.addEventListener('submit', function(e) {
             e.preventDefault();
 
             const DATA = new FormData(form2);
@@ -137,25 +138,31 @@
             fetch("?ctrl=CtrlTramiteDocumentario&accion=enviarTramite", {
                     method: "post",
                     body: DATA,
-
                 })
                 .then(response => {
                     if (response.ok) {
                         return response.json();
                     }
                 })
-
                 .then(data => {
-                    console.log(data);
+                    if (data !== null) {
+                        console.log(data);
+                        // Realiza la redirección después de procesar la respuesta
+                        window.location.href = "?ctrl=CtrlTramiteDocumentario&accion=inbox";
+                    } else {
+                        console.error("La respuesta data es null");
+                    }
 
                 })
+                .catch(error => {
+                    console.error("Ocurrió un error:", error);
+                });
 
-            ;
 
-            window.location.href = "?ctrl=CtrlTramiteDocumentario&accion=inbox"
 
 
         });
+        }
     </script>
 </body>
 

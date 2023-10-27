@@ -13,6 +13,7 @@ class TramiteDocumentario extends Modelo
     private $idOficinaDestino;
     private $idEstado;
 
+
     private $_tabla = 'tramites_documentarios';
     private $_vista = 'v_tramites_documentarios';
 
@@ -55,7 +56,7 @@ class TramiteDocumentario extends Modelo
             'fecha' => ($this->fecha === "null") ? "null" : "'$this->fecha'",
             'fecha_envio' => "'$this->fechaEnvio'",
             'fecha_recepcion' => ($this->fechaRecepcion === "null") ? "null" : "'$this->fechaRecepcion'",
-            
+
             'idDocumento' => "$this->idDocumento",
             'idOficinaOrigen' => ($this->idOficinaOrigen === "null") ? "null" :  "$this->idOficinaOrigen",
             'idOficinaDestino' => "$this->idOficinaDestino",
@@ -74,7 +75,7 @@ class TramiteDocumentario extends Modelo
             'fecha' => $this->fecha,
             'fecha_envio' => "'$this->fechaEnvio'",
             'fecha_recepcion' => "'$this->fechaRecepcion'",
-            
+
             'idDocumento' => "$this->idDocumento",
             'idOficinaOrigen' => "$this->idOficinaOrigen",
             'idOficinaDestino' => "$this->idOficinaDestino",
@@ -83,4 +84,6 @@ class TramiteDocumentario extends Modelo
         $wh = "id=$this->id";
         return $this->update($wh, $datos);
     }
+
+    
 }
