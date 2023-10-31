@@ -15,6 +15,10 @@ class Documento extends Modelo {
     private $ubicacion;
 
     private const CARPETA_SOLICITUDES = "solicitudes";
+    private const ARCHIVO_DESCRIPTION_NAME = "description";
+    private const ARCHIVO_EXTENSION = "html";
+    private const SEPARATOR = "__";
+    private const SEPARATOR_EXTENSION = ".";
 
     private $_tabla='documentos';
     private $_vista='v_documentos';
@@ -94,32 +98,47 @@ class Documento extends Modelo {
         return $this->update($wh,$datos);
     }
 
-    public static function crearCarpeta()
+    public static function crearCarpeta($datetime)
     {
-        $carpetaDestino = self::CARPETA_SOLICITUDES . DIRECTORY_SEPARATOR . $_SESSION["dni"];
+        $carpetaDestino = self::CARPETA_SOLICITUDES . DIRECTORY_SEPARATOR . $_SESSION["dni"] . DIRECTORY_SEPARATOR . $datetime;
 
-        if (!file_exists(
-            $carpetaDestino = self::CARPETA_SOLICITUDES . DIRECTORY_SEPARATOR . $_SESSION["dni"]
-        )) {
-            mkdir($carpetaDestino, 0755);
+        if (!file_exists($carpetaDestino)) {
+            mkdir($carpetaDestino, 0755, true);
         }
 
         return $carpetaDestino;
     }
 
-    public function moverDocumentos($adjunto, $carpetaDestino, $datetime)
+
+    public function crearArchivo($carpetaDestino, $contenido, $formatTime){
+
+        $nombreDeArchivo = self::ARCHIVO_DESCRIPTION_NAME . 
+        self::SEPARATOR . 
+        $formatTime . 
+        self::SEPARATOR_EXTENSION . 
+        self::ARCHIVO_EXTENSION;
+
+        $ubicacionArchivo = $carpetaDestino . DIRECTORY_SEPARATOR . $nombreDeArchivo;
+
+        file_put_contents($ubicacionArchivo, $contenido);
+        return  $ubicacionArchivo;
+        
+    }
+
+    public static function setFormat($datetime){
+        return $datetime->format("Y-m-d_H:i:s");
+    }
+
+    public function moverDocumentos($adjunto, $carpetaDestino, $format)
     {
         if (!empty($adjunto["tmp_name"]) and isset($carpetaDestino)) {
-            $format_datetime = $datetime->format("Y-m-d_H:i:s");
 
             $fileInfo = pathinfo($adjunto["name"]);
-            $separatorName = "__";
-            $separatorExtension = ".";
 
             $nuevoNombreDeArchivo = $fileInfo["filename"] .
-                $separatorName .
-                $format_datetime .
-                $separatorExtension .
+                self::SEPARATOR .
+                $format .
+                self::SEPARATOR_EXTENSION .
                 $fileInfo["extension"];
 
             $ubicacion = $carpetaDestino . DIRECTORY_SEPARATOR . $nuevoNombreDeArchivo;

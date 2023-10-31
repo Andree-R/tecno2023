@@ -201,22 +201,16 @@ class CtrlTramiteDocumentario extends Controlador
     public function mostrarEnviados()
     {
 
-        $oficinas = new Oficina();
+        $idTramite = $_GET["tramite"];
 
-        $dataOficinas = $oficinas->getTodo();
+        $tramite = new TramiteDocumentario();
 
-        $tipoDocumento = new TiposDocumentos();
-
-        $dataTipDoc = $tipoDocumento->getTodo();
-
-
+        $dataTramite = $tramite->editar()["data"][0];
 
         $datos = [
-            "title" => "Bandeja",
-            "oficinas" => $dataOficinas["data"],
-            "tipoDoc" => $dataTipDoc["data"],
+            "title" => "En proceso",
+            "dataTramite" => $dataTramite,
         ];
-        // var_dump($persona);exit;
 
         $home = $this->mostrar('tramitesDocumentarios/compose.php', $datos, true);
 
@@ -245,8 +239,7 @@ class CtrlTramiteDocumentario extends Controlador
         $datetime = new DateTime();
         $now = $datetime->format("Y-m-d H:i:s");
 
-        $carpetaDestino = Documento::crearCarpeta();
-
+        $carpetaDestino = Documento::crearCarpeta($now);
 
         $documento = new Documento(
             "null",
@@ -262,7 +255,10 @@ class CtrlTramiteDocumentario extends Controlador
             $carpetaDestino
         );
 
-        $documento->moverDocumentos($adjunto, $carpetaDestino, $datetime);
+        $formatTime = $documento->setFormat($datetime);
+        
+        $ubicacionDescription = $documento->crearArchivo($carpetaDestino, $descripcion, $formatTime);
+        $documento->moverDocumentos($adjunto, $carpetaDestino, $formatTime);
         $documento->guardar();
 
         if (isset($documento)) {
@@ -277,7 +273,8 @@ class CtrlTramiteDocumentario extends Controlador
                 $idDocumento,
                 "null",
                 $idOficinaDestino,
-                3
+                3,
+                $ubicacionDescription
             );
 
             $tramite->guardar();

@@ -148,7 +148,7 @@
                     if (data !== null) {
                         console.log(data);
                         // Realiza la redirección después de procesar la respuesta
-                        window.location.href = "?ctrl=CtrlTramiteDocumentario&accion=inbox";
+                        // window.location.href = "?ctrl=CtrlTramiteDocumentario&accion=inbox";
                     } else {
                         console.error("La respuesta data es null");
                     }

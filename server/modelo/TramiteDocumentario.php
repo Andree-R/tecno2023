@@ -12,7 +12,7 @@ class TramiteDocumentario extends Modelo
     private $idOficinaOrigen;
     private $idOficinaDestino;
     private $idEstado;
-
+    private $description;
 
     private $_tabla = 'tramites_documentarios';
     private $_vista = 'v_tramites_documentarios';
@@ -27,6 +27,7 @@ class TramiteDocumentario extends Modelo
         $idOficinaOrigen = null,
         $idOficinaDestino = null,
         $idEstado = null,
+        $description = null,
     ) {
         $this->id = $id;
         $this->fecha = $fecha;
@@ -37,6 +38,7 @@ class TramiteDocumentario extends Modelo
         $this->idOficinaOrigen = $idOficinaOrigen;
         $this->idOficinaDestino = $idOficinaDestino;
         $this->idEstado = $idEstado;
+        $this->description = $description;
 
         parent::__construct($this->_tabla);
     }
@@ -61,6 +63,7 @@ class TramiteDocumentario extends Modelo
             'idOficinaOrigen' => ($this->idOficinaOrigen === "null") ? "null" :  "$this->idOficinaOrigen",
             'idOficinaDestino' => "$this->idOficinaDestino",
             'idEstado' => "$this->idEstado",
+            'description' => "'$this->description'",
         ];
         return $this->insert($datos);
     }
@@ -80,6 +83,7 @@ class TramiteDocumentario extends Modelo
             'idOficinaOrigen' => "$this->idOficinaOrigen",
             'idOficinaDestino' => "$this->idOficinaDestino",
             'idEstado' => "$this->idEstado",
+            'description' => "'$this->description'",
         ];
         $wh = "id=$this->id";
         return $this->update($wh, $datos);

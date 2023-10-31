@@ -74,7 +74,7 @@ class EntidadBase
         $this->_sql->setTabla($this->_tabla);
         $this->_sql->setDatos($datos);
         $this->_sql->setComando("INSERT");
-        // echo $this->_sql;
+        // echo $this->_sql . "<br>";
         return $this->_bd->ejecutar($this->_sql);
     } 
  

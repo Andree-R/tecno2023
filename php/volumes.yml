@@ -2,6 +2,6 @@ version: "3.8"
 services:
   app_volumes:
     volumes: 
-      - ../server:/server/app
+      - ../server:/server/app_php
 
       - ../php/extensions:/extensions_cache

@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: mariadb:3306
--- Tiempo de generación: 26-10-2023 a las 18:25:21
+-- Tiempo de generación: 31-10-2023 a las 19:39:25
 -- Versión del servidor: 10.11.5-MariaDB-1:10.11.5+maria~ubu2204
--- Versión de PHP: 8.2.10
+-- Versión de PHP: 8.2.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -438,13 +438,6 @@ CREATE TABLE `documentos` (
   `idPersona` int(11) DEFAULT NULL,
   `ubicacion` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `documentos`
---
-
-INSERT INTO `documentos` (`id`, `idDocumento`, `descripcion`, `fecha`, `fecha_recepcion`, `idTipo`, `numero`, `asunto`, `idOficina`, `idPersona`, `ubicacion`) VALUES
-(25, NULL, '', '2023-10-26 13:22:17', '2023-10-26 13:22:17', 2, '', '', 2, 1, 'solicitudes/77788822/dbtecno2023__2023-10-26_13:22:17.sql');
 
 -- --------------------------------------------------------
 
@@ -1442,15 +1435,9 @@ CREATE TABLE `tramites_documentarios` (
   `fecha` timestamp NULL DEFAULT NULL,
   `fecha_envio` timestamp NULL DEFAULT NULL,
   `fecha_recepcion` timestamp NULL DEFAULT NULL,
-  `idEstado` int(11) DEFAULT NULL
+  `idEstado` int(11) DEFAULT NULL,
+  `description` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `tramites_documentarios`
---
-
-INSERT INTO `tramites_documentarios` (`id`, `idDocumento`, `idOficinaOrigen`, `idOficinaDestino`, `fecha`, `fecha_envio`, `fecha_recepcion`, `idEstado`) VALUES
-(3, 25, NULL, 2, NULL, '2023-10-26 13:22:17', NULL, 3);
 
 -- --------------------------------------------------------
 
@@ -2515,7 +2502,7 @@ ALTER TABLE `docentes`
 -- AUTO_INCREMENT de la tabla `documentos`
 --
 ALTER TABLE `documentos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
 
 --
 -- AUTO_INCREMENT de la tabla `editoriales`
@@ -2917,7 +2904,7 @@ ALTER TABLE `trabajos_requisitos`
 -- AUTO_INCREMENT de la tabla `tramites_documentarios`
 --
 ALTER TABLE `tramites_documentarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT de la tabla `turnos`
