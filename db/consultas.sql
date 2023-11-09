@@ -75,6 +75,7 @@ CREATE VIEW v_tramites_documentarios as
 SELECT 
 td.*,
 d.numero as documento,
+d.ubicacion,
 ofo.nombre as oficinaOrigen,
 ofd.nombre as oficinaDestino,
 et.estado

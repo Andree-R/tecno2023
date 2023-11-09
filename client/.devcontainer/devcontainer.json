@@ -1,7 +1,7 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/docker-existing-docker-compose
 {
-	"name": "Dev Server Project",
+	"name": "Dev Client Project",
 
 	// Update the 'dockerComposeFile' list if you have more compose files or use different names.
 	// The .devcontainer/docker-compose.yml file contains any overrides you need/want to make.
@@ -17,7 +17,7 @@
 	"shutdownAction": "none",
 	// The optional 'workspaceFolder' property is the path VS Code should open by default when
 	// connected. This is typically a file mount in .devcontainer/docker-compose.yml
-	"workspaceFolder": "/server/app_php",
+	"workspaceFolder": "/client/app_angular",
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
@@ -38,32 +38,38 @@
 	"customizations": {
 		"vscode": {
 			"extensions": [
-				"xdebug.php-debug",
-				"MehediDracula.php-namespace-resolver",
-				"hakcorp.php-awesome-snippets",
-				"st-pham.php-refactor-tool",
-				"bmewburn.vscode-intelephense-client",
-				"esbenp.prettier-vscode",
-				"RapidAPI.vscode-rapidapi-client",
-				"rapidapi.vscode-services",
-				"streetsidesoftware.code-spell-checker-spanish",
-				"TabNine.tabnine-vscode",
-				"redhat.vscode-xml",
-				"onecentlin.laravel5-snippets",
-				"onecentlin.laravel-blade",
-				"shufo.vscode-blade-formatter",
-				"kisstkondoros.vscode-gutter-preview",
-				"bradgashler.htmltagwrap",
-				"rifi2k.format-html-in-php",
-				"evan-buss.font-switcher",
-				"usernamehw.errorlens",
-				"yo1dog.cursor-align",
-				"streetsidesoftware.code-spell-checker",
-				"aaron-bond.better-comments",
+				"Angular.ng-template",
+				"johnpapa.Angular2",
+				"cyrilletuzi.angular-schematics",
+				"sp90.angular-control-flow-snippets",
+				"sukumo28.wav-preview",
 				"kevinkyang.auto-comment-blocks",
 				"formulahendry.auto-rename-tag",
-				"formulahendry.auto-close-tag",
-				"JannisX11.batch-rename-extension"
+				"JannisX11.batch-rename-extension",
+				"aaron-bond.better-comments",
+				"streetsidesoftware.code-spell-checker",
+				"WallabyJs.console-ninja",
+				"kisstkondoros.csstriggers",
+				"yo1dog.cursor-align",
+				"usernamehw.errorlens",
+				"evan-buss.font-switcher",
+				"mhutchie.git-graph",
+				"eamodio.gitlens",
+				"bradgashler.htmltagwrap",
+				"kisstkondoros.vscode-gutter-preview",
+				"Meezilla.json",
+				"AykutSarac.jsoncrack-vscode",
+				"Cardinal90.multi-cursor-case-preserve",
+				"esbenp.prettier-vscode",
+				"jakob101.RelativePath",
+				"streetsidesoftware.code-spell-checker-spanish",
+				"MS-CEINTL.vscode-language-pack-es",
+				"jock.svg",
+				"SimonSiefke.svg-preview",
+				"fnando.switch-case",
+				"bradlc.vscode-tailwindcss",
+				"vscode-icons-team.vscode-icons",
+				"tomoki1207.pdf"
 			]
 		}
 	}

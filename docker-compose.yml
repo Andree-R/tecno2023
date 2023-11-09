@@ -12,11 +12,10 @@ services:
     command: sh -c "ng serve --host 0.0.0.0 --port 4200 & php-fpm"
     restart: "no"
     volumes:
-      # - ./php/php.ini:/usr/local/etc/php/conf.d/php.ini
-      # - ./php/php.ini:/usr/local/etc/php/php.ini-production
       # Redefinición del puerto de la imagen php:8.2-fpm-alpine 
       - ./php/zz-docker.conf:/usr/local/etc/php-fpm.d/zz-docker.conf
       # Configuración del php-fpm
+      - ./php/php.ini:/usr/local/etc/php/conf.d/php.ini
       - ./php/www.conf:/usr/local/etc/php-fpm.d/www.conf
     # Extension de la configuracion del servicio
     extends:

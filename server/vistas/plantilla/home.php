@@ -117,6 +117,38 @@
     <script src="/assets/js/demo.js"></script>
 
 
+    <script>
+        $(function() {
+            //Enable check and uncheck all functionality
+            $('.checkbox-toggle').click(function() {
+                var clicks = $(this).data('clicks')
+                if (clicks) {
+                    //Uncheck all checkboxes
+                    $('.mailbox-messages input[type=\'checkbox\']').prop('checked', false)
+                    $('.checkbox-toggle .far.fa-check-square').removeClass('fa-check-square').addClass('fa-square')
+                } else {
+                    //Check all checkboxes
+                    $('.mailbox-messages input[type=\'checkbox\']').prop('checked', true)
+                    $('.checkbox-toggle .far.fa-square').removeClass('fa-square').addClass('fa-check-square')
+                }
+                $(this).data('clicks', !clicks)
+            })
+
+            //Handle starring for font awesome
+            $('.mailbox-star').click(function(e) {
+                e.preventDefault()
+                //detect type
+                var $this = $(this).find('a > i')
+                var fa = $this.hasClass('fa')
+
+                //Switch states
+                if (fa) {
+                    $this.toggleClass('fa-star')
+                    $this.toggleClass('fa-star-o')
+                }
+            })
+        })
+    </script>
 
 
     <?php require_once './vistas/plantilla/js.php'; ?>
@@ -126,43 +158,113 @@
 
         if (form2) {
             form2.addEventListener('submit', function(e) {
-            e.preventDefault();
+                e.preventDefault();
 
-            const DATA = new FormData(form2);
+                const DATA = new FormData(form2);
 
 
-            for (var pair of DATA.entries()) {
-                console.log(`Campo: ${pair[0]}, Valor: ${pair[1]}`);
+                for (var pair of DATA.entries()) {
+                    console.log(`Campo: ${pair[0]}, Valor: ${pair[1]}`);
+                }
+
+                fetch("?ctrl=CtrlTramiteDocumentario&accion=enviarTramite", {
+                        method: "post",
+                        body: DATA,
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            return response.json();
+                        }
+                    })
+                    .then(data => {
+                        if (data !== null) {
+                            console.log("Datos:" + data);
+                            // Realiza la redirección después de procesar la respuesta
+                            window.location.href = "?ctrl=CtrlTramiteDocumentario&accion=inbox";
+                        } else {
+                            console.error("La respuesta data es null");
+                        }
+
+                    })
+                    .catch(error => {
+                        console.error("Ocurrió un error:", error);
+                    });
+            });
+        }
+    </script>
+
+    <script>
+        const inbox = document.querySelector("table");
+
+        inbox.addEventListener("click", function(event) {
+
+            console.log("click en: " + event.target.innerHTML);
+            // Verifica que el objetivo del evento sea un elemento 'tr'
+            let targetElement = event.target;
+
+            // Recorre los elementos padres hasta encontrar un 'tr' o llegar al elemento raíz 'table'
+            while (targetElement !== inbox) {
+                if (targetElement.tagName === "TR") {
+                    const primerHijo = targetElement.firstElementChild;
+                    if (primerHijo && primerHijo.tagName === "TD") {
+                        // Busca el primer hijo 'td' y luego busca un 'input' dentro de él
+                        const input = primerHijo.querySelector('input[id][value]');
+                        if (input) {
+                            // Obtén los atributos 'id' y 'value' del 'input'
+                            const idAtributo = input.getAttribute('id');
+                            const valueAtributo = input.getAttribute('value');
+                            console.log("ID del input:", idAtributo);
+                            console.log("Valor del input:", valueAtributo);
+                            window.location.href = "?ctrl=CtrlTramiteDocumentario&accion=mostrarTramite&tramite=" + valueAtributo;
+
+
+                            
+                            // mostrarTramite(idAtributo, valueAtributo);
+                            
+                        }
+                    }
+                    return; // Rompe el bucle
+                }
+                targetElement = targetElement.parentNode;
+
+
+
             }
 
-            fetch("?ctrl=CtrlTramiteDocumentario&accion=enviarTramite", {
-                    method: "post",
-                    body: DATA,
-                })
-                .then(response => {
-                    if (response.ok) {
-                        return response.json();
-                    }
-                })
-                .then(data => {
-                    if (data !== null) {
-                        console.log(data);
-                        // Realiza la redirección después de procesar la respuesta
-                        // window.location.href = "?ctrl=CtrlTramiteDocumentario&accion=inbox";
-                    } else {
-                        console.error("La respuesta data es null");
-                    }
+            function mostrarTramite(id, value){
 
-                })
-                .catch(error => {
-                    console.error("Ocurrió un error:", error);
-                });
+                const DATA = {
+                    id: id,
+                    value: value,
+                }
 
 
 
+                fetch("?ctrl=CtrlTramiteDocumentario&accion=mostrarTramite", {
+                        method: "post",
+                        body: DATA,
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            return response.json();
+                        }
+                    })
+                    .then(data => {
+                        if (data !== null) {
+                            console.log("Datos:" + data);
+                            // Realiza la redirección después de procesar la respuesta
+                            window.location.href = "?ctrl=CtrlTramiteDocumentario&accion=inbox";
+                        } else {
+                            console.error("La respuesta data es null");
+                        }
+
+                    })
+                    .catch(error => {
+                        console.error("Ocurrió un error:", error);
+                    });
+            }
 
         });
-        }
     </script>
 </body>
 

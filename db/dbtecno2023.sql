@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: mariadb:3306
--- Tiempo de generación: 31-10-2023 a las 19:39:25
+-- Tiempo de generación: 09-11-2023 a las 20:08:38
 -- Versión del servidor: 10.11.5-MariaDB-1:10.11.5+maria~ubu2204
 -- Versión de PHP: 8.2.11
 
@@ -1594,7 +1594,9 @@ CREATE TABLE `v_tramites_documentarios` (
 ,`fecha_envio` timestamp
 ,`fecha_recepcion` timestamp
 ,`idEstado` int(11)
+,`description` varchar(100)
 ,`documento` varchar(20)
+,`ubicacion` varchar(100)
 ,`oficinaOrigen` varchar(80)
 ,`oficinaDestino` varchar(80)
 ,`estado` varchar(30)
@@ -1661,7 +1663,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`%` SQL SECURITY DEFINER VIEW `v_servi
 --
 DROP TABLE IF EXISTS `v_tramites_documentarios`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`%` SQL SECURITY DEFINER VIEW `v_tramites_documentarios`  AS SELECT `td`.`id` AS `id`, `td`.`idDocumento` AS `idDocumento`, `td`.`idOficinaOrigen` AS `idOficinaOrigen`, `td`.`idOficinaDestino` AS `idOficinaDestino`, `td`.`fecha` AS `fecha`, `td`.`fecha_envio` AS `fecha_envio`, `td`.`fecha_recepcion` AS `fecha_recepcion`, `td`.`idEstado` AS `idEstado`, `d`.`numero` AS `documento`, `ofo`.`nombre` AS `oficinaOrigen`, `ofd`.`nombre` AS `oficinaDestino`, `et`.`estado` AS `estado` FROM ((((`tramites_documentarios` `td` left join `documentos` `d` on(`d`.`id` = `td`.`idDocumento`)) left join `oficinas` `ofo` on(`ofo`.`id` = `td`.`idOficinaOrigen`)) left join `oficinas` `ofd` on(`ofd`.`id` = `td`.`idOficinaDestino`)) left join `estados_tramites` `et` on(`et`.`id` = `td`.`idEstado`)) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`%` SQL SECURITY DEFINER VIEW `v_tramites_documentarios`  AS SELECT `td`.`id` AS `id`, `td`.`idDocumento` AS `idDocumento`, `td`.`idOficinaOrigen` AS `idOficinaOrigen`, `td`.`idOficinaDestino` AS `idOficinaDestino`, `td`.`fecha` AS `fecha`, `td`.`fecha_envio` AS `fecha_envio`, `td`.`fecha_recepcion` AS `fecha_recepcion`, `td`.`idEstado` AS `idEstado`, `td`.`description` AS `description`, `d`.`numero` AS `documento`, `d`.`ubicacion` AS `ubicacion`, `ofo`.`nombre` AS `oficinaOrigen`, `ofd`.`nombre` AS `oficinaDestino`, `et`.`estado` AS `estado` FROM ((((`tramites_documentarios` `td` left join `documentos` `d` on(`d`.`id` = `td`.`idDocumento`)) left join `oficinas` `ofo` on(`ofo`.`id` = `td`.`idOficinaOrigen`)) left join `oficinas` `ofd` on(`ofd`.`id` = `td`.`idOficinaDestino`)) left join `estados_tramites` `et` on(`et`.`id` = `td`.`idEstado`)) ;
 
 --
 -- Índices para tablas volcadas
@@ -2502,7 +2504,7 @@ ALTER TABLE `docentes`
 -- AUTO_INCREMENT de la tabla `documentos`
 --
 ALTER TABLE `documentos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
 
 --
 -- AUTO_INCREMENT de la tabla `editoriales`
@@ -2904,7 +2906,7 @@ ALTER TABLE `trabajos_requisitos`
 -- AUTO_INCREMENT de la tabla `tramites_documentarios`
 --
 ALTER TABLE `tramites_documentarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT de la tabla `turnos`

@@ -3,6 +3,7 @@ abstract class Index
 {
     public static function ejecutar(){
         // $rolesManager = RolesManager::getInstance();
+        date_default_timezone_set("America/Lima");
 
         $miControlador = isset ($_GET['ctrl'])?$_GET['ctrl']:'CtrlPrincipal';
         $accion = isset($_REQUEST['accion'])?$_REQUEST['accion']:'index';

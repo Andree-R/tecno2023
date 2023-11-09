@@ -11,6 +11,11 @@ require_once "./vistas/tramitesDocumentarios/breadcrumb.php";
     require_once "./vistas/tramitesDocumentarios/carpetas.php";
 
     ?>
+    <style>
+      tbody td:not(td:first-child){
+        cursor: pointer;
+      }
+    </style>
 
     <div class="col-md-9">
       <div class="card card-primary card-outline">
@@ -50,7 +55,7 @@ require_once "./vistas/tramitesDocumentarios/breadcrumb.php";
               <i class="fas fa-sync-alt"></i>
             </button>
             <div class="float-right">
-              1-50/200
+              1-10/200
               <div class="btn-group">
                 <button type="button" class="btn btn-default btn-sm">
                   <i class="fas fa-chevron-left"></i>
@@ -63,32 +68,58 @@ require_once "./vistas/tramitesDocumentarios/breadcrumb.php";
             </div>
 
           </div>
+
           <div class="table-responsive mailbox-messages">
             <table class="table table-hover table-striped">
               <tbody>
 
                 <?php
+                $check = 1;
+
+                $fechaActual = new DateTime();
+
+
+                function interval($interval)
+                {
+                  if ($interval->y > 0) {
+                    return $interval->format("%y años atrás");
+                  } elseif ($interval->m > 0) {
+                    return $interval->format("%m meses atrás");
+                  } elseif ($interval->d > 0) {
+                    return $interval->format("%d días atrás");
+                  } elseif ($interval->h > 0) {
+                    return $interval->format("%h horas atrás");
+                  } elseif ($interval->i > 0) {
+                    return $interval->format("%i minutos atrás");
+                  } else {
+                    return "Hace unos segundos";
+                  }
+                }
+
+
                 if (is_array($tramites)) {
                   foreach ($tramites as $t) {
-                    # code..
-
                 ?>
-                    <tr>
-                      <td>
-                        <div class="icheck-primary">
-                          <input type="checkbox" value="" id="check1">
-                          <label for="check1"></label>
-                        </div>
-                      </td>
-                      <td class="mailbox-star"><a href="#"><i class="fas fa-star text-warning"></i></a></td>
-                      <td class="mailbox-name"><a href="read-mail.html"><?= $_SESSION["nombre"] ?></a></td>
-                      <td class="mailbox-subject"><b>AdminLTE 3.0 Issue</b> - Trying to find a solution to this problem...
-                      </td>
-                      <td class="mailbox-attachment"></td>
-                      <td class="mailbox-date">5 mins ago</td>
-                    </tr>
+                      <tr>
+                        <td>
+                          <div class="icheck-primary">
+                            <input type="checkbox" value="<?= $t["id"] ?>" id="check<?= $check ?>">
+                            <label for="check<?= $check ?>"></label>
+                          </div>
+                        </td>
+                        <td class="mailbox-star"><a href="#"><i class="fas fa-star text-warning"></i></a></td>
+                        <td class="mailbox-name"><?= $t["estado"] ?></td>
+                        <td class="mailbox-subject"><b>AdminLTE 3.0 Issue</b> - Trying to find a solution to this problem...
+                        </td>
+                        <td class="mailbox-attachment"></td>
+                        <td class="mailbox-date">
+                          <?= interval($fechaActual->diff(new DateTime($t["fecha_envio"])))
+                          ?>
+                        </td>
+                      </tr>
 
                   <?php
+                    $check++;
                   }
                 } else {
                   ?>
@@ -104,7 +135,7 @@ require_once "./vistas/tramitesDocumentarios/breadcrumb.php";
                     <td class="mailbox-subject"><b>Sin nuevos mensajes</b> - Trying to find a solution to this problem...
                     </td>
                     <td class="mailbox-attachment"></td>
-                    <td class="mailbox-date">5 mins ago</td>
+                    <td class="mailbox-date">Hace unos segundos</td>
                   </tr>
                 <?php
                 }
@@ -168,7 +199,7 @@ require_once "./vistas/tramitesDocumentarios/breadcrumb.php";
               <i class="fas fa-sync-alt"></i>
             </button>
             <div class="float-right">
-              1-50/200
+              1-10/200
               <div class="btn-group">
                 <button type="button" class="btn btn-default btn-sm">
                   <i class="fas fa-chevron-left"></i>

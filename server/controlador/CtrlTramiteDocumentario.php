@@ -147,13 +147,15 @@ class CtrlTramiteDocumentario extends Controlador
     {
 
         $tramites = new TramiteDocumentario();
-        $dataTramites = $tramites->getTodo();
+
+        $dataTramites = $tramites->getTodo()["data"] != null ? array_reverse($tramites->getTodo()["data"]) : $tramites->getTodo()["data"];
+
 
         $datos = [
             "title" => "Bandeja",
             "solicitud" => "Enviar solicitud",
             "url" => "?ctrl=CtrlTramiteDocumentario&accion=solicitud",
-            "tramites" => $dataTramites["data"],
+            "tramites" => $dataTramites,
 
         ];
 
@@ -198,21 +200,33 @@ class CtrlTramiteDocumentario extends Controlador
         $this->mostrar('./plantilla/home.php', $datos);
     }
 
-    public function mostrarEnviados()
+    public function mostrarTramite()
     {
 
         $idTramite = $_GET["tramite"];
 
-        $tramite = new TramiteDocumentario();
-
+        $tramite = new TramiteDocumentario($idTramite);
+        
         $dataTramite = $tramite->editar()["data"][0];
 
+        
+        if (file_exists($dataTramite["ubicacion"])) {
+            $adjuntos = readfile($dataTramite["ubicacion"], true);
+            var_dump("<pre>", $adjuntos, "</pre>");
+        }
+
+
+        // var_dump("<pre>", $dataTramite, "</pre>");exit;
+
+        
         $datos = [
-            "title" => "En proceso",
+            "title" => "Tramite",
+            "solicitud" => "Volver a la bandeja",
+            "url" => "?ctrl=CtrlTramiteDocumentario&accion=inbox",
             "dataTramite" => $dataTramite,
         ];
 
-        $home = $this->mostrar('tramitesDocumentarios/compose.php', $datos, true);
+        $home = $this->mostrar('tramitesDocumentarios/read_tramite.php', $datos, true);
 
         $datos = [
             'contenido' => $home,
@@ -224,7 +238,6 @@ class CtrlTramiteDocumentario extends Controlador
     public function enviarTramite()
     {
 
-        date_default_timezone_set("America/Lima");
 
         // var_dump("<pre>", $_POST, "</pre>");
         // var_dump("<pre>", $_FILES, "</pre>");exit;

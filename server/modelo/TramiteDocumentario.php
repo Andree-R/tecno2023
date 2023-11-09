@@ -69,6 +69,8 @@ class TramiteDocumentario extends Modelo
     }
     public function editar()
     {
+        $this->setTabla($this->_vista);
+
         return $this->getById($this->id);
     }
     public function actualizar()

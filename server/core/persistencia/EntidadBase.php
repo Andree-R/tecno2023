@@ -29,6 +29,8 @@ class EntidadBase
 
     public function getAll(){
         $this->_sql->setTabla($this->_tabla);
+        // echo $this->_sql;exit;
+
         return $this->_bd->ejecutar($this->_sql);  
     }
      
