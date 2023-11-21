@@ -146,7 +146,7 @@
     $('#imprimirPDF').click(function(e) {
       e.preventDefault();
       let link = $(this).html();
-      alert(link)
+      // alert(link)
       $(this).html('<i class="fa fa-spinner"></i> Descargando...');
       var datos = <?= json_encode(isset($data) ? $data : ''); ?>;
       let titulo = $('#titulo').html();
@@ -165,17 +165,18 @@
       var doc = new jsPDF('p')
       // doc.addImage(logo, 'JPEG', 10, 10,20,22);
 
-      doc.setFontSize(20)
-      doc.setTextColor(255, 0, 0) // Rojo
-      doc.text(35, 25, titulo)
+      // doc.setFontSize(20)
+      // doc.setTextColor(255, 0, 0) // Rojo
+      // doc.text(35, 25, titulo)
       let columnas = []
-      columnas.push(Object.keys(datos[0]))
+
+      // columnas.push(Object.keys(datos[0]))
 
       let data = []
 
-      for (let i in datos) {
-        data.push(Object.values(datos[i]));
-      }
+      // for (let i in datos) {
+      //   data.push(Object.values(datos[i]));
+      // }
 
       doc.autoTable({
         head: columnas,
@@ -185,7 +186,7 @@
         }
       })
       $('#imprimirPDF').html(link);
-      doc.save(titulo)
+      doc.save("titulo")
 
     });
 

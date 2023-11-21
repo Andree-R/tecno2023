@@ -1,5 +1,13 @@
 <div class="col-md-3">
-        <a href="<?= $url ?>" class="btn btn-primary btn-block mb-3"><?= $solicitud ?></a>
+    <?php 
+    if ($_SESSION["perfil"] != 4) {
+      ?>
+      <a href="<?= $url ?>" class="btn btn-primary btn-block mb-3"><?= $solicitud ?></a>
+      <?php 
+    }
+    
+    ?>
+        
 
         <div class="card">
           <div class="card-header">

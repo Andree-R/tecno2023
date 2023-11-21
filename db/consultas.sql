@@ -74,6 +74,20 @@ ON p.id = sp.id
 CREATE VIEW v_tramites_documentarios as
 SELECT 
 td.*,
+tt.tipo,
+et.estado,
+CONCAT(p.nombres," ",p.apellidos) as solicitante
+FROM tramites_documentarios td
+INNER JOIN personas p
+on p.id = td.idPersona
+LEFT JOIN estados_tramites et
+on et.id = td.idEstado
+LEFT JOIN tipos_tramites tt
+on tt.id = td.idTipoTramite
+
+SELECT 
+td.*,
+CONCAT(p.nombres," ",p.apellidos) as solicitante,
 d.numero as documento,
 d.ubicacion,
 ofo.nombre as oficinaOrigen,
@@ -89,7 +103,10 @@ LEFT JOIN oficinas ofd
 ON ofd.id = td.idOficinaDestino
 LEFT JOIN estados_tramites et
 on et.id = td.idEstado
+LEFT JOIN personas p
+on p.id = d.idPersona
 ;
+
 
 CREATE VIEW v_servidores_publicos as
 SELECT

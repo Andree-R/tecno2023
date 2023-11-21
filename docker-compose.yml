@@ -17,13 +17,11 @@ services:
       # Configuración del php-fpm
       - ./php/php.ini:/usr/local/etc/php/conf.d/php.ini
       - ./php/www.conf:/usr/local/etc/php-fpm.d/www.conf
-    # Extension de la configuracion del servicio
-    extends:
-      # Nombre del archivo del que extendera el servicio
-      file: ./php/volumes.yml
-      # Nombre del servicio del que extiende
-      service: app_volumes
-    # Servicios que se deben iniciar antes que tecno_app
+
+      - ./server:/server/app_php
+      - ./php/extensions:/extensions_cache
+
+      # - ./client/src:/client/app_angular/src
     depends_on:
       - mariadb
 
@@ -36,7 +34,6 @@ services:
     restart: "no"
     # Configuracion de puertos de acceso host:container_network
     ports:
-      - "4200:4200"
       - "8181:80"
       - "450:443"
     volumes:
@@ -56,7 +53,7 @@ services:
     image: mariadb:lts
     container_name: tecno_mariadb
     # Configuracion de puertos de acceso host:container_network
-    ports: 
+    ports:
       - "3309:3306"
     environment:
       # Configuracion de variables de entorno de mariadb

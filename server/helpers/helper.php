@@ -68,19 +68,13 @@ abstract class Helper
           'CtrlCtaContable'=>'Cuentas Contables',
           'CtrlConceptoPago'=>'Conceptos de Pago',
           'CtrlEstudiante'=>'Estudiante',
-          "CtrlDocumento&accion=boardDocumentos" => "Board Documentos",
+          'CtrlPersona&accion=mostrarUsuarios'=>'Supervisar Actividad',
+        //   "CtrlDocumento&accion=boardDocumentos" => "Board Documentos",
       ]; 
   }
   private static function getMenuTramiteAdministrativo(){
       return [
-          'CtrlAnexoDocumento' => 'Anexos',
-          'CtrlTiposDocumentos' => 'Tipos de Documentos',
-          'CtrlOficina' => 'Oficinas',
-          'CtrlDocumento' => 'Documentos',
-          'CtrlTramiteDocumentario' => 'Tramites documentarios',
-          'CtrlEstadosTramites' => 'Estados de tramites',
-
-
+        'CtrlTramiteDocumentario&accion=mostrarSolicitudes'=>'Bandeja',
       ]; 
   }
   private static function getMenuTramiteDocente(){
@@ -93,9 +87,7 @@ abstract class Helper
   private static function getMenuTramiteEstudiante(){
       return [
           
-          'CtrlTramiteDocumentario&accion=inbox'=>'Bandeja',
-          'CtrlEstado'=>'Estados',
-          'CtrlEstado'=>'Estados',
+          'CtrlTramiteDocumentario&accion=mostrarSolicitudes'=>'Bandeja',
          
       ]; 
   }

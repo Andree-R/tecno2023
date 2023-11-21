@@ -15,9 +15,13 @@
     <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assets/css/jquery-toast.css">
     <link rel="stylesheet" href="/assets/css/adminlte.min.css">
+    <link rel="stylesheet" href="/assets/css/toastr.min.css">
     <!-- <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script> -->
 
     <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/jsPDF/jspdf.debug.js"></script>
+    <script src="/assets/js/jsPDF/jspdf.plugin.autotable3.1.1.min.js"></script>
+
 
 
     <style>
@@ -116,6 +120,8 @@
 
     <script src="/assets/js/demo.js"></script>
 
+    <script src="/assets/js/toastr.min.js"></script>
+
 
     <script>
         $(function() {
@@ -164,10 +170,10 @@
 
 
                 for (var pair of DATA.entries()) {
-                    console.log(`Campo: ${pair[0]}, Valor: ${pair[1]}`);
+                    // console.log(`Campo: ${pair[0]}, Valor: ${pair[1]}`);
                 }
 
-                fetch("?ctrl=CtrlTramiteDocumentario&accion=enviarTramite", {
+                fetch("?ctrl=CtrlTramiteDocumentario&accion=enviarSolicitud", {
                         method: "post",
                         body: DATA,
                     })
@@ -177,10 +183,17 @@
                         }
                     })
                     .then(data => {
-                        if (data !== null) {
-                            console.log("Datos:" + data);
+                        console.log(data);
+                        if (data.length > 0) {
+                            for (const i of data) {
+                                toastr.error(i);
+                            }
+                        }
+
+                        if (data !== null && data.length < 1) {
+                            // console.log("Datos:" + data);
                             // Realiza la redirección después de procesar la respuesta
-                            window.location.href = "?ctrl=CtrlTramiteDocumentario&accion=inbox";
+                            window.location.href = "?ctrl=CtrlTramiteDocumentario&accion=mostrarSolicitudes";
                         } else {
                             console.error("La respuesta data es null");
                         }
@@ -196,75 +209,83 @@
     <script>
         const inbox = document.querySelector("table");
 
-        inbox.addEventListener("click", function(event) {
+        if (inbox) {
+            inbox.addEventListener("click", function(event) {
 
-            console.log("click en: " + event.target.innerHTML);
-            // Verifica que el objetivo del evento sea un elemento 'tr'
-            let targetElement = event.target;
+                console.log("click en: " + event.target.innerHTML);
+                // Verifica que el objetivo del evento sea un elemento 'tr'
+                let targetElement = event.target;
 
-            // Recorre los elementos padres hasta encontrar un 'tr' o llegar al elemento raíz 'table'
-            while (targetElement !== inbox) {
-                if (targetElement.tagName === "TR") {
-                    const primerHijo = targetElement.firstElementChild;
-                    if (primerHijo && primerHijo.tagName === "TD") {
-                        // Busca el primer hijo 'td' y luego busca un 'input' dentro de él
-                        const input = primerHijo.querySelector('input[id][value]');
-                        if (input) {
-                            // Obtén los atributos 'id' y 'value' del 'input'
-                            const idAtributo = input.getAttribute('id');
-                            const valueAtributo = input.getAttribute('value');
-                            console.log("ID del input:", idAtributo);
-                            console.log("Valor del input:", valueAtributo);
-                            window.location.href = "?ctrl=CtrlTramiteDocumentario&accion=mostrarTramite&tramite=" + valueAtributo;
+                // Recorre los elementos padres hasta encontrar un 'tr' o llegar al elemento raíz 'table'
+                while (targetElement !== inbox) {
+                    if (targetElement.tagName === "TR") {
+                        const primerHijo = targetElement.firstElementChild;
+                        if (primerHijo && primerHijo.tagName === "TD") {
+                            // Busca el primer hijo 'td' y luego busca un 'input' dentro de él
+                            const input = primerHijo.querySelector('input[id][value]');
+                            if (input) {
+                                // Obtén los atributos 'id' y 'value' del 'input'
+                                const idAtributo = input.getAttribute('id');
+                                const valueAtributo = input.getAttribute('value');
+                                console.log("ID del input:", idAtributo);
+                                console.log("Valor del input:", valueAtributo);
+                                if (valueAtributo) {
+                                    window.location.href = "?ctrl=CtrlTramiteDocumentario&accion=mostrarDetalleTramite&tramite=" + valueAtributo;
+                                }
 
 
-                            
-                            // mostrarTramite(idAtributo, valueAtributo);
-                            
+
+                                // mostrarTramite(idAtributo, valueAtributo);
+
+                            }
                         }
+                        return; // Rompe el bucle
                     }
-                    return; // Rompe el bucle
-                }
-                targetElement = targetElement.parentNode;
+                    targetElement = targetElement.parentNode;
 
 
 
-            }
-
-            function mostrarTramite(id, value){
-
-                const DATA = {
-                    id: id,
-                    value: value,
                 }
 
+                function mostrarTramite(id, value) {
+
+                    const DATA = {
+                        id: id,
+                        value: value,
+                    }
 
 
-                fetch("?ctrl=CtrlTramiteDocumentario&accion=mostrarTramite", {
-                        method: "post",
-                        body: DATA,
-                    })
-                    .then(response => {
-                        if (response.ok) {
-                            return response.json();
-                        }
-                    })
-                    .then(data => {
-                        if (data !== null) {
-                            console.log("Datos:" + data);
-                            // Realiza la redirección después de procesar la respuesta
-                            window.location.href = "?ctrl=CtrlTramiteDocumentario&accion=inbox";
-                        } else {
-                            console.error("La respuesta data es null");
-                        }
 
-                    })
-                    .catch(error => {
-                        console.error("Ocurrió un error:", error);
-                    });
-            }
+                    fetch("?ctrl=CtrlTramiteDocumentario&accion=mostrarTramite", {
+                            method: "post",
+                            body: DATA,
+                        })
+                        .then(response => {
+                            if (response.ok) {
+                                return response.json();
+                            }
+                        })
+                        .then(data => {
+                            if (data !== null) {
+                                console.log("Datos:" + data);
+                                // Realiza la redirección después de procesar la respuesta
+                                window.location.href = "?ctrl=CtrlTramiteDocumentario&accion=inbox";
+                            } else {
+                                console.error("La respuesta data es null");
+                            }
 
-        });
+                        })
+                        .catch(error => {
+                            console.error("Ocurrió un error:", error);
+                        });
+                }
+
+            });
+        }
+    </script>
+
+    <script>
+        
     </script>
 </body>
 

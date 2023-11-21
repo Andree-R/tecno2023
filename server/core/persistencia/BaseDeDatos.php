@@ -9,6 +9,7 @@ class BaseDeDatos {
         $this->_manejador  = $manejador;
     }
     public function ejecutar(SQL $sql){
+
         $this->_manejador->conectar();
         
         $retorno = $this->_manejador->traerDatos($sql);

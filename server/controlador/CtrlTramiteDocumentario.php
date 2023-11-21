@@ -6,6 +6,7 @@ require_once './modelo/Documento.php';
 require_once './modelo/Oficina.php';
 require_once './modelo/EstadosTramites.php';
 require_once './modelo/TiposDocumentos.php';
+require_once './modelo/TiposTramites.php';
 require_once './modelo/Persona.php';
 
 class CtrlTramiteDocumentario extends Controlador
@@ -143,18 +144,19 @@ class CtrlTramiteDocumentario extends Controlador
         $this->index();
     }
 
-    public function inbox()
+    public function mostrarSolicitudes()
     {
 
         $tramites = new TramiteDocumentario();
 
         $dataTramites = $tramites->getTodo()["data"] != null ? array_reverse($tramites->getTodo()["data"]) : $tramites->getTodo()["data"];
 
-
+        // var_dump("<pre>", $tramites->getTodo(), "</pre>");exit;
+        
         $datos = [
-            "title" => "Bandeja",
-            "solicitud" => "Enviar solicitud",
-            "url" => "?ctrl=CtrlTramiteDocumentario&accion=solicitud",
+            "title" => "",
+            "solicitud" => "Nueva solicitud",
+            "url" => "?ctrl=CtrlTramiteDocumentario&accion=nuevaSolicitud",
             "tramites" => $dataTramites,
 
         ];
@@ -168,7 +170,7 @@ class CtrlTramiteDocumentario extends Controlador
         $this->mostrar('./plantilla/home.php', $datos);
     }
 
-    public function solicitud()
+    public function nuevaSolicitud()
     {
 
         $oficinas = new Oficina();
@@ -178,14 +180,17 @@ class CtrlTramiteDocumentario extends Controlador
         $tipoDocumento = new TiposDocumentos();
         $dataTipDoc = $tipoDocumento->getTodo();
 
+        $tipTramite = new TiposTramites();
 
+        $dataTipTramites = $tipTramite->getTodo();
 
         $datos = [
-            "title" => "Solicitud",
+            "title" => "",
             "solicitud" => "Volver a la bandeja",
-            "url" => "?ctrl=CtrlTramiteDocumentario&accion=inbox",
+            "url" => "?ctrl=CtrlTramiteDocumentario&accion=mostrarSolicitudes",
             "oficinas" => $dataOficinas["data"],
             "tipoDoc" => $dataTipDoc["data"],
+            "tipTramites" => $dataTipTramites["data"],
         ];
         // var_dump($persona);exit;
 
@@ -200,113 +205,120 @@ class CtrlTramiteDocumentario extends Controlador
         $this->mostrar('./plantilla/home.php', $datos);
     }
 
-    public function mostrarTramite()
+    public function enviarSolicitud()
+    {
+
+        $idOficinaDestino = $_POST["oficina"];
+        $idtipTramites = $_POST["tipTramites"];
+        $descripcion = $_POST["descripcion"];
+        $files = $_FILES;
+
+        $response = [];
+
+        if (empty($files["adjuntos"]["tmp_name"][0])) {
+            array_push($response, "No se adjuntaron documentos");
+            echo json_encode($response);exit;
+        }
+
+        // var_dump("<pre>", $adjunto, "</pre>");exit;
+
+
+        $datetime = new DateTime();
+        $now = $datetime->format("Y-m-d H:i:s");
+
+        $obj = new TramiteDocumentario();
+
+        $ubicacionArchivos = $obj->guardarSolicitud($now, $descripcion, $files["adjuntos"]);
+
+        // $carpetaDestino = Documento::crearCarpeta($now);
+        // var_dump("<pre>", $ubicacionArchivos, "</pre>");exit;
+        $tramite = new TramiteDocumentario(
+            $ubicacionArchivos["ultimoIdDisponible"],
+            "null",
+            $now,
+            "null",
+            "null",
+            $idOficinaDestino,
+            3,
+            $ubicacionArchivos["ubicacionDescription"],
+            $idtipTramites,
+            $_SESSION["id"],
+        );
+
+        $tramite->guardar();
+
+
+        for ($i=0; $i < count($ubicacionArchivos["ubicacionDocumentos"]); $i++) { 
+            $documento = new Documento(
+                "null",
+                "null",
+                null,
+                null,
+                $now,
+                null,
+                $now,
+                "null",
+                $idOficinaDestino,
+                $ubicacionArchivos["ubicacionDocumentos"][$i],
+                $ubicacionArchivos["ultimoIdDisponible"],
+            );
+            $documento->guardar();
+        }
+
+        
+
+        // $formatTime = $datetime->format("Y-m-d_H:i:s");
+        
+        // $ubicacionDescription = $documento->crearArchivo($carpetaDestino, $descripcion, $formatTime);
+        
+        // $documento->moverDocumentos($adjunto, $carpetaDestino, $formatTime);
+
+
+        if (isset($documento)) {
+
+
+            
+        }
+
+        echo json_encode($response);
+    }
+
+    public function mostrarDetalleTramite()
     {
 
         $idTramite = $_GET["tramite"];
 
         $tramite = new TramiteDocumentario($idTramite);
+
         
         $dataTramite = $tramite->editar()["data"][0];
 
+        $documentos = new Documento();
+
+        $dataDocumentos = $documentos->getBy("idTramiteDocumentario", $idTramite)["data"];
+
         
-        if (file_exists($dataTramite["ubicacion"])) {
-            $adjuntos = readfile($dataTramite["ubicacion"], true);
-            var_dump("<pre>", $adjuntos, "</pre>");
+        if (file_exists($dataTramite["description"])) {
+            $datos = [
+                "title" => "",
+                "solicitud" => "Volver a la bandeja",
+                "url" => "?ctrl=CtrlTramiteDocumentario&accion=mostrarSolicitudes",
+                "dataTramite" => $dataTramite,
+                "dataDocumentos" => $dataDocumentos
+            ];
+    
+            $home = $this->mostrar('tramitesDocumentarios/read_tramite.php', $datos, true);
+    
+            $datos = [
+                'contenido' => $home,
+            ];
+    
+            $this->mostrar('./plantilla/home.php', $datos);
         }
 
 
-        // var_dump("<pre>", $dataTramite, "</pre>");exit;
 
         
-        $datos = [
-            "title" => "Tramite",
-            "solicitud" => "Volver a la bandeja",
-            "url" => "?ctrl=CtrlTramiteDocumentario&accion=inbox",
-            "dataTramite" => $dataTramite,
-        ];
-
-        $home = $this->mostrar('tramitesDocumentarios/read_tramite.php', $datos, true);
-
-        $datos = [
-            'contenido' => $home,
-        ];
-
-        $this->mostrar('./plantilla/home.php', $datos);
-    }
-
-    public function enviarTramite()
-    {
-
-
-        // var_dump("<pre>", $_POST, "</pre>");
-        // var_dump("<pre>", $_FILES, "</pre>");exit;
-
-        $idOficinaDestino = $_POST["oficina"];
-        $idTipoDoc = $_POST["tipoDoc"];
-        $descripcion = $_POST["descripcion"];
-        $adjunto = $_FILES["adjunto"];
-
-        $response = [];
-
-        $datetime = new DateTime();
-        $now = $datetime->format("Y-m-d H:i:s");
-
-        $carpetaDestino = Documento::crearCarpeta($now);
-
-        $documento = new Documento(
-            "null",
-            "null",
-            null,
-            null,
-            $now,
-            null,
-            $now,
-            $idTipoDoc,
-            $idOficinaDestino,
-            $_SESSION["id"],
-            $carpetaDestino
-        );
-
-        $formatTime = $documento->setFormat($datetime);
         
-        $ubicacionDescription = $documento->crearArchivo($carpetaDestino, $descripcion, $formatTime);
-        $documento->moverDocumentos($adjunto, $carpetaDestino, $formatTime);
-        $documento->guardar();
-
-        if (isset($documento)) {
-
-            $idDocumento = $documento->getDoc()["data"][0]["id"];
-
-            $tramite = new TramiteDocumentario(
-                "null",
-                "null",
-                $now,
-                "null",
-                $idDocumento,
-                "null",
-                $idOficinaDestino,
-                3,
-                $ubicacionDescription
-            );
-
-            $tramite->guardar();
-        }
-
-        echo json_encode($response);
-    }
-    public function boardDocumentos()
-    {
-
-        $datos = [];
-
-        $home = $this->mostrar('plantilla/interactiveChart.php', $datos, true);
-
-        $datos = [
-            'titulo' => 'Board Documentos',
-            'contenido' => $home,
-        ];
-
-        $this->mostrar('./plantilla/home.php', $datos);
     }
 }

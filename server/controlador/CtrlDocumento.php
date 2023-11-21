@@ -1,7 +1,5 @@
 <?php
 
-use function PHPSTORM_META\type;
-
 session_start();
 require_once './core/Controlador.php';
 require_once './modelo/Documento.php';
@@ -33,6 +31,7 @@ class CtrlDocumento extends Controlador
         $datos = [
             'titulo' => 'Documentos',
             'contenido' => $home,
+            $_SESSION["datos"] => $data["data"],
         ];
 
         $this->mostrar('./plantilla/home.php', $datos);
@@ -155,8 +154,5 @@ class CtrlDocumento extends Controlador
         # var_dump($data);exit;
         $this->index();
     }
-
-    
-
     
 }

@@ -141,6 +141,7 @@ class CtrlPersona extends Controlador
 
 
         $_SESSION["id"] = $data[0]["id"];
+        // var_dump("<pre>", $data, "</pre>");exit;
         // $_SESSION["perfil"] = $data[0]["perfil"];
 
         // var_dump("<pre>",$data,"</pre>");exit;
@@ -180,12 +181,15 @@ class CtrlPersona extends Controlador
         $obj = new Persona($idPersona);
         $data = $obj->editar()['data'][0];
 
+        // var_dump("<pre>", $data, "</pre>");exit;
+
         if(! is_null($data)){
 
             $_SESSION['id']=$data['id'];
             $_SESSION['usuario']=$data['usuario'];
             $_SESSION['nombre']=$data['nombres'] . ' '. $data['apellidos'];
             $_SESSION["dni"]=$data["dni"];
+            $_SESSION["perfil"]=$_GET['idPerfil'];
         }
 
         $_SESSION['menu']= Helper::getMenu($idModulo,$idPerfil);
@@ -229,5 +233,30 @@ class CtrlPersona extends Controlador
             'CtrlAnexoDocumento' => 'Anexos de Documentos',
             'CtrlConceptoPago' => 'Conceptos de Pago',
         ];
+    }
+
+    public function mostrarUsuarios(){
+        $obj = new Persona;
+        $data = $obj->getTodo();
+
+        # var_dump($data);exit;
+
+        $datos = [
+            'datos' => $data['data']
+        ];
+
+        $home = $this->mostrar('personas/mostrar.php', $datos, true);
+
+        $datos = [
+            'titulo' => 'Actividad usuarios',
+            'contenido' => $home,
+            'menu' => $_SESSION['menu']
+        ];
+
+        $this->mostrar('./plantilla/home.php', $datos);
+    }
+
+    public function supervisarActividad(){
+        echo $_GET["id"];
     }
 }

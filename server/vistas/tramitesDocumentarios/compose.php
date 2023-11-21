@@ -20,11 +20,12 @@ require_once "./vistas/tramitesDocumentarios/breadcrumb.php";
       <form id="form" class="col-md-9">
         <div class="card card-primary card-outline">
           <div class="card-header">
-            <h3 class="card-title">Compose New Message</h3>
+            <h3 class="card-title">Nueva solicitud</h3>
           </div>
           <!-- /.card-header -->
           <div class="card-body">
             <div class="form-group">
+              Dirigido a:
               <?php
 
               // var_dump("<pre>", $oficinas, "</pre>");
@@ -50,20 +51,21 @@ require_once "./vistas/tramitesDocumentarios/breadcrumb.php";
               </select>
               <br>
               <br>
-              <select class="custom-select" name="tipoDoc" id="">
+              Tipo de solicitud:
+              <select class="custom-select" name="tipTramites" id="">
                 <?php
                 $esSeleccionado = null;
 
 
-                if (is_array($tipoDoc))
+                if (is_array($tipTramites))
 
-                  foreach ($tipoDoc as $c) {
+                  foreach ($tipTramites as $c) {
                     $esSeleccionado = '';
                     if ("FUT" === $c['tipo'])
                       $esSeleccionado = 'selected';
                 ?>
 
-                  <option <?= $esSeleccionado ?> value="<?= $c['id'] ?>"> <?= $c['tipo'] ?></option>
+                  <option <?= $esSeleccionado ?> value="<?= $c['id'] ?>">Solicitud de <?= $c['tipo'] ?></option>
                 <?php
                   }
                 ?>
@@ -72,35 +74,19 @@ require_once "./vistas/tramitesDocumentarios/breadcrumb.php";
               <br>
               <div class="form-group">
                 <textarea id="compose-textarea" name="descripcion" class="form-control" style="height: 300px">
-                      <h1><u>Heading Of Message</u></h1>
-                      <h4>Subheading</h4>
-                      <p>But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain
-                        was born and I will give you a complete account of the system, and expound the actual teachings
-                        of the great explorer of the truth, the master-builder of human happiness. No one rejects,
-                        dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know
-                        how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again
-                        is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain,
-                        but because occasionally circumstances occur in which toil and pain can procure him some great
-                        pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise,
-                        except to obtain some advantage from it? But who has any right to find fault with a man who
-                        chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that
-                        produces no resultant pleasure? On the other hand, we denounce with righteous indignation and
-                        dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so
-                        blinded by desire, that they cannot foresee</p>
-                      <ul>
-                        <li>List item one</li>
-                        <li>List item two</li>
-                        <li>List item three</li>
-                        <li>List item four</li>
-                      </ul>
-                      <p>Thank you,</p>
-                      <p>John Doe</p>
+                      <h4><b>A Ud. respetuosamente me presento y expongo:</b></h4>
+                      <blockquote class="blockquote">
+                        <font>
+                        Que habiendo aprobado satisfactoriamente el <b>semestre academico 2023-I</b> y siendo requisito indispensable las <b>Experiencias Formativas en Situaciones Reales de Trabajo</b> las cuales voy a realizar en la empresa <b>"NOMBRE DE LA EMPRESA"</b>, ubicada en <b>DIRECCION DE LA EMPRESA</b>, <b>ENCARGADO DE LA EMPRESA</b> con DNI N° XXXXXXXX, las EFSRT corresponden al <b>MODULO ACTUAL</b> con un <b>TOTAL DE HORAS REALIZADAS</b>. Por tal motivo solicito mi carta de presentación
+
+                        </font>
+                      </blockquote>
                     </textarea>
               </div>
               <div class="form-group">
                 <div class="btn btn-default btn-file">
                   <i class="fas fa-paperclip"></i> Adjunto
-                  <input type="file" name="adjunto">
+                  <input type="file" name="adjuntos[]" multiple>
                 </div>
                 <p class="help-block">Max. 32MB</p>
               </div>
@@ -111,7 +97,7 @@ require_once "./vistas/tramitesDocumentarios/breadcrumb.php";
                 <button type="button" class="btn btn-default"><i class="fas fa-pencil-alt"></i> Borrador</button>
                 <button type="submit" class="btn btn-primary"><i class="far fa-envelope"></i> Enviar</button>
               </div>
-              <button type="reset" class="btn btn-default"><i class="fas fa-times"></i> Descartar</button>
+              <a href="?ctrl=CtrlTramiteDocumentario&accion=mostrarSolicitudes" type="reset" class="btn btn-default"><i class="fas fa-times"></i> Cancelar</a>
             </div>
             <!-- /.card-footer -->
           </div>

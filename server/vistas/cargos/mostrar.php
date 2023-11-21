@@ -1,6 +1,10 @@
 <a href="#" class="btn btn-primary nuevo">
     <i class="fa fa-plus"></i> 
-    Nuevo Cargo
+    Nuevo
+</a>
+<a href="#" class="btn btn-success" id="imprimirPDF">
+    <i class="fa fa-print"></i> 
+    Imprimir
 </a>
 
     <table class="table">

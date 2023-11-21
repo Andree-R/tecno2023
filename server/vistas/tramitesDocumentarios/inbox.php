@@ -109,7 +109,15 @@ require_once "./vistas/tramitesDocumentarios/breadcrumb.php";
                         </td>
                         <td class="mailbox-star"><a href="#"><i class="fas fa-star text-warning"></i></a></td>
                         <td class="mailbox-name"><?= $t["estado"] ?></td>
-                        <td class="mailbox-subject"><b>AdminLTE 3.0 Issue</b> - Trying to find a solution to this problem...
+                        <td class="mailbox-subject">
+                          <?php 
+                          if (isset($_SESSION["perfil"]) and $_SESSION["perfil"] == 4) {
+                          ?>
+                            <b><?= $t["solicitante"] ?></b> - 
+                          <?php
+                          }
+                          ?>
+                           <?= "Solicitud de " . $t["tipo"] ?>
                         </td>
                         <td class="mailbox-attachment"></td>
                         <td class="mailbox-date">
@@ -131,8 +139,8 @@ require_once "./vistas/tramitesDocumentarios/breadcrumb.php";
                       </div>
                     </td>
                     <td class="mailbox-star"><a href="#"><i class="fas fa-star text-warning"></i></a></td>
-                    <td class="mailbox-name"><a href="read-mail.html">Sin nuevos mensajes</a></td>
-                    <td class="mailbox-subject"><b>Sin nuevos mensajes</b> - Trying to find a solution to this problem...
+                    <td class="mailbox-name"><a href="#">Sin nuevos mensajes</a></td>
+                    <td class="mailbox-subject"><b>Sin nuevos mensajes</b>
                     </td>
                     <td class="mailbox-attachment"></td>
                     <td class="mailbox-date">Hace unos segundos</td>

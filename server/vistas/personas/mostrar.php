@@ -1,4 +1,4 @@
-<a class="btn btn-success" href="?ctrl=CtrlPersona&accion=nuevo">Nueva Persona</a>
+<!-- <a class="btn btn-success" href="?ctrl=CtrlPersona&accion=nuevo">Nueva Persona</a> -->
 <table class="table">
     <tr>
         <th>ID</th>
@@ -9,6 +9,7 @@
         <th>Dirección</th>
         <th>Teléfono</th>
         <th>Fecha de Nacimiento</th>
+        <th>Opciones</th>
     </tr>
     <?php
 
@@ -41,10 +42,12 @@
                 <?= $d['fechaNacimiento'] ?>
             </td>
             <td>
-                <a class="btn btn-warning" href="?ctrl=CtrlPersona&accion=editar&id=<?= $d['id'] ?>">
+                <!-- <a class="btn btn-warning" href="?ctrl=CtrlPersona&accion=editar&id=<?= $d['id'] ?>">
                     Editar
                 </a>
-                <a class="btn btn-danger" href="?ctrl=CtrlPersona&accion=eliminar&id=<?= $d['id'] ?>">Eliminar</a>
+                <a class="btn btn-danger" href="?ctrl=CtrlPersona&accion=eliminar&id=<?= $d['id'] ?>">Eliminar</a> -->
+
+                <a class="btn btn-info" href="?ctrl=CtrlPersona&accion=supervisarActividad&id=<?= $d['id'] ?>">Supervisar actividad</a>
 
             </td>
         </tr>

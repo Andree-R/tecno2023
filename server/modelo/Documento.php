@@ -11,8 +11,8 @@ class Documento extends Modelo {
     private $fecha_recepcion;
     private $idTipo;
     private $idOficina;
-    private $idPersona;
     private $ubicacion;
+    private $idTramiteDocumentario;
 
     private const CARPETA_SOLICITUDES = "solicitudes";
     private const ARCHIVO_DESCRIPTION_NAME = "description";
@@ -33,8 +33,8 @@ class Documento extends Modelo {
         $fechaRecepcion=null,
         $idTipo=null,
         $idOficina=null,
-        $idPersona=null,
-        $ubicacion=null
+        $ubicacion=null,
+        $idTramiteDocumentario=null,
         ){
         $this->id = $id;
         $this->idDocumento=$idDocumento;
@@ -45,8 +45,8 @@ class Documento extends Modelo {
         $this->fecha_recepcion=$fechaRecepcion;
         $this->idTipo=$idTipo;
         $this->idOficina=$idOficina;
-        $this->idPersona=$idPersona;
         $this->ubicacion=$ubicacion;
+        $this->idTramiteDocumentario=$idTramiteDocumentario;
         parent::__construct($this->_tabla);
     }
     public function getTodo(){
@@ -65,10 +65,10 @@ class Documento extends Modelo {
             'fecha'=>"'$this->fecha'",
             'descripcion'=>"'$this->descripcion'",
             'fecha_recepcion'=>"'$this->fecha_recepcion'",
-            'idTipo'=>"'$this->idTipo'",
+            'idTipo'=>"$this->idTipo",
             'idOficina'=>"'$this->idOficina'",
-            'idPersona'=>"'$this->idPersona'",
             'ubicacion'=>"'$this->ubicacion'",
+            'idTramiteDocumentario'=>"'$this->idTramiteDocumentario'",
         ];
         return $this->insert($datos);
     }
@@ -92,7 +92,6 @@ class Documento extends Modelo {
             'fecha_recepcion'=>"'$this->fecha_recepcion'",
             'idTipo'=>"'$this->idTipo'",
             'idOficina'=>"'$this->idOficina'",
-            'idPersona'=>"'$this->idPersona'",
         ];
         $wh = "id=$this->id";
         return $this->update($wh,$datos);
@@ -123,10 +122,6 @@ class Documento extends Modelo {
         file_put_contents($ubicacionArchivo, $contenido);
         return  $ubicacionArchivo;
         
-    }
-
-    public static function setFormat($datetime){
-        return $datetime->format("Y-m-d_H:i:s");
     }
 
     public function moverDocumentos($adjunto, $carpetaDestino, $format)
