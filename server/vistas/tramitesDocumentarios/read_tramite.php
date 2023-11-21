@@ -131,12 +131,20 @@ require_once "./vistas/tramitesDocumentarios/breadcrumb.php";
         </div>
         <!-- /.card-footer -->
         <div class="card-footer">
-          <div class="float-right">
-            <button id="anular" type="button" class="btn btn-danger"><i class="fas fa-thumbs-down"></i> Anular</button>
-          </div>
-          <button id="validar" type="button" class="btn btn-success"><i class="fas fa-thumbs-up"></i> Validar</button>
-          <button type="button" class="btn btn-info"><i class="fas fa-print"></i> Imprimir</button>
+        <?php
+        if ($_SESSION["perfil"] == 4) {
+        ?>
+            
+            <div class="float-right">
+              <button id="anular" data-value="<?= $dataTramite["id"] ?>" type="button" class="btn btn-danger"><i class="fas fa-thumbs-down"></i> Anular</button>
+            </div>
+            <button id="validar" data-value="<?= $dataTramite["id"] ?>" type="button" class="btn btn-success"><i class="fas fa-thumbs-up"></i> Validar</button>
+            <button type="button" class="btn btn-info"><i class="fas fa-print"></i> Imprimir</button>
+            <?php
+        }
+        ?>
         </div>
+
         <!-- /.card-footer -->
       </div>
       <!-- /.card -->

@@ -183,7 +183,7 @@
                         }
                     })
                     .then(data => {
-                        console.log(data);
+                        // console.log(data);
                         if (data.length > 0) {
                             for (const i of data) {
                                 toastr.error(i);
@@ -285,7 +285,85 @@
     </script>
 
     <script>
-        
+        const BTN_VALIDAR = document.querySelector("#validar");
+        const BTN_ANULAR = document.querySelector("#anular");
+
+        let accionRealizada = true;
+        BTN_VALIDAR.addEventListener("click", function(event) {
+
+            if (accionRealizada) {
+                accionRealizada = false;
+                const DATA = {
+                id: BTN_VALIDAR.getAttribute("data-value"),
+            }
+
+            fetch("?ctrl=CtrlTramiteDocumentario&accion=validarSolicitud", {
+                    method: "post",
+                    body: DATA,
+                })
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    }
+                })
+                .then(data => {
+                    if (data.length > 0) {
+                        for (const i of data) {
+                            toastr.success(i);
+                        }
+                        setTimeout(function() {
+                            window.location.href = "?ctrl=CtrlTramiteDocumentario&accion=mostrarSolicitudes";
+                            accionRealizada = true;
+                        }, 2000);
+
+                    } else {
+                        console.error("La respuesta data es null");
+                    }
+
+                })
+                .catch(error => {
+                    console.error("Ocurrió un error:", error);
+                });
+            }
+        })
+        BTN_ANULAR.addEventListener("click", function(event) {
+
+            if (accionRealizada) {
+                accionRealizada = false;
+                const DATA = {
+                id: BTN_ANULAR.getAttribute("data-value"),
+            }
+
+            fetch("?ctrl=CtrlTramiteDocumentario&accion=anularSolicitud", {
+                    method: "post",
+                    body: DATA,
+                })
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    }
+                })
+                .then(data => {
+                    if (data.length > 0) {
+                        for (const i of data) {
+                            toastr.error(i);
+                        }
+                        setTimeout(function() {
+                            window.location.href = "?ctrl=CtrlTramiteDocumentario&accion=mostrarSolicitudes";
+                            accionRealizada = true;
+                        }, 2000);
+
+                    } else {
+                        console.error("La respuesta data es null");
+                    }
+
+                })
+                .catch(error => {
+                    console.error("Ocurrió un error:", error);
+                });
+            }
+            
+        })
     </script>
 </body>
 

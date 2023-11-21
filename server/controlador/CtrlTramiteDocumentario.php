@@ -297,6 +297,12 @@ class CtrlTramiteDocumentario extends Controlador
 
         $dataDocumentos = $documentos->getBy("idTramiteDocumentario", $idTramite)["data"];
 
+        $estadosTramites = new EstadosTramites();
+
+        $dataEstados = $estadosTramites->getTodo()["data"];
+
+        // var_dump("<pre>", $dataEstados, "</pre>");exit;
+
         
         if (file_exists($dataTramite["description"])) {
             $datos = [
@@ -315,10 +321,23 @@ class CtrlTramiteDocumentario extends Controlador
     
             $this->mostrar('./plantilla/home.php', $datos);
         }
-
-
-
         
-        
+    }
+
+    public function validarSolicitud(){
+
+        $obj = "";
+        $response = [];
+
+        array_push($response, "La solicitud ha sido validada");
+        echo json_encode($response);
+    }
+
+    public function anularSolicitud(){
+        $obj = "";
+        $response = [];
+
+        array_push($response, "La solicitud ha sido anulada");
+        echo json_encode($response);
     }
 }
