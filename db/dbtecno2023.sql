@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: mariadb:3306
--- Tiempo de generación: 09-11-2023 a las 20:08:38
+-- Tiempo de generación: 21-11-2023 a las 19:14:13
 -- Versión del servidor: 10.11.5-MariaDB-1:10.11.5+maria~ubu2204
 -- Versión de PHP: 8.2.11
 
@@ -435,8 +435,8 @@ CREATE TABLE `documentos` (
   `numero` varchar(20) DEFAULT NULL,
   `asunto` varchar(100) DEFAULT NULL,
   `idOficina` int(11) DEFAULT NULL,
-  `idPersona` int(11) DEFAULT NULL,
-  `ubicacion` varchar(100) DEFAULT NULL
+  `ubicacion` varchar(100) DEFAULT NULL,
+  `idTramiteDocumentario` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -1396,6 +1396,25 @@ CREATE TABLE `tipos_procesadores` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `tipos_tramites`
+--
+
+CREATE TABLE `tipos_tramites` (
+  `id` int(11) NOT NULL,
+  `tipo` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `tipos_tramites`
+--
+
+INSERT INTO `tipos_tramites` (`id`, `tipo`) VALUES
+(1, 'carta de presentación'),
+(2, 'culminación EFSRT');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `trabajos_aplicacion_profesional`
 --
 
@@ -1429,14 +1448,15 @@ CREATE TABLE `trabajos_requisitos` (
 
 CREATE TABLE `tramites_documentarios` (
   `id` int(11) NOT NULL,
-  `idDocumento` int(11) DEFAULT NULL,
   `idOficinaOrigen` int(11) DEFAULT NULL,
   `idOficinaDestino` int(11) DEFAULT NULL,
   `fecha` timestamp NULL DEFAULT NULL,
   `fecha_envio` timestamp NULL DEFAULT NULL,
   `fecha_recepcion` timestamp NULL DEFAULT NULL,
   `idEstado` int(11) DEFAULT NULL,
-  `description` varchar(100) DEFAULT NULL
+  `description` varchar(100) DEFAULT NULL,
+  `idTipoTramite` int(11) DEFAULT NULL,
+  `idPersona` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -1507,16 +1527,6 @@ CREATE TABLE `v_conceptos_pago` (
 -- (Véase abajo para la vista actual)
 --
 CREATE TABLE `v_documentos` (
-`id` int(11)
-,`idDocumento` varchar(20)
-,`numero` varchar(20)
-,`asunto` varchar(100)
-,`fecha` timestamp
-,`descripcion` varchar(4000)
-,`fecha_recepcion` timestamp
-,`idTipo` varchar(25)
-,`idOficina` varchar(80)
-,`idPersona` varchar(101)
 );
 
 -- --------------------------------------------------------
@@ -1587,7 +1597,6 @@ CREATE TABLE `v_servidores_publicos` (
 --
 CREATE TABLE `v_tramites_documentarios` (
 `id` int(11)
-,`idDocumento` int(11)
 ,`idOficinaOrigen` int(11)
 ,`idOficinaDestino` int(11)
 ,`fecha` timestamp
@@ -1595,11 +1604,11 @@ CREATE TABLE `v_tramites_documentarios` (
 ,`fecha_recepcion` timestamp
 ,`idEstado` int(11)
 ,`description` varchar(100)
-,`documento` varchar(20)
-,`ubicacion` varchar(100)
-,`oficinaOrigen` varchar(80)
-,`oficinaDestino` varchar(80)
+,`idTipoTramite` int(11)
+,`idPersona` int(11)
+,`tipo` varchar(100)
 ,`estado` varchar(30)
+,`solicitante` varchar(101)
 );
 
 -- --------------------------------------------------------
@@ -1663,7 +1672,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`%` SQL SECURITY DEFINER VIEW `v_servi
 --
 DROP TABLE IF EXISTS `v_tramites_documentarios`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`%` SQL SECURITY DEFINER VIEW `v_tramites_documentarios`  AS SELECT `td`.`id` AS `id`, `td`.`idDocumento` AS `idDocumento`, `td`.`idOficinaOrigen` AS `idOficinaOrigen`, `td`.`idOficinaDestino` AS `idOficinaDestino`, `td`.`fecha` AS `fecha`, `td`.`fecha_envio` AS `fecha_envio`, `td`.`fecha_recepcion` AS `fecha_recepcion`, `td`.`idEstado` AS `idEstado`, `td`.`description` AS `description`, `d`.`numero` AS `documento`, `d`.`ubicacion` AS `ubicacion`, `ofo`.`nombre` AS `oficinaOrigen`, `ofd`.`nombre` AS `oficinaDestino`, `et`.`estado` AS `estado` FROM ((((`tramites_documentarios` `td` left join `documentos` `d` on(`d`.`id` = `td`.`idDocumento`)) left join `oficinas` `ofo` on(`ofo`.`id` = `td`.`idOficinaOrigen`)) left join `oficinas` `ofd` on(`ofd`.`id` = `td`.`idOficinaDestino`)) left join `estados_tramites` `et` on(`et`.`id` = `td`.`idEstado`)) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`%` SQL SECURITY DEFINER VIEW `v_tramites_documentarios`  AS SELECT `td`.`id` AS `id`, `td`.`idOficinaOrigen` AS `idOficinaOrigen`, `td`.`idOficinaDestino` AS `idOficinaDestino`, `td`.`fecha` AS `fecha`, `td`.`fecha_envio` AS `fecha_envio`, `td`.`fecha_recepcion` AS `fecha_recepcion`, `td`.`idEstado` AS `idEstado`, `td`.`description` AS `description`, `td`.`idTipoTramite` AS `idTipoTramite`, `td`.`idPersona` AS `idPersona`, `tt`.`tipo` AS `tipo`, `et`.`estado` AS `estado`, concat(`p`.`nombres`,' ',`p`.`apellidos`) AS `solicitante` FROM (((`tramites_documentarios` `td` join `personas` `p` on(`p`.`id` = `td`.`idPersona`)) left join `estados_tramites` `et` on(`et`.`id` = `td`.`idEstado`)) left join `tipos_tramites` `tt` on(`tt`.`id` = `td`.`idTipoTramite`)) ;
 
 --
 -- Índices para tablas volcadas
@@ -1859,7 +1868,7 @@ ALTER TABLE `documentos`
   ADD KEY `R_134` (`idTipo`),
   ADD KEY `R_135` (`idOficina`),
   ADD KEY `R_136` (`idDocumento`),
-  ADD KEY `R_137` (`idPersona`);
+  ADD KEY `documentos_FK` (`idTramiteDocumentario`);
 
 --
 -- Indices de la tabla `editoriales`
@@ -2321,6 +2330,12 @@ ALTER TABLE `tipos_procesadores`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `tipos_tramites`
+--
+ALTER TABLE `tipos_tramites`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `trabajos_aplicacion_profesional`
 --
 ALTER TABLE `trabajos_aplicacion_profesional`
@@ -2340,10 +2355,11 @@ ALTER TABLE `trabajos_requisitos`
 --
 ALTER TABLE `tramites_documentarios`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `R_129` (`idDocumento`),
   ADD KEY `R_130` (`idOficinaOrigen`),
   ADD KEY `R_131` (`idOficinaDestino`),
-  ADD KEY `R_133` (`idEstado`);
+  ADD KEY `R_133` (`idEstado`),
+  ADD KEY `tramites_documentarios_FK` (`idTipoTramite`),
+  ADD KEY `tramites_documentarios_FK_1` (`idPersona`);
 
 --
 -- Indices de la tabla `turnos`
@@ -2504,7 +2520,7 @@ ALTER TABLE `docentes`
 -- AUTO_INCREMENT de la tabla `documentos`
 --
 ALTER TABLE `documentos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=222;
 
 --
 -- AUTO_INCREMENT de la tabla `editoriales`
@@ -2540,7 +2556,7 @@ ALTER TABLE `equipos_discos`
 -- AUTO_INCREMENT de la tabla `estados`
 --
 ALTER TABLE `estados`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `estados_tramites`
@@ -2891,6 +2907,12 @@ ALTER TABLE `tipos_procesadores`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de la tabla `tipos_tramites`
+--
+ALTER TABLE `tipos_tramites`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT de la tabla `trabajos_aplicacion_profesional`
 --
 ALTER TABLE `trabajos_aplicacion_profesional`
@@ -2906,7 +2928,7 @@ ALTER TABLE `trabajos_requisitos`
 -- AUTO_INCREMENT de la tabla `tramites_documentarios`
 --
 ALTER TABLE `tramites_documentarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 --
 -- AUTO_INCREMENT de la tabla `turnos`
@@ -3068,7 +3090,7 @@ ALTER TABLE `documentos`
   ADD CONSTRAINT `R_134` FOREIGN KEY (`idTipo`) REFERENCES `tipos_documentos` (`id`),
   ADD CONSTRAINT `R_135` FOREIGN KEY (`idOficina`) REFERENCES `oficinas` (`id`),
   ADD CONSTRAINT `R_136` FOREIGN KEY (`idDocumento`) REFERENCES `documentos` (`id`),
-  ADD CONSTRAINT `R_137` FOREIGN KEY (`idPersona`) REFERENCES `personas` (`id`);
+  ADD CONSTRAINT `documentos_FK` FOREIGN KEY (`idTramiteDocumentario`) REFERENCES `tramites_documentarios` (`id`);
 
 --
 -- Filtros para la tabla `editoriales`
@@ -3380,10 +3402,11 @@ ALTER TABLE `trabajos_requisitos`
 -- Filtros para la tabla `tramites_documentarios`
 --
 ALTER TABLE `tramites_documentarios`
-  ADD CONSTRAINT `R_129` FOREIGN KEY (`idDocumento`) REFERENCES `documentos` (`id`),
   ADD CONSTRAINT `R_130` FOREIGN KEY (`idOficinaOrigen`) REFERENCES `oficinas` (`id`),
   ADD CONSTRAINT `R_131` FOREIGN KEY (`idOficinaDestino`) REFERENCES `oficinas` (`id`),
-  ADD CONSTRAINT `R_133` FOREIGN KEY (`idEstado`) REFERENCES `estados_tramites` (`id`);
+  ADD CONSTRAINT `R_133` FOREIGN KEY (`idEstado`) REFERENCES `estados_tramites` (`id`),
+  ADD CONSTRAINT `tramites_documentarios_FK` FOREIGN KEY (`idTipoTramite`) REFERENCES `tipos_tramites` (`id`),
+  ADD CONSTRAINT `tramites_documentarios_FK_1` FOREIGN KEY (`idPersona`) REFERENCES `personas` (`id`);
 
 --
 -- Filtros para la tabla `visitas_anexo04`
