@@ -310,7 +310,8 @@ class CtrlTramiteDocumentario extends Controlador
                 "solicitud" => "Volver a la bandeja",
                 "url" => "?ctrl=CtrlTramiteDocumentario&accion=mostrarSolicitudes",
                 "dataTramite" => $dataTramite,
-                "dataDocumentos" => $dataDocumentos
+                "dataDocumentos" => $dataDocumentos,
+                "estadosTramites" => $dataEstados,
             ];
     
             $home = $this->mostrar('tramitesDocumentarios/read_tramite.php', $datos, true);
@@ -326,7 +327,12 @@ class CtrlTramiteDocumentario extends Controlador
 
     public function validarSolicitud(){
 
-        $obj = "";
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        $obj = new TramiteDocumentario($data["id"]);
+
+        $obj->actualizarByColumn("idEstado", $data["valor"]);
+
         $response = [];
 
         array_push($response, "La solicitud ha sido validada");
@@ -334,8 +340,20 @@ class CtrlTramiteDocumentario extends Controlador
     }
 
     public function anularSolicitud(){
-        $obj = "";
+        $data = json_decode(file_get_contents('php://input'), true);
         $response = [];
+
+
+        if (empty($data["observacion"])) {
+            array_push($response, "No ha colocado ninguna observación");
+            echo json_encode($response);exit;
+        }
+
+        $obj = new TramiteDocumentario($data["id"]);
+
+        $obj->actualizarByColumn("idEstado", $data["valor"]);
+        $obj->actualizarByColumn("observacion", $data["observacion"]);
+
 
         array_push($response, "La solicitud ha sido anulada");
         echo json_encode($response);

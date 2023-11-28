@@ -289,81 +289,119 @@
         const BTN_ANULAR = document.querySelector("#anular");
 
         let accionRealizada = true;
-        BTN_VALIDAR.addEventListener("click", function(event) {
 
+
+
+        if (BTN_VALIDAR) {
+            BTN_VALIDAR.addEventListener("click", function(event) {
+                if (accionRealizada) {
+                    accionRealizada = false;
+                    const DATA = {
+                        id: BTN_VALIDAR.getAttribute("data-id"),
+                        valor: BTN_VALIDAR.getAttribute("data-value"),
+                    }
+
+                    fetch("?ctrl=CtrlTramiteDocumentario&accion=validarSolicitud", {
+                            method: "post",
+                            body: JSON.stringify(DATA),
+                        })
+                        .then(response => {
+                            if (response.ok) {
+                                return response.json();
+                            }
+                        })
+                        .then(data => {
+                            if (data.length > 0) {
+                                for (const i of data) {
+                                    toastr.success(i);
+                                }
+                                setTimeout(function() {
+                                    window.location.href = "?ctrl=CtrlTramiteDocumentario&accion=mostrarSolicitudes";
+                                    accionRealizada = true;
+                                }, 2000);
+
+                            } else {
+                                console.error("La respuesta data es null");
+                            }
+
+                        })
+                        .catch(error => {
+                            console.error("Ocurrió un error:", error);
+                        });
+                }
+            })
+        }
+
+        $(() => {
+
+            $('#anular').click(function(e) {
+                e.preventDefault();
+                // alert('nuevo')
+                $('#modal-lg').modal('show')
+            });
+        });
+
+        $(() => {
+
+            $('#confirmar').click(function(e) {
+                e.preventDefault();
+                // alert('nuevo')
+                eliminar()
+                $('#modal-lg').modal('show')
+            });
+        });
+
+
+        function eliminar() {
             if (accionRealizada) {
                 accionRealizada = false;
                 const DATA = {
-                id: BTN_VALIDAR.getAttribute("data-value"),
-            }
+                    id: BTN_ANULAR.getAttribute("data-id"),
+                    valor: BTN_ANULAR.getAttribute("data-value"),
+                    observacion: document.querySelector("#mensaje").value,
+                }
 
-            fetch("?ctrl=CtrlTramiteDocumentario&accion=validarSolicitud", {
-                    method: "post",
-                    body: DATA,
-                })
-                .then(response => {
-                    if (response.ok) {
-                        return response.json();
-                    }
-                })
-                .then(data => {
-                    if (data.length > 0) {
-                        for (const i of data) {
-                            toastr.success(i);
+
+                fetch("?ctrl=CtrlTramiteDocumentario&accion=anularSolicitud", {
+                        method: "post",
+                        body: JSON.stringify(DATA),
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            return response.json();
                         }
-                        setTimeout(function() {
-                            window.location.href = "?ctrl=CtrlTramiteDocumentario&accion=mostrarSolicitudes";
-                            accionRealizada = true;
-                        }, 2000);
+                    })
+                    .then(data => {
 
-                    } else {
-                        console.error("La respuesta data es null");
-                    }
+                        console.log(data);
+                        if (data.length > 0 && DATA.observacion == false) {
+                            for (const i of data) {
+                                toastr.error(i);
+                            }
 
-                })
-                .catch(error => {
-                    console.error("Ocurrió un error:", error);
-                });
-            }
-        })
-        BTN_ANULAR.addEventListener("click", function(event) {
+                            setTimeout(function() {
+                                accionRealizada = true;
+                            }, 1000);
 
-            if (accionRealizada) {
-                accionRealizada = false;
-                const DATA = {
-                id: BTN_ANULAR.getAttribute("data-value"),
-            }
 
-            fetch("?ctrl=CtrlTramiteDocumentario&accion=anularSolicitud", {
-                    method: "post",
-                    body: DATA,
-                })
-                .then(response => {
-                    if (response.ok) {
-                        return response.json();
-                    }
-                })
-                .then(data => {
-                    if (data.length > 0) {
-                        for (const i of data) {
-                            toastr.error(i);
                         }
-                        setTimeout(function() {
-                            window.location.href = "?ctrl=CtrlTramiteDocumentario&accion=mostrarSolicitudes";
-                            accionRealizada = true;
-                        }, 2000);
+                        if (data.length > 0 && DATA.observacion != false) {
+                            for (const i of data) {
+                                toastr.success(i);
+                            }
+                            setTimeout(function() {
+                                window.location.href = "?ctrl=CtrlTramiteDocumentario&accion=mostrarSolicitudes";
+                                accionRealizada = true;
+                            }, 2000);
+                        }
 
-                    } else {
-                        console.error("La respuesta data es null");
-                    }
+                    })
+                    .catch(error => {
+                        console.error("Ocurrió un error:", error);
+                    });
 
-                })
-                .catch(error => {
-                    console.error("Ocurrió un error:", error);
-                });
             }
-            
-        })
+        };
     </script>
 </body>
 

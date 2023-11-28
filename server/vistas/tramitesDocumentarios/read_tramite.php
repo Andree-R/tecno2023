@@ -131,18 +131,47 @@ require_once "./vistas/tramitesDocumentarios/breadcrumb.php";
         </div>
         <!-- /.card-footer -->
         <div class="card-footer">
-        <?php
-        if ($_SESSION["perfil"] == 4) {
-        ?>
-            
-            <div class="float-right">
-              <button id="anular" data-value="<?= $dataTramite["id"] ?>" type="button" class="btn btn-danger"><i class="fas fa-thumbs-down"></i> Anular</button>
-            </div>
-            <button id="validar" data-value="<?= $dataTramite["id"] ?>" type="button" class="btn btn-success"><i class="fas fa-thumbs-up"></i> Validar</button>
-            <button type="button" class="btn btn-info"><i class="fas fa-print"></i> Imprimir</button>
+          <?php
+          if ($_SESSION["perfil"] == 4) {
+            $btn_derivar = 1;
+            // var_dump("<pre>", $dataTramite["estado"], "</pre>");?>
+
             <?php
-        }
-        ?>
+            // var_dump("<pre>", $estadosTramites, "</pre>");exit;
+            foreach ($estadosTramites as $estados => $valor) {
+            ?>
+
+
+              <?php
+              if ((($valor["estado"] != "Aceptado" OR $valor["estado"] != "Aceptado") AND $btn_derivar == 1) AND $dataTramite["estado"] != "En espera") {
+              ?>
+                <button id="derivar" data-id="<?= $dataTramite["id"] ?>" data-value="<?= $valor["id"] ?>" type="button" class="btn btn-secondary"><i class="fas fa-file-export"></i> Derivar</button>
+
+                <?php
+                $btn_derivar++;
+              } else {
+
+                if ($valor["estado"] == "Anulado" AND $btn_derivar < 2) {
+                ?>
+                  <div class="float-right">
+                    <button id="anular" data-id="<?= $dataTramite["id"] ?>" data-value="<?= $valor["id"] ?>" type="button" class="btn btn-danger"><i class="fas fa-thumbs-down"></i> Anular</button>
+                  </div>
+                <?php
+                }
+                if ($valor["estado"] == "Aceptado" AND $btn_derivar < 2) {
+                ?>
+                  <button id="validar" data-id="<?= $dataTramite["id"] ?>" data-value="<?= $valor["id"] ?>" type="button" class="btn btn-success"><i class="fas fa-thumbs-up"></i> Validar</button>
+                  <!-- <button type="button" class="btn btn-info"><i class="fas fa-print"></i> Imprimir</button> -->
+                <?php
+                }
+
+                ?>
+          <?php
+
+              }
+            }
+          }
+          ?>
         </div>
 
         <!-- /.card-footer -->
@@ -150,5 +179,32 @@ require_once "./vistas/tramitesDocumentarios/breadcrumb.php";
       <!-- /.card -->
     </div>
   </div>
-
 </section>
+
+
+<div class="modal fade " id="modal-lg">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title"><i class="fa fa-trash"></i> Anulando solicitud: <?= $dataTramite["id"] ?></h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body ">
+        <h5 class="font-weight-bold text-center">¿Estas seguro que deseas anular la solicitud?</h5>
+        <h5>Solicita: <code class="text-uppercase"><?= $dataTramite["tipo"] ?></code></h5>
+        <h5>Solicitante: <code class="text-uppercase"><?= $dataTramite["solicitante"] ?></code></h5>
+        <h5>Observación:</h5>
+        <textarea id="mensaje" class="form-control" rows="3" placeholder="Mensaje..." style="height: 92px;"></textarea>
+      </div>
+      <div class="modal-footer justify-content-between">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        <button id="confirmar" type="button" class="btn btn-danger"><i class="fas fa-thumbs-down"></i> Confirmar</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

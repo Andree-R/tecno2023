@@ -100,6 +100,20 @@ class TramiteDocumentario extends Modelo
         return $this->update($wh, $datos);
     }
 
+    /**
+     * @param string $columna
+     * @param string $valor
+     * @return Array
+     */
+    public function actualizarByColumn($columna, $valor){
+        $datos = [
+            $columna => "'$valor'",
+        ];
+
+        $wh = "id=$this->id";
+        return $this->update($wh, $datos);
+    }
+
     public function mostrarSolicitudes()
     {
         $this->setTabla($this->_vista);
