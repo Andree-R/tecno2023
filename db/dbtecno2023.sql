@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: mariadb:3306
--- Tiempo de generación: 21-11-2023 a las 19:14:13
+-- Tiempo de generación: 28-11-2023 a las 20:36:37
 -- Versión del servidor: 10.11.5-MariaDB-1:10.11.5+maria~ubu2204
 -- Versión de PHP: 8.2.11
 
@@ -439,6 +439,13 @@ CREATE TABLE `documentos` (
   `idTramiteDocumentario` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `documentos`
+--
+
+INSERT INTO `documentos` (`id`, `idDocumento`, `descripcion`, `fecha`, `fecha_recepcion`, `idTipo`, `numero`, `asunto`, `idOficina`, `ubicacion`, `idTramiteDocumentario`) VALUES
+(227, NULL, '', '2023-11-28 15:35:18', '2023-11-28 15:35:18', NULL, '', '', 2, 'solicitudes/77788822/2023-11-28 15:35:18/Guion Documental turistico__2023-11-28 15:35:18.pdf', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -555,7 +562,9 @@ CREATE TABLE `estados_tramites` (
 INSERT INTO `estados_tramites` (`estado`, `id`) VALUES
 ('Observado', 1),
 ('Archivado', 2),
-('En espera', 3);
+('En espera', 3),
+('Aceptado', 4),
+('Anulado', 5);
 
 -- --------------------------------------------------------
 
@@ -1456,8 +1465,16 @@ CREATE TABLE `tramites_documentarios` (
   `idEstado` int(11) DEFAULT NULL,
   `description` varchar(100) DEFAULT NULL,
   `idTipoTramite` int(11) DEFAULT NULL,
-  `idPersona` int(11) DEFAULT NULL
+  `idPersona` int(11) DEFAULT NULL,
+  `observacion` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `tramites_documentarios`
+--
+
+INSERT INTO `tramites_documentarios` (`id`, `idOficinaOrigen`, `idOficinaDestino`, `fecha`, `fecha_envio`, `fecha_recepcion`, `idEstado`, `description`, `idTipoTramite`, `idPersona`, `observacion`) VALUES
+(1, NULL, 2, NULL, '2023-11-28 15:35:18', NULL, 4, 'solicitudes/77788822/2023-11-28 15:35:18/description__2023-11-28 15:35:18.html', 1, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -1518,15 +1535,6 @@ CREATE TABLE `v_conceptos_pago` (
 ,`nombre` varchar(100)
 ,`monto` decimal(10,2)
 ,`idCta` varchar(100)
-);
-
--- --------------------------------------------------------
-
---
--- Estructura Stand-in para la vista `v_documentos`
--- (Véase abajo para la vista actual)
---
-CREATE TABLE `v_documentos` (
 );
 
 -- --------------------------------------------------------
@@ -1628,15 +1636,6 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`%` SQL SECURITY DEFINER VIEW `v_anexo
 DROP TABLE IF EXISTS `v_conceptos_pago`;
 
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`%` SQL SECURITY DEFINER VIEW `v_conceptos_pago`  AS SELECT `cp`.`id` AS `id`, `cp`.`nombre` AS `nombre`, `cp`.`monto` AS `monto`, `cc`.`descripcion` AS `idCta` FROM (`conceptos_pago` `cp` join `ctas_contables` `cc` on(`cc`.`id` = `cp`.`idCta`)) ;
-
--- --------------------------------------------------------
-
---
--- Estructura para la vista `v_documentos`
---
-DROP TABLE IF EXISTS `v_documentos`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`%` SQL SECURITY DEFINER VIEW `v_documentos`  AS SELECT `doc`.`id` AS `id`, `docR`.`numero` AS `idDocumento`, `doc`.`numero` AS `numero`, `doc`.`asunto` AS `asunto`, `doc`.`fecha` AS `fecha`, `doc`.`descripcion` AS `descripcion`, `doc`.`fecha_recepcion` AS `fecha_recepcion`, `tipDoc`.`tipo` AS `idTipo`, `ofic`.`nombre` AS `idOficina`, concat(`person`.`nombres`,' ',`person`.`apellidos`) AS `idPersona` FROM ((((`documentos` `doc` left join `documentos` `docR` on(`doc`.`idDocumento` = `docR`.`id`)) left join `tipos_documentos` `tipDoc` on(`tipDoc`.`id` = `doc`.`idTipo`)) left join `personas` `person` on(`person`.`id` = `doc`.`idPersona`)) left join `oficinas` `ofic` on(`ofic`.`id` = `doc`.`idOficina`)) ;
 
 -- --------------------------------------------------------
 
@@ -2520,7 +2519,7 @@ ALTER TABLE `docentes`
 -- AUTO_INCREMENT de la tabla `documentos`
 --
 ALTER TABLE `documentos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=222;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=228;
 
 --
 -- AUTO_INCREMENT de la tabla `editoriales`
@@ -2562,7 +2561,7 @@ ALTER TABLE `estados`
 -- AUTO_INCREMENT de la tabla `estados_tramites`
 --
 ALTER TABLE `estados_tramites`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `estudiantes`
