@@ -14,9 +14,13 @@
     <link rel="stylesheet" href="/assets/css/icheck.css">
     <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assets/css/jquery-toast.css">
+    <link rel="stylesheet" href="/assets/css/select2.min.css">
+    <link rel="stylesheet" href="/assets/css/select2-bootstrap4.min.css">
     <link rel="stylesheet" href="/assets/css/adminlte.min.css">
     <link rel="stylesheet" href="/assets/css/toastr.min.css">
     <!-- <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script> -->
+
+
 
     <script src="/assets/js/jquery.min.js"></script>
     <script src="/assets/js/jsPDF/jspdf.debug.js"></script>
@@ -108,20 +112,30 @@
 
     <script type="text/javascript" src="/assets/js/moment.min.js"></script>
 
+    <script type="text/javascript" src="/assets/js/select2.full.min.js"></script>
+
     <!-- Bootstrap 4 -->
     <script src="/assets/js/bootstrap.bundle.min.js"></script>
     <!-- AdminLTE App -->
     <script src="/assets/js/adminlte.min.js"></script>
     <!-- AdminLTE for demo purposes -->
-    <!-- 
-    <script src="/assets/js/jquery.flot.js"></script>
+    <!-- <script type="text/javascript" src="/assets/js/jquery.flot.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.flot.resize.js"></script> -->
 
-    <script src="/assets/js/jquery.flot.resize.js"></script> -->
+
+    <!-- <script src="/assets/js/jquery.flot.resize.js"></script> -->
 
     <script src="/assets/js/demo.js"></script>
 
     <script src="/assets/js/toastr.min.js"></script>
 
+    <script>
+        $(function() {
+            //Initialize Select2 Elements
+            $('.select2').select2()
+        })
+        // DropzoneJS Demo Code End
+    </script>
 
     <script>
         $(function() {
@@ -337,7 +351,16 @@
             $('#anular').click(function(e) {
                 e.preventDefault();
                 // alert('nuevo')
-                $('#modal-lg').modal('show')
+                $('#modal-anular').modal('show')
+            });
+        });
+
+        $(() => {
+
+            $('#derivar').click(function(e) {
+                e.preventDefault();
+                // alert('nuevo')
+                $('#modal-derivar').modal('show')
             });
         });
 
@@ -348,6 +371,15 @@
                 // alert('nuevo')
                 eliminar()
                 $('#modal-lg').modal('show')
+            });
+        });
+
+        $(() => {
+
+            $('#infoSolicitud').click(function(e) {
+                e.preventDefault();
+                // alert('nuevo')
+                $('#modal-infoSolicitud').modal('show')
             });
         });
 

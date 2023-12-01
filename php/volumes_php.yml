@@ -1,0 +1,11 @@
+version: "3.8"
+services:
+  app_php_volumes:
+    volumes: 
+      - ../server:/server/app_php
+
+      - ../php/extensions:/extensions_cache
+
+    extends:
+      file: ../angular/volumes_angular.yml
+      service: app_angular_volumes

@@ -56,6 +56,12 @@ class TramiteDocumentario extends Modelo
         $this->setTabla($this->_vista);
         return $this->getAll();
     }
+
+    public function getByColunm($columna, $valor){
+        $this->setTabla($this->_vista);
+        return $this->getBy($columna,$valor);
+    }
+
     public function eliminar()
     {
         return $this->deleteById($this->id);

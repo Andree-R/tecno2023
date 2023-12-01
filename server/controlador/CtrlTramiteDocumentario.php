@@ -149,7 +149,15 @@ class CtrlTramiteDocumentario extends Controlador
 
         $tramites = new TramiteDocumentario();
 
-        $dataTramites = $tramites->getTodo()["data"] != null ? array_reverse($tramites->getTodo()["data"]) : $tramites->getTodo()["data"];
+        $columna = "idPersona";
+
+        if ($_SESSION["perfil"] == 4) {
+            $dataTramites = $tramites->getTodo()["data"] != null ? array_reverse($tramites->getTodo()["data"]) : $tramites->getTodo()["data"];
+        } else{
+            $dataTramites = $tramites->getByColunm($columna, $_SESSION["id"])["data"] != null ? array_reverse($tramites->getByColunm($columna, $_SESSION["id"])["data"]) : $tramites->getByColunm($columna, $_SESSION["id"])["data"];
+        }
+
+        
 
         // var_dump("<pre>", $tramites->getTodo(), "</pre>");exit;
         
@@ -299,6 +307,13 @@ class CtrlTramiteDocumentario extends Controlador
 
         $estadosTramites = new EstadosTramites();
 
+        $objOfic = new Oficina();
+
+        $dataOfic =  $objOfic->getTodo()["data"];
+
+        // var_dump("<pre>", $dataOfic, "</pre>");exit;
+
+
         $dataEstados = $estadosTramites->getTodo()["data"];
 
         // var_dump("<pre>", $dataEstados, "</pre>");exit;
@@ -312,6 +327,7 @@ class CtrlTramiteDocumentario extends Controlador
                 "dataTramite" => $dataTramite,
                 "dataDocumentos" => $dataDocumentos,
                 "estadosTramites" => $dataEstados,
+                "oficinas" => $dataOfic,
             ];
     
             $home = $this->mostrar('tramitesDocumentarios/read_tramite.php', $datos, true);
@@ -331,7 +347,13 @@ class CtrlTramiteDocumentario extends Controlador
 
         $obj = new TramiteDocumentario($data["id"]);
 
+        $datetime = new DateTime();
+        $now = $datetime->format("Y-m-d H:i:s");
+
+        
+
         $obj->actualizarByColumn("idEstado", $data["valor"]);
+        $obj->actualizarByColumn("fecha_recepcion", $now);
 
         $response = [];
 
@@ -343,6 +365,9 @@ class CtrlTramiteDocumentario extends Controlador
         $data = json_decode(file_get_contents('php://input'), true);
         $response = [];
 
+        $datetime = new DateTime();
+        $now = $datetime->format("Y-m-d H:i:s");
+
 
         if (empty($data["observacion"])) {
             array_push($response, "No ha colocado ninguna observación");
@@ -353,6 +378,7 @@ class CtrlTramiteDocumentario extends Controlador
 
         $obj->actualizarByColumn("idEstado", $data["valor"]);
         $obj->actualizarByColumn("observacion", $data["observacion"]);
+        $obj->actualizarByColumn("fecha_recepcion", $now);
 
 
         array_push($response, "La solicitud ha sido anulada");
