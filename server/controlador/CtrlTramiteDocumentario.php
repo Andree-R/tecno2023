@@ -318,7 +318,7 @@ class CtrlTramiteDocumentario extends Controlador
 
         // var_dump("<pre>", $dataEstados, "</pre>");exit;
 
-        
+        // var_dump("<pre>", $dataTramite["description"], "</pre>");
         if (file_exists($dataTramite["description"])) {
             $datos = [
                 "title" => "",
